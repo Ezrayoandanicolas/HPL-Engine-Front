@@ -61,6 +61,20 @@ class RegisterasiController extends FrontendController
         ));
 
         if (isset($response['success'])) {
+            $login = $this->apiPost('auth/login', [
+                'username' => $request->username,
+                'password' => $request->password,
+            ]);
+
+            if (($login['success'] ?? false) && isset($login['data']['user']['id'])) {
+                session([
+                    'api_token' => $login['data']['token'] ?? null,
+                    'api_user' => $login['data']['user'],
+                ]);
+                session()->regenerate();
+                return redirect('/');
+            }
+
             return redirect('/')
                 ->with('success', 'Registrasi Berhasil. Silahkan Login');
         }

@@ -162,7 +162,7 @@ $setting = (object) $settingData;
         }
 
 
-        setInterval(checkDeposits, 2000);
+        setInterval(checkDeposits, 15000);
     </script>
       <script>
         function checkWithdraws() {
@@ -183,7 +183,7 @@ $setting = (object) $settingData;
         }
 
 
-        setInterval(checkWithdraws, 2000);
+        setInterval(checkWithdraws, 15000);
 
         // Notifications
         function checkNotifications() {
@@ -201,7 +201,7 @@ $setting = (object) $settingData;
                 $('#notifList').html(html);
             });
         }
-        setInterval(checkNotifications, 5000);
+        setInterval(checkNotifications, 30000);
         checkNotifications();
     </script>
     <!-- SweetAlert2 -->

@@ -200,7 +200,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'api_base_url' => env('API_BASE_URL', 'http://127.0.0.1:8111/api'),
+    'api_base_url' => env('API_BASE_URL', 'https://bussy.amsgroup.it.com/api'),
     'api_key' => env('API_KEY'),
 
 ];

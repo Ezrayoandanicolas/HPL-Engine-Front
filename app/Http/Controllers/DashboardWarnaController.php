@@ -2,79 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Warna;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class DashboardWarnaController extends Controller
+class DashboardWarnaController extends BaseAdminController
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $warna = Warna::latest()->get();
-        return view('Dashboard.Warna.index', [
-            'warna' => $warna,
-        ]);
+        $resp = $this->adminGet('colors');
+        $warna = $resp['data']['colors'] ?? [];
+        return view('Dashboard.Warna.index', compact('warna'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('Dashboard.Warna.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'style' => 'required|max:15',
-        ]);
-
-        $validateData['custom'] = $request->style;
-        $validateData['global'] = $request->style;
-
-        Warna::create($validateData);
-
-        return redirect('/Admin/Dashboard/Warna')->with('success', 'Promotion has been added!!');
+        $this->adminPost('colors', $request->all());
+        return redirect('/Admin/Dashboard/Warna')->with('success', 'Color created!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $warna = Warna::find($id);
-        Warna::destroy($warna->id);
-        return redirect('/Admin/Dashboard/Warna')->with('success', 'New Posts has been deleted!!');
+        $this->adminDelete("colors/{$id}");
+        return redirect('/Admin/Dashboard/Warna')->with('success', 'Deleted!');
     }
 }

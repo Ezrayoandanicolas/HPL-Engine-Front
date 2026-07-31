@@ -12,7 +12,7 @@ class AdminLoginController extends Controller
 {
     public function index()
     {
-        return view('Layout.adminlogin');
+        return view('adminlogin');
     }
 
     public function auth(Request $request)
@@ -26,6 +26,6 @@ class AdminLoginController extends Controller
             $request->session()->regenerate();
             return redirect('/Admin/Dashboard');
         }
-        return back()->with('LoginError', 'Login tidak berhasil!!');
+        return back()->with('error', 'Login tidak berhasil!!');
     }
 }

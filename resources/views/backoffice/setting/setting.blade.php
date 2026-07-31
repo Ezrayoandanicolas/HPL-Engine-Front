@@ -1,160 +1,236 @@
 @extends('backoffice.layouts.main')
-
 @section('content')
-    <div class="card mt-3">
-        <div class="card-header">
-            Pengaturan Tampilan Website
-        </div>
-        <div class="card-body">
-            <form action="/Setting" method="POST" enctype="multipart/form-data">
-                @method('POST')
-                @csrf
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1" class="form-text text-muted">Nama Website :</label>
-                            <input name="web" type="text" class="form-control" placeholder="Nama Website"
-                                value="">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="form-text text-muted">No TLP:</label>
-                            <input name="telp" type="number" class="form-control" placeholder="Nomor Telepon format +62"
-                                value="">
-                        </div>
-                    </div>
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card card-outline" style="border-top: 3px solid #6f42c1;">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <h4 class="card-title mb-0"><i class="fas fa-sliders-h text-purple mr-2"></i> Pengaturan Website</h4>
+                    <small class="text-muted">Kelola tampilan dan informasi website</small>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="form-text text-muted">No Whatsapp :</label>
-                            <input name="whatsapp" type="number" class="form-control" value=""
-                                placeholder="Nomor Whatsapp format +62">
+                <form action="/Setting" method="POST" enctype="multipart/form-data">
+                    @method('POST')
+                    @csrf
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-purple text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-info"></i></div>
+                            <h5 class="mb-0 ml-3">Informasi Website</h5>
                         </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <label class="form-text text-muted">Telegram :</label>
-                            <input name="telegram" type="number" class="form-control" value=""
-                                placeholder="Akun Telegram format +62">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Nama Website</label>
+                                    <input name="web" type="text" class="form-control form-control-lg shadow-sm" placeholder="cth: NexEngine" value="{{ $setting['web'] ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">No Telepon</label>
+                                    <input name="telp" type="text" class="form-control form-control-lg shadow-sm" placeholder="+62xxx" value="{{ $setting['telp'] ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">No Whatsapp</label>
+                                    <input name="whatsapp" type="text" class="form-control form-control-lg shadow-sm" placeholder="+62xxx" value="{{ $setting['whatsapp'] ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Telegram</label>
+                                    <input name="telegram" type="text" class="form-control form-control-lg shadow-sm" placeholder="+62xxx" value="{{ $setting['telegram'] ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Running Text</label>
+                                    <input name="running_text" type="text" class="form-control form-control-lg shadow-sm" placeholder="Text berjalan di halaman utama" value="{{ $setting['running_text'] ?? '' }}">
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label class="form-text text-muted">Running Text :</label>
-                            <input name="running_text" type="text" class="form-control" value=""
-                                placeholder="Running Text">
-                        </div>
-                    </div>
 
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-group">
-                            <img class="img-preview-logo img-fluid">
-                            <label for="logo" class="form-label @error('logo') is-invalid @enderror ">Logo Web</label>
-                            <input class="form-control" type="file" id="logo" name="logo"
-                                onchange="previewLogo()" accept=".jpg, .jpeg, .png , .webp , .gif">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
-                            <img class="img-preview img-fluid">
-                            <label for="icon" class="form-label @error('icon') is-invalid @enderror ">Icon Web</label>
-                            <input class="form-control" type="file" id="image" name="icon"
-                                onchange="previewImage()" accept=".jpg, .jpeg, .png , .webp">
-                        </div>
-                    </div>
-                </div>
+                        <hr class="my-4">
 
-                <div class="row">
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1" class="form-text text-muted">Live Chat :</label>
-                            <textarea name="livechat" type="text" class="form-control" placeholder="Live Chat"></textarea>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-success text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-images"></i></div>
+                            <h5 class="mb-0 ml-3">Logo & Icon</h5>
                         </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="form-group">
-                            <label for="Theme" class="form-text text-muted">Theme :</label>
-                            <select name="theme" class="form-control">
-                                <option value="Mpo_black">
-                                    Mpo - Theme 1
-                                </option>
-                                <option value="Mpo_blue">
-                                    Mpo - Theme 2
-                                </option>
-                                <option value="Mpo_red">
-                                    Mpo - Theme 3
-                                </option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Logo Web</label>
+                                    <div class="border rounded p-4 text-center bg-light mb-2" style="min-height:150px;display:flex;align-items:center;justify-content:center;">
+                                        @if(!empty($setting['logo']))
+                                        <img class="img-fluid" src="{{ asset('storage/' . $setting['logo']) }}" style="max-height:120px">
+                                        @else
+                                        <span class="text-muted"><i class="fas fa-image fa-2x d-block mb-2"></i>Belum ada logo</span>
+                                        @endif
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="logo" name="logo" accept=".jpg,.jpeg,.png,.webp,.gif">
+                                        <label class="custom-file-label" for="logo">Ganti logo</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Icon Web</label>
+                                    <div class="border rounded p-4 text-center bg-light mb-2" style="min-height:150px;display:flex;align-items:center;justify-content:center;">
+                                        @if(!empty($setting['icon']))
+                                        <img class="img-fluid" src="{{ asset('storage/' . $setting['icon']) }}" style="max-height:120px">
+                                        @else
+                                        <span class="text-muted"><i class="fas fa-image fa-2x d-block mb-2"></i>Belum ada icon</span>
+                                        @endif
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="icon" name="icon" accept=".jpg,.jpeg,.png,.webp">
+                                        <label class="custom-file-label" for="icon">Ganti icon</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 mb-5">
-    <label>SEO</label>
 
-    <textarea
-        name="seo"
-        class="form-control"
-        rows="15"
-        spellcheck="false">{{ old('seo') }}</textarea>
-</div>
-                </div>
-                <button type="submit" class="btn btn-primary">Perbaharui</button>
-            </form>
+                        <hr class="my-4">
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-warning text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-puzzle-piece"></i></div>
+                            <h5 class="mb-0 ml-3">Pengaturan Lainnya</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Live Chat</label>
+                                    <textarea name="livechat" class="form-control shadow-sm" rows="3" placeholder="Embed script live chat">{{ $setting['livechat'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Theme</label>
+                                    <select name="theme" class="form-control form-control-lg shadow-sm">
+                                        <option value="Mpo_black" {{ ($setting['theme'] ?? '') == 'Mpo_black' ? 'selected' : '' }}>⚫ Mpo - Theme 1 (Black)</option>
+                                        <option value="Mpo_blue" {{ ($setting['theme'] ?? '') == 'Mpo_blue' ? 'selected' : '' }}>🔵 Mpo - Theme 2 (Blue)</option>
+                                        <option value="Mpo_red" {{ ($setting['theme'] ?? '') == 'Mpo_red' ? 'selected' : '' }}>🔴 Mpo - Theme 3 (Red)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">SEO Metadata</label>
+                                    <textarea name="seo" class="form-control shadow-sm" rows="8" spellcheck="false" placeholder="Meta tags, Google Analytics, dll">{{ $setting['seo'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-secondary text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-building"></i></div>
+                            <h5 class="mb-0 ml-3">Bank Config</h5>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Nama Bank</label>
+                                    <input type="text" name="bank_name" class="form-control form-control-lg shadow-sm" value="{{ $setting['bank_name'] ?? '' }}" placeholder="BCA">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">No Rekening</label>
+                                    <input type="text" name="bank_account" class="form-control form-control-lg shadow-sm" value="{{ $setting['bank_account'] ?? '' }}" placeholder="1234567890">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Atas Nama</label>
+                                    <input type="text" name="bank_holder" class="form-control form-control-lg shadow-sm" value="{{ $setting['bank_holder'] ?? '' }}" placeholder="PT. Contoh">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-info text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-coins"></i></div>
+                            <h5 class="mb-0 ml-3">Fee & Limit</h5>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Fee Deposit (%)</label>
+                                    <input type="number" step="0.01" name="fee_deposit" class="form-control form-control-lg shadow-sm" value="{{ $setting['fee_deposit'] ?? 0 }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Fee Withdraw (%)</label>
+                                    <input type="number" step="0.01" name="fee_withdraw" class="form-control form-control-lg shadow-sm" value="{{ $setting['fee_withdraw'] ?? 0 }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Min Deposit</label>
+                                    <input type="number" name="min_deposit" class="form-control form-control-lg shadow-sm" value="{{ $setting['min_deposit'] ?? 25000 }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Max Deposit</label>
+                                    <input type="number" name="max_deposit" class="form-control form-control-lg shadow-sm" value="{{ $setting['max_deposit'] ?? 10000000 }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Min Withdraw</label>
+                                    <input type="number" name="min_withdraw" class="form-control form-control-lg shadow-sm" value="{{ $setting['min_withdraw'] ?? 50000 }}">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Max Withdraw</label>
+                                    <input type="number" name="max_withdraw" class="form-control form-control-lg shadow-sm" value="{{ $setting['max_withdraw'] ?? 5000000 }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-danger text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-shield-alt"></i></div>
+                            <h5 class="mb-0 ml-3">Maintenance Mode</h5>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="maintenance" name="maintenance" value="1" {{ ($setting['maintenance'] ?? 0) ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="maintenance">Aktifkan Maintenance Mode</label>
+                                    </div>
+                                    <small class="text-muted">Jika aktif, member tidak bisa mengakses website. Admin tetap bisa login.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white d-flex justify-content-end">
+                        <button type="submit" class="btn px-4 text-white" style="background:#6f42c1;border:none;border-radius:8px;">
+                            <i class="fas fa-save mr-1"></i> Simpan Perubahan
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-
-    <script>
-        function previewImage() {
-            const image = document.querySelector('#image');
-            const imagePreview = document.querySelector('.img-preview');
-
-            imagePreview.style.display = "block";
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imagePreview.src = oFREvent.target.result;
-            }
-
-        }
-    </script>
-    <script>
-        function previewLogo() {
-            const image = document.querySelector('#logo');
-            const imagePreview = document.querySelector('.img-preview-logo');
-
-            imagePreview.style.display = "block";
-
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-
-            oFReader.onload = function(oFREvent) {
-                imagePreview.src = oFREvent.target.result;
-            }
-
-        }
-    </script>
-
-   <link rel="stylesheet" type="text/css" href="/css/trix.css">
-<script type="text/javascript" src="/js/trix.js"></script>
+</div>
 
 <style>
-    trix-toolbar [data-trix-button-group="file-tools"] {
-        display: none;
-    }
+.tracking-wider { letter-spacing: 0.05em; }
+.bg-purple { background-color: #6f42c1; }
+.form-control-lg.shadow-sm:focus {
+    box-shadow: 0 0 0 3px rgba(111,66,193,0.15) !important;
+    border-color: #6f42c1;
+}
+.custom-file-input:focus ~ .custom-file-label {
+    box-shadow: 0 0 0 3px rgba(111,66,193,0.15) !important;
+    border-color: #6f42c1;
+}
 </style>
-
-<script>
-    document.addEventListener('trix-file-accept', function (e) {
-        e.preventDefault();
-    });
-</script>
 @endsection

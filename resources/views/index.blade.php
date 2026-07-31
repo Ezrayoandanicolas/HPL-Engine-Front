@@ -3,10 +3,12 @@
 @else
     @include('layout.desktop.index')
 @endif
-<script type="text/javascript">
-    window.addEventListener('DOMContentLoaded', () => {
-        // Cek apakah user sudah melihat konten
-
+<script>
+(function() {
+    var key = 'introShown_v2';
+    if (localStorage.getItem(key)) return;
+    window.addEventListener('DOMContentLoaded', function() {
+        if (typeof initializeIntro !== 'function') return;
         initializeIntro({
             username: 'sapri0808',
             loyaltyLevelTitle: 'Sistem Loyalitas',
@@ -19,9 +21,7 @@
             loyaltyExperienceSubtitle: 'Kumpulkan XP sebanyak mungkin',
             loyaltyExperienceContent: 'Kumpulkan lebih banyak XP untuk naik ke level yang lebih tinggi dan dapatkan lebih banyak keuntungan.',
         });
-
-        // Set localStorage item setelah konten ditampilkan
-        localStorage.setItem('introShown', 'true');
-
+        localStorage.setItem(key, 'true');
     });
+})();
 </script>

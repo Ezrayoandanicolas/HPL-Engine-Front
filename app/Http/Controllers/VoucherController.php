@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Voucher;
-use Illuminate\Http\Request;
-
-class VoucherController extends Controller
+class VoucherController extends BaseAdminController
 {
     public function index()
     {
-        $voucher = Voucher::all();
+        $resp = $this->adminGet('vouchers');
+        $voucher = $resp['data']['vouchers'] ?? collect();
         return view('layout.desktop.loyalitas', compact('voucher'));
     }
 

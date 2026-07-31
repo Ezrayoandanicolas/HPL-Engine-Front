@@ -8,8 +8,8 @@
 
 
         <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row mb-2">
+                <div class="col-md-12 text-right">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambahBankModal">
                         Tambah Bank Baru
                     </button>
@@ -23,7 +23,7 @@
                         <th>Nama Rekening/E-wallet</th>
                         <th>Nomor Rekening/E-wallet</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th class="text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,7 @@
                                     <span class="badge badge-danger">Off</span>
                                 @endif
                             </td>
-                            <td>
+                            <td class="text-right">
                                 @if ($item->status == 1)
                                     <button data-toggle="modal" data-target="#non{{ $item->id }}" type="button"
                                         class="badge bg-danger">Disabled</button>

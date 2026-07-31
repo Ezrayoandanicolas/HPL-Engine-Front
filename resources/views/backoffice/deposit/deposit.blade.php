@@ -1,188 +1,83 @@
 @extends('backoffice.layouts.main')
-
 @section('content')
-    @if (Auth()->User()->role == 'admin')
-        <div class="container-fluid">
-            <div class="card  mt-3">
-                <div class="card-header">
-                    <h4>Tabel Deposit</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="deposit-table1" class="table table-bordered table-hover">
-                            <thead>
-                                <tr class="text-center">
-                                    <th scope="col">No.</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Username</th>
-                                    <th scope="col">Nama Pengirim</th>
-                                    <th scope="col">Bank</th>
-                                    <th scope="col">No. Rekening</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Bukti</th>
-                                    <th scope="col">Acc</th>
-                                    <th scope="col">Tolak</th>
-                                </tr>
-                            </thead>
-                            @foreach ($Tranksaksi as $Tranksaksi)
-                                <tbody>
-                                    <tr>
-                                        <th>{{ $loop->iteration }}</th>
-                                        <td>{{ $Tranksaksi->created_at->diffForHumans() }}</td>
-                                        <td>{{ $Tranksaksi->User->username }}</td>
-                                        <td>{{ $Tranksaksi->User->accName }}</td>
-                                        <td>{{ $Tranksaksi->User->bank }}</td>
-                                        <td>{{ $Tranksaksi->User->accNumber }}</td>
-                                        <td>{{ $Tranksaksi->amount }}</td>
-                                        @if ($Tranksaksi->status_id == 1)
-                                            <td>Pending</td>
-                                        @else
-                                            <td>Tidak Jelas</td>
-                                        @endif
-                                        <td>
-                                            @if ($Tranksaksi->img)
-                                                <img src="{{ asset('storage/' . $Tranksaksi->img) }}" alt="Bukti Transfer"
-                                                    class="img-fluid " width="70" height="100">
-                                            @else
-                                                <h6>No Image</h6>
-                                            @endif
-                                        </td>
-                                        <td class="d-flex justify-content-center">
-                                            <form class="form-grup"
-                                                action="/Admin/Dashboard/Tranksaksi/{{ $Tranksaksi->id }}/update"
-                                                method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="action" value="acc">
-                                                <button type="submit" class="badge bg-success">
-                                                    ACCEPT
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form class="form-grup"
-                                                action="/Admin/Dashboard/Tranksaksi/{{ $Tranksaksi->id }}/update"
-                                                method="Post" class="d-flex mx-2">
-
-                                                @method('PUT')
-                                                @csrf
-                                                <input type="hidden" name="action" value="tolak">
-                                                <button class="badge bg-danger" onclick="return confirm('Are you sure?')">
-                                                    Tolak
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @elseif(Auth()->User()->role == 'promotor')
-        <div class="container-fluid">
-            <div class="card  mt-3">
-                <div class="card-header">
-                    <h4>Tabel Deposit</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="deposit-table2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr class="text-center">
-                                    <th scope="col">No.</th>
-                                    <th scope="col">Tanggal</th>
-                                    <th scope="col">Parent Ref</th>
-                                    <th scope="col">Nama Pengirim</th>
-                                    <th scope="col">Bank</th>
-                                    <th scope="col">No. Rekening</th>
-                                    <th scope="col">Amount</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Bukti</th>
-                                    <th scope="col">Acc</th>
-                                    <th scope="col">Tolak</th>
-                                </tr>
-                            </thead>
-                            @foreach ($userrefDeposite as $Tranksaksi)
-                                <tbody>
-                                    <tr>
-                                        <th>{{ $loop->iteration }}</th>
-                                        <td>{{ $Tranksaksi->created_at->diffForHumans() }}</td>
-                                        <td>{{ $Tranksaksi->ref }}</td>
-                                        <td>{{ $Tranksaksi->User->username }}</td>
-                                        <td>{{ $Tranksaksi->User->bank }}</td>
-                                        <td>{{ $Tranksaksi->User->accNumber }}</td>
-                                        <td>{{ $Tranksaksi->amount }}</td>
-                                        @if ($Tranksaksi->status_id == 1)
-                                            <td>Pending</td>
-                                        @else
-                                            <td>Tidak Jelas</td>
-                                        @endif
-                                        <td>
-                                            @if ($Tranksaksi->img)
-                                                <img src="{{ asset('storage/' . $Tranksaksi->img) }}" alt="Bukti Transfer"
-                                                    class="img-fluid " width="70" height="100">
-                                            @else
-                                                <h6>No Image</h6>
-                                            @endif
-                                        </td>
-                                        <td class="d-flex justify-content-center">
-                                            <form class="form-grup"
-                                                action="/Admin/Dashboard/Tranksaksi/{{ $Tranksaksi->id }}" method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="action" value="acc">
-                                                <button type="submit" class="badge bg-success">
-                                                    ACCEPT
-                                                </button>
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form class="form-grup"
-                                                action="/Admin/Dashboard/Tranksaksi/{{ $Tranksaksi->id }}" method="Post"
-                                                class="d-flex mx-2">
-
-                                                @method('PUT')
-                                                @csrf
-                                                <input type="hidden" name="action" value="tolak">
-                                                <button class="badge bg-danger" onclick="return confirm('Are you sure?')">
-                                                    Tolak
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-    <script>
-        $(document).ready(function() {
-
-            $('#deposit-table1').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
-
-            $('#deposit-table2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-            });
+<script>
+function previewImage(src) {
+    $('#imagePreview').attr('src', src);
+    $('#imageModal').modal('show');
+}
+function depositRow(t, idx) {
+    var status = parseInt(t.status_id);
+    var badge = status === 1 ? 'badge-warning' : (status === 2 ? 'badge-success' : 'badge-danger');
+    var label = status === 1 ? 'Pending' : (status === 2 ? 'Sukses' : 'Ditolak');
+    var img = t.img ? '<a href="javascript:void(0)" onclick="previewImage(\'/storage/' + t.img + '\')"><img src="/storage/' + t.img + '" class="img-thumbnail" style="max-height:50px"></a>' : '<span class="text-muted">-</span>';
+    var u = t.user || {};
+    var csrf = $('meta[name="csrf-token"]').attr('content');
+    var aksi = '';
+    if (status === 1) {
+        aksi = '<form action="/Admin/Dashboard/Tranksaksi/' + t.id + '/update" method="POST" style="display:inline">' +
+               '<input type="hidden" name="_token" value="' + csrf + '">' +
+               '<input type="hidden" name="_method" value="PUT">' +
+               '<input type="hidden" name="action" value="acc">' +
+               '<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check"></i> Acc</button></form>' +
+               '<form action="/Admin/Dashboard/Tranksaksi/' + t.id + '/update" method="POST" style="display:inline" onsubmit="return confirm(\'Tolak deposit ini?\')">' +
+               '<input type="hidden" name="_token" value="' + csrf + '">' +
+               '<input type="hidden" name="_method" value="PUT">' +
+               '<input type="hidden" name="action" value="tolak">' +
+               '<button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-times"></i> Tolak</button></form>';
+    } else if (status === 2) {
+        aksi = '<span class="badge badge-success">Sudah di ACC</span>';
+    } else {
+        aksi = '<span class="badge badge-danger">Sudah ditolak</span>';
+    }
+    return '<tr>' +
+        '<td>' + idx + '</td>' +
+        '<td>' + moment(t.created_at).fromNow() + '</td>' +
+        '<td><strong>' + (u.username || '-') + '</strong></td>' +
+        '<td>' + (u.accName || '-') + '</td>' +
+        '<td>' + (u.bank || '-') + '</td>' +
+        '<td>' + (u.accNumber || '-') + '</td>' +
+        '<td>Rp ' + new Intl.NumberFormat('id-ID').format(t.amount || 0) + '</td>' +
+        '<td><span class="badge ' + badge + '">' + label + '</span></td>' +
+        '<td>' + img + '</td>' +
+        '<td class="text-right">' + aksi + '</td>' +
+        '</tr>';
+}
+$(function() {
+    var lastId = {{ collect($Tranksaksi)->max('id') ?? 0 }};
+    var rowCount = {{ count($Tranksaksi) }};
+    function checkNew() {
+        $.get('/Admin/Dashboard/Tranksaksi/new-deposits', { since_id: lastId, status_id: 1 }, function(res) {
+            if (res.transactions && res.transactions.length) {
+                var tbody = $('#deposit-table1 tbody');
+                res.transactions.forEach(function(t) {
+                    rowCount++;
+                    tbody.append(depositRow(t, rowCount));
+                });
+                lastId = res.transactions[res.transactions.length - 1].id;
+            }
         });
-    </script>
+    }
+    setInterval(checkNew, 10000);
+});
+</script>
+<div id="depositContent" class="container-fluid">
+    @if (Auth()->User()->role == 'admin')
+        @include('backoffice.deposit.partials._admin_table', ['Tranksaksi' => $Tranksaksi])
+    @elseif(Auth()->User()->role == 'promotor')
+        @include('backoffice.deposit.partials._promotor_table', ['userrefDeposite' => $userrefDeposite])
+    @endif
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <img id="imagePreview" src="" class="img-fluid">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

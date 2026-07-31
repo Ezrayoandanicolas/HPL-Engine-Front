@@ -28,6 +28,22 @@
                 });
             });
         </script>
+        <div class="container mt-2 mb-2">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="small-box bg-info"><div class="inner"><h3>Rp {{ number_format($user->saldo ?? 0, 0, ',', '.') }}</h3><p>Saldo Utama</p></div><div class="icon"><i class="fas fa-wallet"></i></div></div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="small-box bg-success"><div class="inner"><h3>Rp {{ number_format($total_deposit ?? 0, 0, ',', '.') }}</h3><p>Total Deposit</p></div><div class="icon"><i class="fas fa-arrow-down"></i></div></div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="small-box bg-warning"><div class="inner"><h3>Rp {{ number_format($total_withdraw ?? 0, 0, ',', '.') }}</h3><p>Total Withdraw</p></div><div class="icon"><i class="fas fa-arrow-up"></i></div></div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="small-box bg-danger"><div class="inner"><h3>{{ $user->point_player ?? 0 }}</h3><p>Poin</p></div><div class="icon"><i class="fas fa-star"></i></div></div>
+                </div>
+            </div>
+        </div>
         <div class="announcement-outer-container">
             <div class="container">
                 <div class="row">
@@ -76,7 +92,7 @@
 
 
 
-                                <div class="popular-game-title-container">
+                                                                <div class="popular-game-title-container">
                                     <div class="title">
                                         <i data-icon="popular-games"
                                             style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/home/popular-games.png?v=20240708-4);"></i>
@@ -85,470 +101,14 @@
                                     <i></i>
                                 </div>
                                 <div class="game-list-container">
-                                    <div class="game-list">
+                                    <div class="game-list" id="popular-games-container">
                                         <div class="games-group">
-                                            <div class="game-item" data-game="Sweet Bonanza 1000™">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20fruitswx.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20fruitswx.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Sweet Bonanza 1000™"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20fruitswx.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Sweet Bonanza 1000™">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Sweet Bonanza 1000™</div>
-                                            </div>
-                                            <div class="game-item" data-game="Mahjong Ways">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/mahjong-ways.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/mahjong-ways.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Mahjong Ways" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/mahjong-ways.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Mahjong Ways">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Mahjong Ways</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Mahjong Wins 2">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vswaysmahwin2.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vswaysmahwin2.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Mahjong Wins 2" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vswaysmahwin2.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Mahjong Wins 2">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Mahjong Wins 2</div>
-                                            </div>
-                                            <div class="game-item" data-game="Jajanan Pasar">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20fruitjpas.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20fruitjpas.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Jajanan Pasar" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20fruitjpas.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Jajanan Pasar">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Jajanan Pasar</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="SixSixSix">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HACKSAW/HACKSAW_1534.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HACKSAW/HACKSAW_1534.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="SixSixSix" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/HACKSAW/HACKSAW_1534.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="SixSixSix">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">SixSixSix</div>
-                                            </div>
-                                            <div class="game-item" data-game="Gates of Olympus 1000™">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20olympx.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20olympx.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Gates of Olympus 1000™"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20olympx.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Gates of Olympus 1000™">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Gates of Olympus 1000™</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Ze Zeus">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HACKSAW/HACKSAW_1508.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HACKSAW/HACKSAW_1508.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Ze Zeus" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/HACKSAW/HACKSAW_1508.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Ze Zeus">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Ze Zeus</div>
-                                            </div>
-                                            <div class="game-item" data-game="Way of Ninja">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20olympnin.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20olympnin.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Way of Ninja" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20olympnin.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Way of Ninja">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Way of Ninja</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Starlight Princess™">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20starlight.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20starlight.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Starlight Princess™"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20starlight.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Starlight Princess™">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Starlight Princess™</div>
-                                            </div>
-                                            <div class="game-item" data-game="Mahjong Ways 2">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/mahjong-ways2.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/mahjong-ways2.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Mahjong Ways 2" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/mahjong-ways2.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Mahjong Ways 2">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Mahjong Ways 2</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Nexus Gates of Olympus™">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20nexusgates.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20nexusgates.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Nexus Gates of Olympus™"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PP/vs20nexusgates.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Nexus Gates of Olympus™">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Nexus Gates of Olympus™</div>
-                                            </div>
-                                            <div class="game-item" data-game="Wild Bounty Showdown">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/PGSOFT_135.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/PGSOFT_135.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Wild Bounty Showdown"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/PGSOFT/PGSOFT_135.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Wild Bounty Showdown">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Wild Bounty Showdown</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Lucky Twins Nexus">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/MICROGAMING/SMG_luckyTwinsNexus.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/MICROGAMING/SMG_luckyTwinsNexus.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Lucky Twins Nexus"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/MICROGAMING/SMG_luckyTwinsNexus.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Lucky Twins Nexus">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Lucky Twins Nexus</div>
-                                            </div>
-                                            <div class="game-item" data-game="Nexus Knockout Football Rush">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HABANERO/SGKnockoutFootballRushNexus.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HABANERO/SGKnockoutFootballRushNexus.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Nexus Knockout Football Rush"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/HABANERO/SGKnockoutFootballRushNexus.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Nexus Knockout Football Rush">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Nexus Knockout Football Rush</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="The Crypt">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/NOLIMITCITY/thecrypt00000000.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/NOLIMITCITY/thecrypt00000000.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="The Crypt" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/NOLIMITCITY/thecrypt00000000.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="The Crypt">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">The Crypt</div>
-                                            </div>
-                                            <div class="game-item" data-game="Lucky Twins Wilds">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/MICROGAMING/SMG_luckyTwinsWilds.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/MICROGAMING/SMG_luckyTwinsWilds.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Lucky Twins Wilds"
-                                                            height="150" loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/MICROGAMING/SMG_luckyTwinsWilds.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Lucky Twins Wilds">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Lucky Twins Wilds</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Mental">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/NOLIMITCITY/mental0000000000.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/NOLIMITCITY/mental0000000000.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Mental" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/NOLIMITCITY/mental0000000000.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Mental">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Mental</div>
-                                            </div>
-                                            <div class="game-item" data-game="Fortune Gems 2">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/JILI/JILI_223.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/JILI/JILI_223.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Fortune Gems 2" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/JILI/JILI_223.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Fortune Gems 2">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Fortune Gems 2</div>
-                                            </div>
-                                        </div>
-                                        <div class="games-group">
-                                            <div class="game-item" data-game="Hot Hot Fruit">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HABANERO/HB0160.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/HABANERO/HB0160.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Hot Hot Fruit" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/HABANERO/HB0160.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Hot Hot Fruit">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Hot Hot Fruit</div>
-                                            </div>
-                                            <div class="game-item" data-game="Fortune Gems">
-                                                <div class="wrapper-container">
-                                                    <picture>
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/JILI/JILI_109.webp?v=20240708-4"
-                                                            type="image/webp" />
-                                                        <source
-                                                            srcset="//d33egg70nrp50s.cloudfront.net/Images/providers/JILI/JILI_109.jpg?v=20240708-4"
-                                                            type="image/jpeg" /><img alt="Fortune Gems" height="150"
-                                                            loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/providers/JILI/JILI_109.jpg?v=20240708-4"
-                                                            width="150" />
-                                                    </picture>
-                                                    <div class="link-container">
-                                                        <a href="/slots"
-                                                            class="play-now" data-game="Fortune Gems">
-                                                            MAIN
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="game-name">Fortune Gems</div>
+                                            <div class="game-item">
+                                                <div class="wrapper-container" style="text-align:center;padding:40px;color:#666">Memuat game...</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="popular-game-title-container">
                                     <div class="title">
                                         <i data-icon="new-games"
@@ -1988,5 +1548,38 @@
             </div>
         </div>
     @endif
+
+<script>
+(function() {
+    var apiUrl = '{{ config('app.api_base_url') }}/public-games?limit=20';
+    var container = document.getElementById('popular-games-container');
+    if (!container) return;
+
+    fetch(apiUrl, { headers: { 'Accept': 'application/json' } })
+    .then(function(r){ return r.json(); })
+    .then(function(resp) {
+        if (!resp.success || !resp.data || !resp.data.length) return;
+        var html = '';
+        resp.data.forEach(function(game, i) {
+            if (i % 2 === 0) html += '<div class="games-group">';
+            var img = game.image || '';
+            var imgHtml = img ? '<picture><source srcset="' + img + '" type="image/webp" /><img alt="' + escHtml(game.game_name) + '" height="150" loading="lazy" src="' + img + '" width="150" /></picture>' : '<div style="width:150px;height:150px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#666;border-radius:8px">' + escHtml(game.game_name) + '</div>';
+            html += '<div class="game-item" data-game="' + escHtml(game.game_name) + '">' +
+                '<div class="wrapper-container">' + imgHtml +
+                '<div class="link-container"><a href="/slots/' + escHtml(game.game_provider) + '" class="play-now" data-game="' + escHtml(game.game_name) + '">MAIN</a></div>' +
+                '</div><div class="game-name">' + escHtml(game.game_name) + '</div></div>';
+            if (i % 2 === 1 || i === resp.data.length - 1) html += '</div>';
+        });
+        container.innerHTML = html;
+    })
+    .catch(function(e){ console.error('Games load error:', e); });
+
+    function escHtml(s) {
+        if (!s) return '';
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+})();
+</script>
+
 
 @endsection

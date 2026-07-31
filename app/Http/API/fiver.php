@@ -91,6 +91,31 @@ class fiver
         return $this->sg_connect($this->url, $param);
     }
 
+    public function resetUserBalance($username)
+    {
+        $param = [
+            'method' => 'user_withdraw_reset',
+            'agent_code' => $this->agen,
+            'agent_token' => $this->token,
+            'user_code' => $username,
+        ];
+
+        return $this->sg_connect($this->url, $param);
+    }
+
+    public function transferStatus($username, $agentSign)
+    {
+        $param = [
+            'method' => 'transfer_status',
+            'agent_code' => $this->agen,
+            'agent_token' => $this->token,
+            'user_code' => $username,
+            'agent_sign' => $agentSign,
+        ];
+
+        return $this->sg_connect($this->url, $param);
+    }
+
     public function gamelist($provider)
     {
         $param = [
@@ -172,6 +197,58 @@ class fiver
         ]);
 
         return $response;
+    }
+
+    public function callCancel($callId)
+    {
+        $param = [
+            'method' => 'call_cancel',
+            'agent_code' => $this->agen,
+            'agent_token' => $this->token,
+            'call_id' => (int) $callId,
+        ];
+
+        return $this->sg_connect($this->url, $param);
+    }
+
+    public function callHistory($offset = 0, $limit = 100)
+    {
+        $param = [
+            'method' => 'call_history',
+            'agent_code' => $this->agen,
+            'agent_token' => $this->token,
+            'offset' => (int) $offset,
+            'limit' => (int) $limit,
+        ];
+
+        return $this->sg_connect($this->url, $param);
+    }
+
+    public function controlUserRtp($provider, $username, $rtp)
+    {
+        $param = [
+            'method' => 'control_rtp',
+            'agent_code' => $this->agen,
+            'agent_token' => $this->token,
+            'provider_code' => $provider,
+            'user_code' => $username,
+            'rtp' => (int) $rtp,
+        ];
+
+        return $this->sg_connect($this->url, $param);
+    }
+
+    public function controlUsersRtp(array $userCodes, $rtp)
+    {
+        $param = [
+            'method' => 'control_users_rtp',
+            'agent_code' => $this->agen,
+            'agent_token' => $this->token,
+            'user_codes' => json_encode($userCodes),
+            'rtp' => (int) $rtp,
+        ];
+
+        return $this->sg_connect($this->url, $param);
     }
 
     public function opengame($username, $gamecode, $game_provider)

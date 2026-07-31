@@ -1,229 +1,154 @@
 @extends('backoffice.layouts.main')
-
 @section('content')
-<style>
-    .modal-body { max-height: 80vh; overflow-y: auto; }
-    .modal { z-index: 1050 !important; }
-    .modal-backdrop { z-index: 1040 !important; }
-</style>
-
-<div class="card mt-3">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="mb-0">Games List - Active Players</h4>
+<div class="container-fluid">
+    @php
+        $total = count($Game);
+        $providers = collect($Game)->groupBy('game_provider');
+    @endphp
+    <div class="row mt-3">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner"><h3>{{ $total }}</h3><p>Total Game</p></div>
+                <div class="icon"><i class="fas fa-gamepad"></i></div>
+            </div>
+        </div>
+        @foreach($providers as $prov => $glist)
+        <div class="col-lg-3 col-6">
+            <div class="small-box" style="background:{{ ['#6f42c1','#fd7e14','#20c997','#e83e8c','#17a2b8','#ffc107','#dc3545','#28a745','#007bff','#6c757d'][$loop->index % 10] }};">
+                <div class="inner"><h3>{{ count($glist) }}</h3><p>{{ $prov }}</p></div>
+                <div class="icon"><i class="fas fa-folder"></i></div>
+            </div>
+        </div>
+        @endforeach
     </div>
-    <div class="card-body">
-
-        <div class="table-responsive">
-            <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Username</th>
-                        <th>Provider</th>
-                        <th>Game Code</th>
-                        <th class="text-center">Bet</th>
-                        <th class="text-center">Balance</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse (($x ?? []) as $data)
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><i class="fas fa-cog mr-2"></i> Game Settings</h4>
+            <div class="card-tools">
+                <form method="GET" class="form-inline" style="display:inline-flex;gap:4px">
+                    <select name="provider" class="form-control form-control-sm" onchange="this.form.submit()">
+                        <option value="">Semua Provider</option>
+                        @foreach($provider as $pr)
+                        @php $pr = (object) $pr; @endphp
+                        <option value="{{ $pr->provider_code }}" {{ request('provider', 'PRAGMATIC') == $pr->provider_code ? 'selected' : '' }}>{{ $pr->provider_name }}</option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table id="game-table" class="table table-hover table-striped mb-0">
+                    <thead>
                         <tr>
+                            <th>No</th>
+                            <th>Nama Game</th>
+                            <th>Kode</th>
+                            <th>Provider</th>
+                            <th>Gambar</th>
+                            <th>Status</th>
+                            <th class="text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($Game as $g)
+                        @php $g = (object) $g; @endphp
+                        <tr data-id="{{ $g->id }}">
                             <td>{{ $loop->iteration }}</td>
-                            <td><strong>{{ $data['user_code'] }}</strong></td>
-                            <td>{{ $data['provider_code'] }}</td>
-                            <td>{{ $data['game_code'] }}</td>
-                            <td class="text-center">{{ $data['bet'] }}</td>
-                            <td class="text-center">{{ number_format($data['balance'], 2) }}</td>
-                            <td class="text-center">
-                                <button class="btn btn-primary btn-sm submit-data"
-                                        data-provider="{{ $data['provider_code'] }}"
-                                        data-gamecode="{{ $data['game_code'] }}"
-                                        data-username="{{ $data['user_code'] }}"
-                                        data-bet="{{ $data['bet'] }}">
-                                    Set Call
-                                </button>
+                            <td><strong>{{ $g->game_name }}</strong></td>
+                            <td><code>{{ $g->game_code }}</code></td>
+                            <td>{{ $g->game_provider }}</td>
+                            <td>
+                                @if($g->image_url ?? $g->game_image ?? false)
+                                <img src="{{ $g->image_url ?? $g->game_image }}" style="max-height:32px;border-radius:4px">
+                                @else
+                                <span class="text-muted">-</span>
+                                @endif
+                            </td>
+                            <td>
+                                <span class="badge badge-{{ $g->status == 1 ? 'success' : 'secondary' }}">{{ $g->status == 1 ? 'Aktif' : 'Nonaktif' }}</span>
+                            </td>
+                            <td class="text-right">
+                                <button class="btn btn-warning btn-sm btn-edit" title="Edit"><i class="fas fa-pen"></i></button>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">Tidak ada player aktif</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                        @empty
+                        <tr><td colspan="7" class="text-center text-muted py-3">Tidak ada game</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- ==================== MODAL CALL APPLY ==================== -->
-<div class="modal fade" id="newModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Call Apply</h5>
-                <button type="button" class="close text-white" onclick="closeManualModal()">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="activeProvider">
-                <input type="hidden" id="activeGameCode">
-                <input type="hidden" id="activeUser">
-
-                <div class="alert alert-info py-2">
-                    <strong>Player:</strong> <span id="modalUsername"></span><br>
-                    <strong>Current Bet:</strong> <span id="modalCurrentBet"></span>
+            <form id="editForm" method="POST" enctype="multipart/form-data">
+                @csrf @method('PUT')
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Game</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-
-                <div class="form-group">
-                    <label><strong>Win Amount (Target)</strong></label>
-                    <input type="number" class="form-control" id="winAmountInput" placeholder="Contoh: 5000" step="0.01" required>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nama Game</label>
+                        <input type="text" name="game_name" id="edit_name" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Kode Game</label>
+                        <input type="text" name="game_code" id="edit_code" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <input type="text" name="game_provider" id="edit_provider" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Ganti Gambar</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="img" id="edit_img" accept=".jpg,.jpeg,.png,.webp">
+                            <label class="custom-file-label" for="edit_img">Pilih file</label>
+                        </div>
+                        <div id="edit_img_preview" class="mt-2"></div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label><strong>Call Type</strong></label>
-                    <select class="form-control" id="callTypeSelect">
-                        <option value="normal">Normal Call (1)</option>
-                        <option value="buy">Buy Call (2)</option>
-                    </select>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-warning">Simpan Perubahan</button>
                 </div>
-
-                <div class="form-group">
-                    <label><strong>Bet Multiplier</strong> (Opsional)</label>
-                    <select class="form-control" id="betMultiplierSelect">
-                        <option value="">-- Tidak digunakan --</option>
-                        <option value="1">1x</option>
-                        <option value="2">2x</option>
-                        <option value="3">3x</option>
-                        <option value="4.05">4.05x</option>
-                        <option value="5">5x</option>
-                        <option value="10">10x</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeManualModal()">Batal</button>
-                <button type="button" class="btn btn-success px-4 apply-data">
-                    <i class="fas fa-paper-plane mr-1"></i> Apply Call
-                </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
-$(document).ready(function() {
-    if (typeof $.fn.DataTable !== 'undefined') {
-        $('#example2').DataTable();
-    }
-
-    // Buka Modal
-    $(document).on('click', '.submit-data', function(e) {
-        e.preventDefault();
-
-        const provider = $(this).data('provider');
-        const gamecode = $(this).data('gamecode');
-        const username = $(this).data('username');
-        const currentBet = $(this).data('bet');
-
-        $('#activeProvider').val(provider);
-        $('#activeGameCode').val(gamecode);
-        $('#activeUser').val(username);
-
-        $('#modalUsername').text(username);
-        $('#modalCurrentBet').text(currentBet);
-
-        $('#winAmountInput').val('');
-        $('#callTypeSelect').val('normal');
-        $('#betMultiplierSelect').val('');
-
-        showManualModal();
+$(function() {
+    $('#game-table').DataTable({
+        paging: true, lengthChange: false, searching: true, ordering: true, info: false, autoWidth: false, responsive: true
     });
 
-    // Tombol Apply
-    $(document).on('click', '.apply-data', function(e) {
-        e.preventDefault();
-
-        if (!confirm('Yakin ingin apply call ini?')) return;
-
-        const provider      = $('#activeProvider').val();
-        const gamecode      = $('#activeGameCode').val();
-        const username      = $('#activeUser').val();
-        const winAmount     = $('#winAmountInput').val();
-        const callType      = $('#callTypeSelect').val();
-        const betMultiplier = $('#betMultiplierSelect').val();
-
-        if (!winAmount || parseFloat(winAmount) <= 0) {
-            alert('Win Amount harus diisi!');
-            return;
-        }
-
-        const $btn = $(this);
-        const originalText = $btn.html();
-        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processing...');
-
-        $.ajax({
-            url: '/call-apply',
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                provider: provider,
-                game_code: gamecode,
-                username: username,
-                win_amount: winAmount,
-                call_type: callType,
-                bet_multiplier: betMultiplier || null
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    let msg = '✅ Call berhasil dikirim!\n\n';
-                    if (response.data && response.data.called_money) {
-                        msg += `Called Money: ${response.data.called_money}`;
-                    }
-                    alert(msg);
-                    closeManualModal();
-                } else {
-                    alert('❌ Gagal: ' + (response.msg || 'Unknown error'));
-                }
-            },
-            error: function(xhr) {
-                alert('❌ Terjadi kesalahan server');
-                console.error(xhr.responseJSON);
-            },
-            complete: function() {
-                $btn.prop('disabled', false).html(originalText);
+    $(document).on('click', '.btn-edit', function() {
+        var id = $(this).closest('tr').data('id');
+        $.get('/Admin/Dashboard/Game-setting/' + id, function(res) {
+            var g = res.game;
+            $('#edit_name').val(g.game_name);
+            $('#edit_code').val(g.game_code);
+            $('#edit_provider').val(g.game_provider);
+            $('#edit_img_preview').html('');
+            if (g.image) {
+                $('#edit_img_preview').html('<img src="' + g.image + '" style="max-height:80px;border-radius:4px">');
             }
+            $('#editForm').attr('action', '/Admin/Dashboard/Game-setting/' + g.id);
+            $('#editModal').modal('show');
         });
     });
+
+    $('.custom-file-input').on('change', function() {
+        var name = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').html(name);
+    });
 });
-
-function showManualModal() {
-    const modal = document.getElementById('newModal');
-    modal.style.display = 'block';
-    modal.classList.add('show');
-    document.body.classList.add('modal-open');
-
-    let backdrop = document.getElementById('manual-backdrop');
-    if (!backdrop) {
-        backdrop = document.createElement('div');
-        backdrop.id = 'manual-backdrop';
-        backdrop.className = 'modal-backdrop fade show';
-        document.body.appendChild(backdrop);
-        backdrop.onclick = closeManualModal;
-    }
-}
-
-function closeManualModal() {
-    const modal = document.getElementById('newModal');
-    const backdrop = document.getElementById('manual-backdrop');
-
-    if (modal) {
-        modal.style.display = 'none';
-        modal.classList.remove('show');
-    }
-    if (backdrop) backdrop.remove();
-    document.body.classList.remove('modal-open');
-}
 </script>
 @endsection

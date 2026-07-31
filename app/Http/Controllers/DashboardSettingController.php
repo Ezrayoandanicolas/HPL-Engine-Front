@@ -2,133 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\API\fiver;
-use App\Models\Game;
-use App\Models\Type;
-use App\Models\Gamer;
-use App\Models\Provider;
-use App\Http\API\whitelabel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use App\Http\Controllers\Controller;
 
-class DashboardSettingController extends Controller
+class DashboardSettingController extends BaseAdminController
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-
-        // $SG = new softgaming();
-        // $act = json_decode($SG->gamelist('CQ'));
-        // $Game = $act->gamelist;
-        // return $act;
-        // foreach ($Game as $Game) {
-        //     Game::create([
-        //         'game_code' => $Game->game_code,
-        //         'game_name' => $Game->game_name,
-        //         'game_provider' => $Game->game_provider,
-        //         'game_category' => $Game->game_type,
-        //         'game_image' => '../CQ9/' . $Game->game_vendor . '.png',
-        //         'game_demo' => NULL,
-        //         'game_device' => NULL,
-        //         'rtp' => 0
-
-        //     ]);
-        // }
-        $Game = Game::all();
-        $provider = Provider::all();
-        return view('backoffice.games.game_setting', [
-            'Game' => $Game,
-            'Provider' => $provider,
+        $resp = $this->adminGet('games', [
+            'provider' => $request->input('provider'),
+            'category' => $request->input('category'),
         ]);
-    }
+        $Game = $resp['data'] ?? [];
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function create()
-    // {
-    //     $type = Type::all();
-    //     return view('Dashboard.Game.create', [
-    //         'Type' => $type
-    //     ]);
-    // }
+        $provResp = $this->adminGet('providers');
+        $provider = $provResp['data']['providers'] ?? [];
 
-    // /**
-    //  * Store a newly created resource in storage.
-    //  */
-    public function store(Request $request, Game $Game)
-    {
-
-        $rules = [
-
-            'type_id' => $request->type_id
-        ];
-
-        $validateData = $request->validate($rules);
-
-        Game::where('provider', $Game->game_provider)
-            ->updated($validateData);
-
-        return redirect('/Admin/Dashboard/Tranksaksi')->with('success', 'Post has been Updated!!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $Game = Game::find($id);
-        return view('Dashboard.Game.edit', [
-            'Game' => $Game,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $validateData = $request->validate([
-
-            'img' => 'image|file|mimes:jpeg,png,gif|max:4048',
-
-        ]);
-
-        if ($request->file('img')) {
-            $validateData['game_image'] = $request->file('img')->store('post-images');
+        if (empty($provider)) {
+            $provider = [
+                ['provider_code' => 'PRAGMATIC', 'provider_name' => 'Pragmatic Play'],
+                ['provider_code' => 'PGSOFT', 'provider_name' => 'PG Soft'],
+                ['provider_code' => 'HABANERO', 'provider_name' => 'Habanero'],
+                ['provider_code' => 'CQ9', 'provider_name' => 'CQ9'],
+                ['provider_code' => 'JOKER', 'provider_name' => 'Joker Gaming'],
+                ['provider_code' => 'PLAYSTAR', 'provider_name' => 'Playstar'],
+                ['provider_code' => 'BOONGO', 'provider_name' => 'Booongo'],
+                ['provider_code' => 'MICROGAMING', 'provider_name' => 'Microgaming'],
+                ['provider_code' => 'PP', 'provider_name' => 'Pragmatic Play'],
+                ['provider_code' => 'SPADEGAMING', 'provider_name' => 'Spade Gaming'],
+                ['provider_code' => 'DREAMTECH', 'provider_name' => 'Dreamtech'],
+                ['provider_code' => 'EVOPLAY', 'provider_name' => 'Evoplay'],
+                ['provider_code' => 'TOPTREND', 'provider_name' => 'Toptrend'],
+                ['provider_code' => 'PLAYNGO', 'provider_name' => 'Play N Go'],
+                ['provider_code' => 'HACKSAW', 'provider_name' => 'Hacksaw'],
+                ['provider_code' => 'GENESIS', 'provider_name' => 'Genesis'],
+                ['provider_code' => 'ADVANTPLAY', 'provider_name' => 'Advant Play'],
+            ];
         }
 
-
-        Game::create($validateData);
-
-        return redirect('/Admin/Dashboard/Game-Setting')->with('success', 'Banner has been added!!');
+        return view('backoffice.games.game_setting', compact('Game', 'provider'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function edit(string $id)
     {
-        //
+        $resp = $this->adminGet("games/{$id}");
+        $game = $resp['data']['game'] ?? null;
+        if (!$game) abort(404);
+        return view('Dashboard.Game.edit', ['Game' => (object) $game]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $this->adminPut("games/{$id}", $request->all());
+        return redirect('/Admin/Dashboard/Game-Setting')->with('success', 'Game updated!');
     }
 
     public function searchByProvider(Request $request)
     {
-        // Ambil data game dari database berdasarkan provider
-        $games = Game::where('game_provider', $request->provider_id)->get();
+        $resp = $this->adminGet('games/search-by-provider', ['provider_id' => $request->provider_id]);
+        return response()->json($resp);
+    }
 
-        // Kembalikan hasil dalam format JSON
-        return response()->json($games);
+    public function show($id)
+    {
+        $resp = $this->adminGet("games/{$id}");
+        $game = $resp['data']['game'] ?? null;
+        if (!$game) {
+            return response()->json(['error' => 'Not found'], 404);
+        }
+        return response()->json(['game' => $game]);
     }
 }

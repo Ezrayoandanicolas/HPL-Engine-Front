@@ -1,11 +1,5 @@
 <?php
 
-use App\Models\Banner;
-use App\Http\API\fiver;
-use App\Http\API\exa;
-use App\Models\Setting;
-use App\Models\Voucher;
-use App\Models\Freechip;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Cq9Controller;
@@ -18,6 +12,7 @@ use App\Http\Controllers\PlayController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\BonusController;
 use App\Http\Controllers\JokerController;
+use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PokerController;
 use App\Http\Controllers\ArcadeController;
@@ -75,6 +70,18 @@ use App\Http\Controllers\SyncController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\TransferController;
 use App\Http\Controllers\CasinoPlayController;
+use App\Http\Controllers\SlotsController;
+use App\Http\Controllers\DashboardLiveChatController;
+use App\Http\Controllers\ChatSseController;
+use App\Http\Controllers\DashboardNavigationMenuController;
+use App\Http\Controllers\DashboardFiverController;
+use App\Http\Controllers\DashboardCallController;
+use App\Http\Controllers\DashboardBonusController;
+use App\Http\Controllers\DashboardStatisticController;
+use App\Http\Controllers\DashboardSportsbookController;
+use App\Http\Controllers\DashboardMessageController;
+use App\Http\Controllers\DashboardGgrController;
+use App\Http\Controllers\DashboardActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,14 +97,29 @@ Route::get('/clear-cache', function () {
 
 Route::get('/tarik', [LoyalitasController::class, 'tarik']);
 
+// Chat SSE (served by Nginx/PHP-FPM, multi-threaded)
+Route::get('/chat-sse/{token}', [ChatSseController::class, 'sse']);
+
 Route::middleware(['check.web'])->group(function () {
 
     Route::get('/promotion', [PromotionController::class, 'index']);
     Route::post('/ubah-bahasa', [LanguageController::class, 'ubahBahasa'])->name('change.language');
     Route::get('/', [HomeController::class, 'index']);
-    Route::get('/login', [LoginController::class, 'index']);
+    Route::get('/balance', function () {
+        if (!Auth::check()) return response()->json(['main' => 0, 'slot' => 0, 'game' => 0]);
+        $api = app(\App\Services\ApiService::class);
+        $response = $api->get('wallet/balance', ['user_id' => Auth::id()]);
+        return response()->json([
+            'main' => (float) ($response['main'] ?? 0),
+            'slot' => (float) ($response['slot'] ?? 0),
+            'game' => (float) ($response['game'] ?? 0),
+        ]);
+    });
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'auth']);
     Route::post('/logout', [LoginController::class, 'logout']);
+    Route::get('/Admin/Login', [AdminLoginController::class, 'index']);
+    Route::post('/Admin/Login', [AdminLoginController::class, 'auth']);
     Route::get('/registerasi', [RegisterasiController::class, 'index']);
     Route::get('/referral-register', [RegisterasiController::class, 'loadReferral']);
     Route::post('/registerasi', [RegisterasiController::class, 'registerasi']);
@@ -119,7 +141,6 @@ Route::middleware(['check.web'])->group(function () {
     Route::get('/slots/pgsoft', [PgsoftController::class, 'index']);
     Route::get('/slots/habanero', [HabaneroController::class, 'index']);
     Route::get('/slots/spadegaming', [SpadegamingController::class, 'index']);
-    Route::get('/slots/microgaming', [MicrogamingController::class, 'index']);
     Route::get('/slots/genesis', [GenesisController::class, 'index']);
     Route::get('/slots/dreamtech', [DreamtechController::class, 'index']);
     Route::get('/slots/evoplay', [EvoplayController::class, 'index']);
@@ -127,130 +148,74 @@ Route::middleware(['check.web'])->group(function () {
     Route::get('/slots/booongo', [BoongoController::class, 'index']);
     Route::get('/slots/toptrend', [ToptrendController::class, 'index']);
     Route::get('/slots/joker', [JokerController::class, 'index']);
-    Route::get('/slots/playstar', [PlaystarController::class, 'index']);
     Route::get('/slots/playngo', [PlayngoController::class, 'index']);
     Route::get('/slots/hacksaw', [HacksawController::class, 'index']);
-    Route::get('/slots/advantplay', [AdvantplayController::class, 'index']);
+    
+    Route::get('/slots/{provider}', [SlotsController::class, 'provider'])->where('provider', '[a-z-]+');
     
     Route::get('/faq', function () {
-        if (Auth::check()) {
-            $SG = new fiver();
-            $act = json_decode($SG->userbalance(Auth()->user()->extplayer));
-            $agent = $act->user;
-            $hiddenBalance = $agent->balance;
-            if ($hiddenBalance == 0) {
-                $balance = '0,00';
-            } else {
-                if ($hiddenBalance < 1000 && $hiddenBalance > 0) {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = '0' . '.' . substr_replace($formattedBalance, '', -4);
-                } else {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = substr_replace($formattedBalance, '', -4);
-                }
-            }
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('faq', compact('setting', 'balance'));
-        } else {
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('faq', compact('setting'));
-        }
+        $api = app(\App\Services\ApiService::class);
+        $pageResp = $api->get('page/home');
+        $pageData = $pageResp['data'] ?? [];
+        $settingData = $pageData['setting'] ?? [];
+        $setting = (object) $settingData;
+        $balance = $pageData['balance'] ?? null;
+        return view('faq', compact('setting', 'balance'));
     });
 
     Route::get('/versi-mobile', function () {
-        if (Auth::check()) {
-            $SG = new fiver();
-            $act = json_decode($SG->userbalance(Auth()->user()->extplayer, true));
-            $agent = $act->user;
-            $hiddenBalance = $agent->balance;
-            if ($hiddenBalance == 0) {
-                $balance = '0,00';
-            } else {
-                if ($hiddenBalance < 1000 && $hiddenBalance > 0) {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = '0' . '.' . substr_replace($formattedBalance, '', -4);
-                } else {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = substr_replace($formattedBalance, '', -4);
-                }
-            }
-            $banner = Banner::all();
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('layout.mobile.index', compact('banner', 'setting', 'balance'));
-        } else {
-            $banner = Banner::all();
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('layout.mobile.index', compact('banner', 'setting'));
-        }
+        $api = app(\App\Services\ApiService::class);
+        $pageResp = $api->get('page/home');
+        $pageData = $pageResp['data'] ?? [];
+        $rawBanner = $pageData['banner'] ?? [];
+        $banner = array_map(function ($b) {
+            return (object) [
+                'id' => $b['id'] ?? null,
+                'title' => $b['Judul'] ?? '',
+                'img' => $b['img'] ?? '',
+                'link' => $b['link'] ?? '',
+            ];
+        }, $rawBanner);
+        $settingData = $pageData['setting'] ?? [];
+        $setting = (object) $settingData;
+        $balance = $pageData['balance'] ?? null;
+        return view('layout.mobile.index', compact('banner', 'setting', 'balance'));
     });
 
     Route::get('/contact', function () {
-        if (Auth::check()) {
-            $SG = new fiver();
-            $act = json_decode($SG->userbalance(Auth()->user()->extplayer));
-            $agent = $act->user;
-            $hiddenBalance = $agent->balance;
-            if ($hiddenBalance == 0) {
-                $balance = '0,00';
-            } else {
-                if ($hiddenBalance < 1000 && $hiddenBalance > 0) {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = '0' . '.' . substr_replace($formattedBalance, '', -4);
-                } else {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = substr_replace($formattedBalance, '', -4);
-                }
-            }
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('layout.mobile.contact', compact('setting', 'balance'));
-        } else {
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('layout.mobile.contact', compact('setting'));
-        }
+        $api = app(\App\Services\ApiService::class);
+        $pageResp = $api->get('page/home');
+        $pageData = $pageResp['data'] ?? [];
+        $settingData = $pageData['setting'] ?? [];
+        $setting = (object) $settingData;
+        $balance = $pageData['balance'] ?? null;
+        return view('layout.mobile.contact', compact('setting', 'balance'));
     });
 
     Route::middleware(['auth'])->group(function () {
 
         Route::get('/missions', function () {
-            $SG = new fiver();
-            $act = json_decode($SG->userbalance(Auth()->user()->extplayer));
-            $agent = $act->user;
-            $hiddenBalance = $agent->balance;
-            if ($hiddenBalance == 0) {
-                $balance = '0,00';
-            } else {
-                if ($hiddenBalance < 1000 && $hiddenBalance > 0) {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = '0' . '.' . substr_replace($formattedBalance, '', -4);
-                } else {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = substr_replace($formattedBalance, '', -4);
-                }
-            }
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
+            $api = app(\App\Services\ApiService::class);
+            $pageResp = $api->get('page/home');
+            $pageData = $pageResp['data'] ?? [];
+            $settingData = $pageData['setting'] ?? [];
+            $setting = (object) $settingData;
+            $balance = $pageData['balance'] ?? null;
             return view('layout.mobile.misi', compact('setting', 'balance'));
         });
 
         Route::get('/penukaran', function () {
-            $SG = new fiver();
-            $act = json_decode($SG->userbalance(Auth()->user()->extplayer));
-            $agent = $act->user;
-            $hiddenBalance = $agent->balance;
-            if ($hiddenBalance == 0) {
-                $balance = '0,00';
-            } else {
-                if ($hiddenBalance < 1000 && $hiddenBalance > 0) {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = '0' . '.' . substr_replace($formattedBalance, '', -4);
-                } else {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = substr_replace($formattedBalance, '', -4);
-                }
-            }
-            $claimedVoucherIds = Freechip::where('user_id', Auth()->user()->id)
-                ->pluck('voucher_id')->toArray();
-            $voucher = Voucher::whereNotIn('id', $claimedVoucherIds)->get();
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
+            $api = app(\App\Services\ApiService::class);
+            $pageResp = $api->get('page/home');
+            $pageData = $pageResp['data'] ?? [];
+            $settingData = $pageData['setting'] ?? [];
+            $setting = (object) $settingData;
+            $balance = $pageData['balance'] ?? null;
+
+            $voucherResp = $api->get('admin/vouchers');
+            $voucherData = $voucherResp['data']['vouchers'] ?? [];
+            $voucher = collect($voucherData);
+
             return view('layout.mobile.penukaran', compact('setting', 'balance', 'voucher'));
         });
 
@@ -316,6 +281,7 @@ Route::middleware(['check.web'])->group(function () {
     Route::put('/saldo/update/{id}', [InjectController::class, 'update'])->name('saldo.update');
     Route::get('/deposits/today', [DashboardController::class, 'getDeposit']);
     Route::get('/withdraw/today', [DashboardController::class, 'getWithdawDashboard']);
+    Route::get('/Admin/Dashboard/notifications/unread', [DashboardController::class, 'unreadNotifications'])->middleware('admin');
     Route::post('/Admin/Dashboard/Deposit/Approve/{id}', [DashboardController::class, 'approveDeposit'])->name('admin.deposit.approve');
     Route::post('/Admin/Dashboard/Withdraw/Approve/{id}', [DashboardController::class, 'approveWithdraw'])->name('admin.withdraw.approve');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -336,7 +302,9 @@ Route::middleware(['check.web'])->group(function () {
     
     Route::resource('/Admin/Dashboard/Voucher', DashboardVoucherController::class);
     Route::PUT('/Admin/Dashboard/Withdraw/{id}/update', [DashboardWithdrawController::class, 'update']);
+    Route::get('/Admin/Dashboard/Withdraw/new-withdraws', [DashboardWithdrawController::class, 'newWithdraws'])->middleware('admin');
     Route::PUT('/Admin/Dashboard/Tranksaksi/{id}/update', [DashboardDepositeController::class, 'update']);
+    Route::get('/Admin/Dashboard/Tranksaksi/new-deposits', [DashboardDepositeController::class, 'newDeposits'])->middleware('admin');
     Route::get('/Admin/Dashboard', [DashboardController::class, 'index'])->middleware('admin');
     Route::resource('/Admin/Dashboard/User', DashboardUserController::class);
     Route::put('/Admin/Dashboard/User/{id}', [DashboardUserController::class, 'updateUser']);
@@ -361,7 +329,52 @@ Route::middleware(['check.web'])->group(function () {
     Route::POST('/Admin/Logout', [AdminLogoutController::class, 'AdminLogout'])->name('Logouts')->middleware('admin');
     Route::put('/Admin/Dashboard/User/{id}', [DashboardUserController::class, 'update'])->name('user.update');
     Route::get('/Admin/Dashboard/Kyc', [KycController::class, 'index'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Kyc/new-verifications', [KycController::class, 'newVerifications'])->middleware('admin');
     Route::put('/Admin/Dashboard/Kyc/{id}', [KycController::class, 'updateStatus'])->name('kyc.updateStatus');
+    Route::get('/Admin/Dashboard/Livechat', [DashboardLiveChatController::class, 'index'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Livechat/unread-count', [DashboardLiveChatController::class, 'unreadCount'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Navigation-Menu', [DashboardNavigationMenuController::class, 'index'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Navigation-Menu', [DashboardNavigationMenuController::class, 'store'])->middleware('admin');
+    Route::put('/Admin/Dashboard/Navigation-Menu/{id}', [DashboardNavigationMenuController::class, 'update'])->middleware('admin');
+    Route::delete('/Admin/Dashboard/Navigation-Menu/{id}', [DashboardNavigationMenuController::class, 'destroy'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Navigation-Menu/sync-ggr', [DashboardNavigationMenuController::class, 'syncGGR'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Navigation-Menu/sync-games', [DashboardNavigationMenuController::class, 'syncGames'])->middleware('admin');
+
+    Route::get('/Admin/Dashboard/Bonus', [DashboardBonusController::class, 'index'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Bonus', [DashboardBonusController::class, 'store'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Bonus/{id}', [DashboardBonusController::class, 'show'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Bonus/{id}', [DashboardBonusController::class, 'update'])->middleware('admin');
+    Route::delete('/Admin/Dashboard/Bonus/{id}', [DashboardBonusController::class, 'destroy'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Bonus/{id}/toggle-status', [DashboardBonusController::class, 'toggleStatus'])->middleware('admin');
+    Route::get('/admin-chat-sse/{id}', [ChatSseController::class, 'adminSse'])->middleware('admin');
+    Route::get('/admin-chat-sessions-sse', [ChatSseController::class, 'sessionsSse'])->middleware('admin');
+    
+    // Fiver / NEXUS Tools
+    Route::get('/Admin/Dashboard/Fiver', [DashboardFiverController::class, 'index'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Fiver/reset-user', [DashboardFiverController::class, 'resetUser'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Fiver/reset-all', [DashboardFiverController::class, 'resetAll'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Fiver/check-status', [DashboardFiverController::class, 'checkStatus'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Fiver/transaction/{id}', [DashboardFiverController::class, 'detailTransaction'])->middleware('admin');
+    
+    // Call Management
+    Route::get('/Admin/Dashboard/Call', [DashboardCallController::class, 'index'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Call/players', [DashboardCallController::class, 'players'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/apply', [DashboardCallController::class, 'apply'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/call-list', [DashboardCallController::class, 'callList'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/cancel', [DashboardCallController::class, 'cancel'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Call/history', [DashboardCallController::class, 'history'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/control-rtp', [DashboardCallController::class, 'controlRtp'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/control-users-rtp', [DashboardCallController::class, 'controlUsersRtp'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/game-log', [DashboardCallController::class, 'gameLog'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Call/game-history', [DashboardCallController::class, 'gameHistory'])->middleware('admin');
+    
+    Route::get('/Admin/Dashboard/Statistic', [DashboardStatisticController::class, 'index'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Sportsbook', [DashboardSportsbookController::class, 'index'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Message', [DashboardMessageController::class, 'index'])->middleware('admin');
+    Route::post('/Admin/Dashboard/Message', [DashboardMessageController::class, 'store'])->middleware('admin');
+    Route::delete('/Admin/Dashboard/Message/{id}', [DashboardMessageController::class, 'destroy'])->middleware('admin');
+    Route::get('/Admin/Dashboard/GgrBalance', [DashboardGgrController::class, 'balance'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Activity', [DashboardActivityController::class, 'index'])->middleware('admin');
     
 });
 Route::post('/session/online', function () {

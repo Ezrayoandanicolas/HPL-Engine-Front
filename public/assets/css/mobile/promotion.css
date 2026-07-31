@@ -38,6 +38,8 @@
 }
 .promotion-item img {
     width: 100%;
+    height: 150px;
+    object-fit: cover;
 }
 .promotion-item .button-container {
     padding: 10px;

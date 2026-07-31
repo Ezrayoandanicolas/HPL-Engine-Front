@@ -335,7 +335,7 @@
 
             <span class="wallet-currency">IDR</span>
 
-            <span class="balance total_balance">
+            <span class="balance total_balance" id="nav_main_balance">
                 Rp {{ number_format($mainBalance,0,',','.') }}
             </span>
 
@@ -349,7 +349,7 @@
                     SALDO WALLET
                 </h5>
 
-                <div class="balance total_balance">
+                <div class="balance total_balance" id="nav_main_balance_header">
                     Rp {{ number_format($mainBalance,0,',','.') }}
                 </div>
 
@@ -361,7 +361,7 @@
 
                     <span>💳 Main Wallet</span>
 
-                    <strong>
+                    <strong id="nav_wallet_main">
                         Rp {{ number_format($mainBalance,0,',','.') }}
                     </strong>
 
@@ -371,7 +371,7 @@
 
                     <span>🎰 Slot Wallet</span>
 
-                    <strong>
+                    <strong id="nav_wallet_slot">
                         Rp {{ number_format($slotBalance,0,',','.') }}
                     </strong>
 
@@ -381,7 +381,7 @@
 
                     <span>🎮 Game Wallet</span>
 
-                    <strong>
+                    <strong id="nav_wallet_game">
                         Rp {{ number_format($gameBalance,0,',','.') }}
                     </strong>
 
@@ -608,7 +608,7 @@
                                             type: 'GET',
                                             dataType: 'json',
                                             success: function(response) {
-                                                var unreadCount = response.unreadCount;
+                                                var unreadCount = response.unreadCount || 0;
                                                 $('#unread_announcements').attr('data-announcement-count', unreadCount);
                                                 $('#announcement_count').text('(' + unreadCount + ')');
                                                 $('#incoming-message').text('[' + unreadCount + ']');
@@ -906,36 +906,20 @@
                             </div>
 
 
-                            <form action="/login" method="post">
-                                @csrf
-                                <div class="login-panel">
-                                    <div class="login-panel-item">
-                                        <label>
-                                            <input type="text" name="username" placeholder="Nama Pengguna" />
-                                        </label>
-                                    </div>
-                                    <div class="login-panel-item">
-                                        <label>
-                                            <span class="standard-password-field">
-                                                <input type="password" name="password" placeholder="Kata Sandi"
-                                                    id="password_input" />
-                                                <i class="fa-solid fa-eye-slash"
-                                                    style="color: rgb(25, 205, 163); cursor: pointer;"
-                                                    id="password_toggle"></i>
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <div class="login-panel-item">
-                                        <input type="submit" class="login-button" value="Masuk" />
-                                    </div>
-                                    <div class="login-panel-item">
-                                        <a href="#" class="register-button" data-toggle="modal"
-                                            data-target="#register_modal">
-                                            Daftar
-                                        </a>
-                                    </div>
-                                    <a href="/lupa-sandi" class="forgot-password-link" data-toggle="modal"
-                                        data-target="#forgot_password_modal">
+                            <div class="login-panel">
+                                <div class="login-panel-item">
+                                    <a href="#" class="login-button" data-toggle="modal" data-target="#login_modal">
+                                        Masuk
+                                    </a>
+                                </div>
+                                <div class="login-panel-item">
+                                    <a href="#" class="register-button" data-toggle="modal"
+                                        data-target="#register_modal">
+                                        Daftar
+                                    </a>
+                                </div>
+                                <a href="/lupa-sandi" class="forgot-password-link" data-toggle="modal"
+                                    data-target="#forgot_password_modal">
                                         Lupa Kata Sandi
                                     </a>
                                 </div>
@@ -968,3 +952,21 @@
         @include('layout.desktop.site-header')
     </div>
 @endif
+<script>
+$(function() {
+    function refreshBalance() {
+        $.get('/balance', function(res) {
+            var fmt = function(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); };
+            if (res.main != null) {
+                $('#nav_main_balance').text(fmt(res.main));
+                $('#nav_main_balance_header').text(fmt(res.main));
+                $('#nav_wallet_main').text(fmt(res.main));
+            }
+            if (res.slot != null) $('#nav_wallet_slot').text(fmt(res.slot));
+            if (res.game != null) $('#nav_wallet_game').text(fmt(res.game));
+        });
+    }
+    refreshBalance();
+    setInterval(refreshBalance, 5000);
+});
+</script>

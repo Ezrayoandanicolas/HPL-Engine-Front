@@ -1,3 +1,6 @@
+@php
+    $unreadLivechat = 0;
+@endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ URL::to('backoffice') }}" class="brand-link">
@@ -80,6 +83,18 @@
                             <p>
                                 Dashboard
                             </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Livechat" class="nav-link">
+                            <i class="fas fa-comment-dots nav-icon"></i>
+                            <p>Live Chat</p>
+                            @if($unreadLivechat > 0)
+                            <span class="badge badge-danger right" id="livechatBadge">{{ $unreadLivechat }}</span>
+                            @else
+                            <span class="badge badge-danger right" id="livechatBadge" style="display:none">0</span>
+                            @endif
                         </a>
                     </li>
 
@@ -185,6 +200,12 @@
                                     <p>Histori Transaksi</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/history-play/user" class="nav-link">
+                                    <i class="fas fa-gamepad nav-icon"></i>
+                                    <p>Riwayat Game</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -203,6 +224,12 @@
                                 <a href="/Setting" class="nav-link">
                                     <i class="fas fa-tshirt nav-icon"></i>
                                     <p>Setting Web</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Admin/Dashboard/Activity" class="nav-link">
+                                    <i class="fas fa-clipboard-list nav-icon"></i>
+                                    <p>Activity Log</p>
                                 </a>
                             </li>
                         </ul>
@@ -225,7 +252,15 @@
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ URL::to('bonus') }}" class="nav-link">
+                                <a href="/Admin/Dashboard/Navigation-Menu" class="nav-link">
+                                    <i class="fas fa-list nav-icon"></i>
+                                    <p>Menu Navigasi</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ URL::to('Admin/Dashboard/Bonus') }}" class="nav-link">
                                     <i class="fas fa-toilet-paper nav-icon"></i>
                                     <p>Bonus</p>
                                 </a>
@@ -236,26 +271,46 @@
                     <!-- luckyspin -->
                     <li class="nav-header">Fitur Permainan</li>
                     <li class="nav-item">
-                        <a href="/history-play/user" class="nav-link">
-                            <i class="nav-icon fas fa-dice"></i>
-                            <p>
-                                History Play User
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="/game_setting" class="nav-link">
-                            <i class="nav-icon fas fa-dice"></i>
-                            <p>
-                                Setting Scatter
-                            </p>
+                        <a href="/Admin/Dashboard/Call" class="nav-link">
+                            <i class="nav-icon fas fa-phone-alt"></i>
+                            <p>Call Management</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="/Admin/Dashboard/Game-setting" class="nav-link">
                             <i class="fas fa-gamepad nav-icon"></i>
                             <p>Game</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Sportsbook" class="nav-link">
+                            <i class="fas fa-futbol nav-icon"></i>
+                            <p>Sportsbook</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Statistic" class="nav-link">
+                            <i class="fas fa-chart-bar nav-icon"></i>
+                            <p>Statistic</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Message" class="nav-link">
+                            <i class="fas fa-envelope nav-icon"></i>
+                            <p>Pesan</p>
+                        </a>
+                    </li>
+                    <li class="nav-header">Provider</li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Fiver" class="nav-link">
+                            <i class="nav-icon fas fa-cloud-upload-alt"></i>
+                            <p>Transfer Provider</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/GgrBalance" class="nav-link">
+                            <i class="nav-icon fas fa-wallet"></i>
+                            <p>Saldo GGR Member</p>
                         </a>
                     </li>
                     <li class="nav-header">Profile</li>
@@ -275,3 +330,22 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+
+@push('scripts')
+<script>
+function refreshLivechatBadge() {
+    $.get('/Admin/Dashboard/Livechat/unread-count', function(res) {
+        if (res.count !== undefined) {
+            var badge = $('#livechatBadge');
+            if (res.count > 0) {
+                badge.text(res.count).show();
+            } else {
+                badge.text('0').hide();
+            }
+        }
+    });
+}
+setInterval(refreshLivechatBadge, 10000);
+$(function() { refreshLivechatBadge(); });
+</script>
+@endpush

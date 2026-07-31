@@ -40,6 +40,17 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected static function booted()
+    {
+        static::creating(function ($user) {
+            \Illuminate\Support\Facades\Log::warning('FE_USER_CREATING', [
+                'id' => $user->id,
+                'username' => $user->username,
+                'trace' => debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 8),
+            ]);
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *

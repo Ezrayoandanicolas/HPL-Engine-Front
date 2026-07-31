@@ -33,17 +33,44 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="notification-tabs">
-                            <div class="notification-tab-item" data-tab="transaction" data-active="true" data-count="3">
-                                Transaksi <span id="transaction_in">(0)</span>
+                            <div class="notification-tab-item" data-tab="transaction" data-active="true" data-count="{{ is_array($transaksi) ? count($transaksi) : 0 }}">
+                                Transaksi <span id="transaction_in">({{ is_array($transaksi) ? count($transaksi) : 0 }})</span>
                             </div>
-                            <div class="notification-tab-item" data-tab="promo" data-active="false" data-count="0">
-                                Promo <span>(0)</span>
+                            <div class="notification-tab-item" data-tab="promo" data-active="false" data-count="{{ count($adminMessages) }}">
+                                Pengumuman <span>({{ count($adminMessages) }})</span>
                             </div>
                             <div class="notification-tab-item" data-tab="info" data-active="false" data-count="1">
                                 Info <span>(0)</span>
                             </div>
                         </div>
                         <div class="notification-content">
+                            <div id="announcement-admin-section">
+                            @forelse ($adminMessages as $msg)
+                            @php
+                                $msg = (object) $msg;
+                                $bodyClean = str_replace(["\r", "\n"], ' ', strip_tags($msg->body));
+                            @endphp
+                            <div class="notification-list">
+                                <a href="#" style="display:block" class="admin-message-link"
+                                   data-title="{{ $msg->title }}"
+                                   data-body="{{ $bodyClean }}"
+                                   data-date="{{ \Carbon\Carbon::parse($msg->created_at)->format('d M Y H:i') }}">
+                                    <div class="notification-item" data-seen="{{ $msg->is_read ? 'true' : 'false' }}">
+                                        <div class="notification-image" data-message-category="Announcement">
+                                            <img loading="lazy" src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg">
+                                        </div>
+                                        <div class="notification-caption">
+                                            <div class="notification-title">{{ $msg->title }}</div>
+                                            <div class="notification-datetime">{{ \Carbon\Carbon::parse($msg->created_at)->format('d M Y H:i') }}</div>
+                                        </div>
+                                        <div class="notification-description">{{ $bodyClean }}</div>
+                                    </div>
+                                </a>
+                            </div>
+                            @empty
+                            @endforelse
+                            </div>
+                            <div id="announcement-transaksi-section">
                             @foreach ($transaksi as $transaksi)
                                 @if ($transaksi->count() > 0)
                                     @if ($transaksi->notes == 'read')
@@ -261,10 +288,10 @@
                                         <div class="empty-notification-content">
                                             <h3>Belum Ada Notifikasi</h3>
                                             <p>Saat Anda mendapatkan notifikasi, mereka akan muncul di sini</p>
-                                        </div>
                                     </div>
                                 @endif
                             @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -325,4 +352,40 @@
             }
         });
     </script>
+
+<div class="modal fade" id="adminMessageModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="amTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="amBody"></div>
+            <div class="modal-footer">
+                <small class="text-muted float-left" id="amDate"></small>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).on('click', '.admin-message-link', function() {
+    $('#amTitle').text($(this).data('title'));
+    $('#amBody').text($(this).data('body'));
+    $('#amDate').text($(this).data('date'));
+    $('#adminMessageModal').modal('show');
+});
+$(function() {
+    $('.notification-tab-item').on('click', function() {
+        var tab = $(this).data('tab');
+        $('.notification-tab-item').removeClass('active');
+        $(this).addClass('active');
+        $('#announcement-admin-section, #announcement-transaksi-section').hide();
+        if (tab === 'transaction') $('#announcement-transaksi-section').show();
+        else if (tab === 'promo') $('#announcement-admin-section').show();
+    });
+    $('.notification-tab-item[data-tab="transaction"]').click();
+});
+</script>
 @endsection

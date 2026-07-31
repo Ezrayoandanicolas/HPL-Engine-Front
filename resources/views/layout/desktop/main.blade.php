@@ -509,47 +509,43 @@
         </div>
     </div>
 
-    <div id="popup_modal" class="modal popup-modal" role="dialog" data-title="PERHATIAN" aria-label="Popup Modal">
-        <div class="modal-dialog">
-            <div class="modal-content"
-                style="--desktop-popup-alert-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/layout/popup/alert.png?v=20240708-4);;--desktop-popup-notification-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/layout/popup/notification.png?v=20240708-4);;--mobile-popup-alert-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/layout/popup/alert.png?v=20240708-4);;--mobile-popup-notification-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/layout/popup/notification.png?v=20240708-4);;--event-giveaway-popper-src: url(//d33egg70nrp50s.cloudfront.net/Images/giveaway/popper.png?v=20240708-4);">
+    <div id="login_modal" class="modal login-modal register-modal" role="dialog">
+        <div class="modal-dialog" style="max-width:483px">
+            <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <h4 class="modal-title" id="popup_modal_title">
-                        PERHATIAN
-                    </h4>
+                    <h4 class="modal-title">MASUK</h4>
+                    <hr />
                 </div>
-                <div class="modal-body" id="popup_modal_body">
-                    <a href="#" target="_self" class="popup-thumbnail">
-                        <img loading="lazy" src="{{ asset('storage/' . $setting->logo) }}" />
-                    </a>
-                    <p><span style="color: #ffffff;"><strong>MOHON PERHATIAN
-                                !!!</strong><strong><br /></strong><strong><br /></strong><strong>Jika ada pihak yang
-                                mengatasnamakan {{ $setting->web }} meminta untuk melakukan transfer dengan iming-iming
-                                BONUS/HADIAH
-                                terutama melalui media sosial seperti TELEGRAM maka dapat dipastikan bahwa itu adalah
-                                PENIPU dan segala kerugian yang terjadi BUKAN merupakan TANGGUNG JAWAB kami. Pihak
-                                {{ $setting->web }} tidak pernah meminta member untuk transfer untuk mendapatkan
-                                HADIAH/BONUS</strong></span></p>
-                    <p><span style="color: #ffffff;"><strong>Mohon selalu cek nomor rekening yang aktif di halaman
-                                deposit web kami sebelum transfer atau hubungi admin web kami melalui LiveChat jika ada
-                                hal yang tidak dimengerti.</strong></span></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal"
-                        id="popup_modal_dismiss_button">
-                        OK
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="popup_modal_cancel_button" style="display: none">
-                        Batal
-                    </button>
-                    <button type="button" class="btn btn-primary" id="popup_modal_confirm_button"
-                        style="display: none">
-                        OK
-                    </button>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="alert-danger" id="login_alert" hidden></div>
+                    </div>
+                    <form action="/login" method="post">
+                        @csrf
+                        <div class="form-group text-left">
+                            <label for="login_username">Nama Pengguna</label>
+                            <input type="text" name="username" id="login_username" class="form-control" placeholder="Nama Pengguna" required autocomplete="off" style="background-color:#0c0c0c;border-color:#2a2a2a;color:#fff" />
+                        </div>
+                        <div class="form-group text-left">
+                            <label for="login_password">Kata Sandi</label>
+                            <div style="position:relative">
+                                <input type="password" name="password" id="login_password" class="form-control" placeholder="Kata Sandi" required autocomplete="off" style="background-color:#0c0c0c;border-color:#2a2a2a;color:#fff;padding-right:40px" />
+                                <i class="fa-solid fa-eye-slash" id="login_password_toggle" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#02bca2;cursor:pointer;z-index:5"></i>
+                            </div>
+                        </div>
+                        <div style="text-align:right;margin:4px 0 16px">
+                            <a href="#" data-toggle="modal" data-target="#forgot_password_modal" data-dismiss="modal" class="register-page-link">Lupa Kata Sandi?</a>
+                        </div>
+                        <div class="standard-button-group">
+                            <button type="submit" class="btn btn-primary" value="Masuk" style="width:100%;border-radius:50px">Masuk</button>
+                        </div>
+                        <div style="text-align:center;margin-top:14px">
+                            Belum punya akun? <a href="#" data-toggle="modal" data-target="#register_modal" data-dismiss="modal" class="register-page-link" style="font-weight:600">Daftar Sekarang</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -582,10 +578,39 @@
                 $('#register_modal').modal();
                 $('#popup_modal').modal('hide');
             }
+
+            // Login password toggle
+            const loginPwToggle = document.getElementById('login_password_toggle');
+            const loginPwInput = document.getElementById('login_password');
+            if (loginPwToggle && loginPwInput) {
+                loginPwToggle.onclick = function() {
+                    if (loginPwInput.type === 'password') {
+                        loginPwInput.type = 'text';
+                        loginPwToggle.classList.remove('fa-eye-slash');
+                        loginPwToggle.classList.add('fa-eye');
+                    } else {
+                        loginPwInput.type = 'password';
+                        loginPwToggle.classList.remove('fa-eye');
+                        loginPwToggle.classList.add('fa-eye-slash');
+                    }
+                };
+            }
         });
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
     <script src='../../../assets/js/desktop/desktop.js' defer></script>
+
+<div id="popup_modal" style="display:none!important"><div id="popup_modal_body"></div></div>
+
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+    window.registerPopup = function() {};
+    $('#popup_modal').on('show.bs.modal', function(e) { e.preventDefault(); });
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+});
+</script>
 
     <script type="text/javascript">
         window.addEventListener('DOMContentLoaded', () => {
@@ -1288,6 +1313,24 @@
 
 
     <script src='../../../assets/js/desktop/reward.js' defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @php
+        $__flashes = [];
+        foreach (['success','error','info','warning'] as $__t) {
+            if (session($__t)) { $__flashes[] = ['type'=>$__t, 'message'=>session($__t)]; }
+        }
+        foreach ($errors->all() as $__e) { $__flashes[] = ['type'=>'error', 'message'=>$__e]; }
+    @endphp
+    @if(count($__flashes))
+    <script>
+    var __flashes = @json($__flashes);
+    __flashes.forEach(function(f) {
+        Swal.fire({ icon: f.type, title: f.message, confirmButtonText: 'OK' });
+    });
+    </script>
+    @endif
+
+    @include('layout.desktop.chat-widget')
 
 </body>
 

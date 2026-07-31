@@ -11,25 +11,6 @@
 
     <hr>
 
-    @if(session('warning'))
-        <div class="alert alert-warning">
-            <strong>Perhatian!</strong><br>
-            {{ session('warning') }}
-        </div>
-    @endif
-
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
     {{-- INFORMASI WALLET --}}
     <div class="alert alert-info">
 

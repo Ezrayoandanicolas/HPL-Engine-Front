@@ -2,39 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\API\fiver;
-use App\Models\Setting;
-use App\Models\Promotion;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-
-class PromotionController extends Controller
+class PromotionController extends FrontendController
 {
     public function index()
     {
-        if (Auth::check()) {
-            $SG = new fiver();
-            $act = json_decode($SG->userbalance(Auth()->user()->extplayer));
-            $agent = $act->user;
-            $hiddenBalance = $agent->balance;
-            if ($hiddenBalance == 0) {
-                $balance = '0,00';
-            } else {
-                if ($hiddenBalance < 1000 && $hiddenBalance > 0) {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = '0' . '.' . substr_replace($formattedBalance, '', -4);
-                } else {
-                    $formattedBalance = number_format($hiddenBalance, 2, ',', '.');
-                    $balance = substr_replace($formattedBalance, '', -4);
-                }
-            }
-            $promotion = Promotion::all();
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('promotion', compact('promotion', 'setting', 'balance'));
-        } else {
-            $promotion = Promotion::all();
-            $setting = Setting::orderBY('created_at', 'DESC')->first();
-            return view('promotion', compact('promotion', 'setting'));
-        }
+        $data = $this->fetchPage('home');
+        $resp = $this->apiGet('promotions');
+        $list = $resp['data']['promotions'] ?? [];
+        $promotion = array_map(function ($p) {
+            return (object) [
+                'id' => $p['id'],
+                'title' => $p['title'],
+                'bonus_title' => $p['bonus'],
+                'min_deposite' => $p['min_deposite'],
+                'max_deposite' => $p['max_deposite'],
+                'tanggal_akhir' => $p['tanggal_akhir'],
+                'body' => $p['body'],
+                'img' => $p['img'],
+            ];
+        }, $list);
+        return view('promotion', array_merge(compact('promotion'), $data));
     }
 }

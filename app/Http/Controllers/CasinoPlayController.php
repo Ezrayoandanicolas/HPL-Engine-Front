@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\API\Exa;
-use App\Models\Casino;
 use Illuminate\Support\Facades\Auth;
 use App\Services\WalletService;
 
@@ -18,8 +17,8 @@ class CasinoPlayController extends Controller
 
     public function play($game_uid)
     {
-        $game = Casino::where('game_uid', $game_uid)->firstOrFail();
         $user = Auth::user();
+        if (!$user) return redirect('/login');
 
         $gameBalance = $this->wallet->getGameBalance($user);
         if ($gameBalance <= 0) {
@@ -36,15 +35,15 @@ class CasinoPlayController extends Controller
             try {
                 $exa->createMember($user->username, $user->email, 'member123', $user->name ?? $user->username, $user->phone ?? '08123456789');
                 $playerId = $user->username;
-                $user->update(['exa_player_id' => $playerId]);
+                $user->exa_player_id = $playerId;
             } catch (\Exception $e) {
-                $user->update(['exa_player_id' => $playerId]);
+                $user->exa_player_id = $playerId;
             }
         }
 
         $result = $exa->launchGame(
             $playerId,
-            $game->game_uid,
+            $game_uid,
             'https://casino.gamexaglobal.com'
         );
 

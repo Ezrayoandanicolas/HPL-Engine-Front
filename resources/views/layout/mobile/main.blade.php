@@ -85,10 +85,36 @@
         @include('layout.mobile.navbar')
     </div>
 
-    @include('sweetalert::alert')
-    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @php
+        $__flashes = [];
+        foreach (['success','error','info','warning'] as $__t) {
+            if (session($__t)) { $__flashes[] = ['type'=>$__t, 'message'=>session($__t)]; }
+        }
+        foreach ($errors->all() as $__e) { $__flashes[] = ['type'=>'error', 'message'=>$__e]; }
+    @endphp
+    @if(count($__flashes))
+    <script>
+    var __flashes = @json($__flashes);
+    __flashes.forEach(function(f) {
+        Swal.fire({ icon: f.type, title: f.message, confirmButtonText: 'OK' });
+    });
+    </script>
+    @endif
 
     <script src="{{ asset('assets/js/mobile/mobile.js') }}"></script>
+
+<div id="popup_modal" style="display:none!important"><div id="popup_modal_body"></div></div>
+<script>
+window.addEventListener('DOMContentLoaded', function() {
+    window.registerPopup = function() {};
+    if ($) {
+        $('#popup_modal').on('show.bs.modal', function(e) { e.preventDefault(); });
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+    }
+});
+</script>
 
     <script type="text/javascript">
         window.addEventListener('DOMContentLoaded', () => {
@@ -776,6 +802,7 @@
             }
         }
     </style>
+
 
 </body>
 

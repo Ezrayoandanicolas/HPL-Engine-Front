@@ -29,7 +29,7 @@
                         <th>Kategori</th>
                         <th>Gambar</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th class="text-right">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                                     <span class="badge badge-danger">Off</span>
                                 @endif
                             </td>
-                            <td>
+                            <td class="text-right">
                                 @if ($item->status == 1)
                                     <button data-toggle="modal" data-target="#non{{ $item->id }}" type="button"
                                         class="btn btn-danger">Non-Aktifkan</button>

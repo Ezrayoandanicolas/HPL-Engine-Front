@@ -43,10 +43,10 @@
             <span class="balance">
                 <a href="#" data-toggle="dropdown">
                     IDR
-                    <span class="balance total_balance">{{ auth()->check() ? (auth()->user()->saldo ?? 0) : 0 }}</span>
+                    <span class="balance total_balance" id="mob_nav_main">{{ auth()->check() ? number_format((auth()->user()->saldo ?? 0),0,',','.') : 0 }}</span>
                     <span class="locked-balance locked_balance_container" hidden="">
                         <i class="glyphicon glyphicon-lock"></i>
-                       <span class="balance total_balance">{{ auth()->check() ? (auth()->user()->saldo ?? 0) : 0 }}</span>
+                       <span class="balance total_balance" id="mob_nav_main_locked">{{ auth()->check() ? number_format((auth()->user()->saldo ?? 0),0,',','.') : 0 }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu vendor-balances-container wallet-dropdown-menu">
@@ -57,7 +57,7 @@
             💳 SALDO WALLET
         </h5>
 
-        <div class="balance total_balance">
+        <div class="balance total_balance" id="mob_main_header">
             Rp {{ number_format($mainBalance,0,',','.') }}
         </div>
 
@@ -67,21 +67,21 @@
 
         <div class="wallet-row">
             <span>💳 Main Wallet</span>
-            <strong class="text-success">
+            <strong class="text-success" id="mob_wallet_main">
                 Rp {{ number_format($mainBalance,0,',','.') }}
             </strong>
         </div>
 
         <div class="wallet-row">
             <span>🎰 Slot Wallet</span>
-            <strong class="text-warning">
+            <strong class="text-warning" id="mob_wallet_slot">
                 Rp {{ number_format($slotBalance,0,',','.') }}
             </strong>
         </div>
 
         <div class="wallet-row">
             <span>🎮 Game Wallet</span>
-            <strong class="text-info">
+            <strong class="text-info" id="mob_wallet_game">
                 Rp {{ number_format($gameBalance,0,',','.') }}
             </strong>
         </div>
@@ -217,7 +217,7 @@
             type: 'GET',
             dataType: 'json',
             success: function(response) {
-                var unreadCount = response.unreadCount;
+                var unreadCount = response.unreadCount || 0;
                 $('#mobile_unread_announcements').attr('data-announcement-count', unreadCount);
                 $('#mobile_announcement_count').text('(' + unreadCount + ')');
                 $('#transaction_in').text('(' + unreadCount + ')');
@@ -297,4 +297,24 @@
     $(document).ready(function() {
         updateAnnouncementCount();
     });
+</script>
+<script>
+$(function() {
+    function refreshMobileBalance() {
+        $.get('/balance', function(res) {
+            var fmt = function(n) { return Number(n || 0).toLocaleString('id-ID'); };
+            var fmtRp = function(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); };
+            if (res.main != null) {
+                $('#mob_nav_main').text(fmt(res.main));
+                $('#mob_nav_main_locked').text(fmt(res.main));
+                $('#mob_main_header').text(fmtRp(res.main));
+                $('#mob_wallet_main').text(fmtRp(res.main));
+            }
+            if (res.slot != null) $('#mob_wallet_slot').text(fmtRp(res.slot));
+            if (res.game != null) $('#mob_wallet_game').text(fmtRp(res.game));
+        });
+    }
+    refreshMobileBalance();
+    setInterval(refreshMobileBalance, 5000);
+});
 </script>

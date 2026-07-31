@@ -2,60 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bank;
-use App\Models\Deposite;
-use App\Models\Withdraw;
-use App\Models\Transaksi;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class HistoryTransaksiController extends Controller
+class HistoryTransaksiController extends FrontendController
 {
-
     public function index()
     {
-        $deposits = Transaksi::orderBy('created_at', 'DESC')
-            ->whereIn('status_id', [2, 3])
-            ->where('type', 1)
-            ->get();
-        return view('backoffice.histori_transaksi.histori_transaksi', compact('deposits'));
+        $resp = $this->apiGet('transactions/deposits-completed');
+        $deposits = collect($resp['data']['transactions']['data'] ?? [])->map(fn($d) => (object) $d);
+
+        $respW = $this->apiGet('transactions/withdraws-completed');
+        $withdraws = collect($respW['data']['transactions']['data'] ?? [])->map(fn($w) => (object) $w);
+
+        return view('backoffice.histori_transaksi.histori_transaksi', compact('deposits', 'withdraws'));
     }
 
     public function getDepositHistory()
     {
-        // Fetch deposit transactions from the database
-        $deposits = Transaksi::orderBy('created_at', 'DESC')
-            ->whereIn('status_id', [2, 3])
-            ->where('type', 1)
-            ->get();
-
-        // Return JSON response
+        $resp = $this->apiGet('transactions/deposits-completed');
+        $deposits = $resp['data']['transactions']['data'] ?? [];
         return response()->json($deposits);
     }
 
     public function getWithdrawHistory()
     {
-        // Fetch withdraw transactions from the database
-        $withdraws  = Transaksi::orderBy('created_at', 'DESC')
-            ->whereIn('status_id', [2, 3])
-            ->where('type', 2)
-            ->get();
-
-        // Return JSON response
+        $resp = $this->apiGet('transactions/withdraws-completed');
+        $withdraws = $resp['data']['transactions']['data'] ?? [];
         return response()->json($withdraws);
     }
 
     public function getBankName(Request $request)
     {
-        $transaksi = Transaksi::where('status_id', 2)
-            ->where('type', 2)
-            ->get();
-        $bankId = $transaksi->bank_id;
-        $bank = Bank::find($bankId);
-        if ($bank) {
-            return response()->json(['bank_name' => $bank->nama_penerima]);
-        } else {
-            return response()->json(['bank_name' => null]);
-        }
+        $response = $this->apiGet('banks');
+        return response()->json($response);
     }
 }

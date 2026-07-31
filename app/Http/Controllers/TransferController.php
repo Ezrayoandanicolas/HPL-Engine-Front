@@ -2,39 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\WalletService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Services\WalletService;
-use App\Models\Setting;
 
-class TransferController extends Controller
+class TransferController extends FrontendController
 {
     protected $wallet;
 
     public function __construct(WalletService $wallet)
     {
+        parent::__construct();
         $this->wallet = $wallet;
     }
 
     public function index()
     {
+        $data = $this->fetchPage('home');
         $user = Auth::user();
-
-        $setting = Setting::orderBy('created_at', 'DESC')->first();
-
-        return view('transfer', [
-            'setting'     => $setting,
-            'mainBalance' => $this->wallet->getMainBalance($user),
-            'slotBalance' => $this->wallet->getSlotBalance($user),
-            'gameBalance' => $this->wallet->getGameBalance($user),
-        ]);
+        $mainBalance = $this->wallet->getMainBalance($user);
+        $slotBalance = $this->wallet->getSlotBalance($user);
+        $gameBalance = $this->wallet->getGameBalance($user);
+        return view('transfer', compact('mainBalance', 'slotBalance', 'gameBalance') + $data);
     }
 
     public function transfer(Request $request)
     {
         $request->validate([
-            'from'   => 'required',
-            'to'     => 'required',
+            'from'   => 'required|in:main,slot,game',
+            'to'     => 'required|in:main,slot,game',
             'amount' => 'required|numeric|min:1000',
         ]);
 
@@ -42,48 +38,31 @@ class TransferController extends Controller
             return back()->with('error', 'Asal dan tujuan transfer tidak boleh sama.');
         }
 
-        try {
+        $user = Auth::user();
+        $amount = (float) $request->amount;
 
-            $user = Auth::user();
+        $response = $this->apiPost('/wallet/transfer', [
+            'user_id' => $user->id,
+            'from'    => $request->from,
+            'to'      => $request->to,
+            'amount'  => $amount,
+        ]);
 
-            switch ($request->from . '-' . $request->to) {
+        if (!empty($response['success'])) {
+            $this->syncSessionUser($user, $response['balance'] ?? null);
 
-                case 'main-slot':
-                    $this->wallet->transferToSlot($user, $request->amount);
-                    break;
-
-                case 'slot-main':
-                    $this->wallet->transferFromSlot($user, $request->amount);
-                    break;
-
-                case 'main-game':
-                    $this->wallet->transferToGame($user, $request->amount);
-                    break;
-
-                case 'game-main':
-                    $this->wallet->transferFromGame($user, $request->amount);
-                    break;
-
-                case 'game-slot':
-                    $this->wallet->transferFromGame($user, $request->amount);
-                    $this->wallet->transferToSlot($user, $request->amount);
-                    break;
-
-                case 'slot-game':
-                    $this->wallet->transferFromSlot($user, $request->amount);
-                    $this->wallet->transferToGame($user, $request->amount);
-                    break;
-
-                default:
-                    return back()->with('error', 'Transfer tidak didukung.');
-            }
-
-            return back()->with('success', 'Transfer berhasil.');
-
-        } catch (\Exception $e) {
-
-            return back()->with('error', $e->getMessage());
-
+            return back()->with('success', $response['message'] ?? 'Transfer berhasil.');
         }
+
+        return back()->with('error', $response['message'] ?? 'Transfer gagal.');
+    }
+
+    private function syncSessionUser($user, ?array $balance = null): void
+    {
+        $sessionUser = session('api_user', []);
+        $sessionUser['saldo'] = $balance['main'] ?? $user->saldo;
+        $sessionUser['saldo_slot'] = $balance['slot'] ?? $user->saldo_slot;
+        $sessionUser['saldo_game'] = $balance['game'] ?? $user->saldo_game;
+        session(['api_user' => $sessionUser]);
     }
 }

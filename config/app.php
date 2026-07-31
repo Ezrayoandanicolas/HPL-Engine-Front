@@ -194,4 +194,13 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
     ])->toArray(),
 
+    /*
+    |--------------------------------------------------------------------------
+    | API Configuration
+    |--------------------------------------------------------------------------
+    */
+
+    'api_base_url' => env('API_BASE_URL', 'http://127.0.0.1:8111/api'),
+    'api_key' => env('API_KEY'),
+
 ];

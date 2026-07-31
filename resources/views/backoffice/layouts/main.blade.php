@@ -1,7 +1,8 @@
 <?php
-use App\Models\Setting;
-
-$setting = Setting::first();
+$settingService = app(\App\Services\ApiService::class);
+$settingResp = $settingService->get('admin/settings');
+$settingData = $settingResp['data']['setting'] ?? [];
+$setting = (object) $settingData;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +14,16 @@ $setting = Setting::first();
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Google Font: Inter (modern) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            important: true,
+            corePlugins: { preflight: false },
+        }
+    </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('/../../Admin/plugins/fontawesome-free/css/all.min.css') }}">
     {{-- {{ asset('/css/bootstrap-tagsinput.css') }} --}}
@@ -47,6 +55,7 @@ $setting = Setting::first();
     <script src="{{ asset('/../../Admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Custom style -->
     <link rel="stylesheet" href="{{ asset('/../../Admin/css/backoffice.css') }}">
+    <link rel="stylesheet" href="{{ asset('/../../Admin/css/backoffice-modern.css') }}">
     <link rel="icon" href="{{ asset('/../../Admin/image/NYOBAINmini.png') }}" type="image/gif">
 
 
@@ -95,9 +104,6 @@ $setting = Setting::first();
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="{{ asset('/../../Admin/plugins/jquery/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('/../../Admin/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -137,7 +143,6 @@ $setting = Setting::first();
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function checkDeposits() {
             $.ajax({
@@ -179,7 +184,43 @@ $setting = Setting::first();
 
 
         setInterval(checkWithdraws, 2000);
+
+        // Notifications
+        function checkNotifications() {
+            $.get('/Admin/Dashboard/notifications/unread', function(res) {
+                var items = res.data || [];
+                $('#notifCount').text(items.length);
+                $('#notifHeader').text(items.length + ' Notifications');
+                var html = '';
+                items.forEach(function(n) {
+                    var icon = n.type == 'deposit' ? 'fa-arrow-down text-success' : 'fa-arrow-up text-warning';
+                    var link = n.type == 'withdraw' ? '/Admin/Dashboard/Withdraw' : '/Admin/Dashboard/Tranksaksi';
+                    html += '<div class="dropdown-divider"></div><a href="' + link + '" class="dropdown-item"><i class="fas ' + icon + ' mr-2"></i> ' + n.message + ' <span class="float-right text-muted text-sm">' + n.time + '</span></a>';
+                });
+                if (!items.length) html = '<div class="dropdown-divider"></div><a href="#" class="dropdown-item text-muted">Tidak ada notifikasi</a>';
+                $('#notifList').html(html);
+            });
+        }
+        setInterval(checkNotifications, 5000);
+        checkNotifications();
     </script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @php
+        $__flashes = [];
+        foreach (['success','error','info','warning','LoginError'] as $__t) {
+            if (session($__t)) { $__flashes[] = ['type'=>$__t === 'LoginError' ? 'error' : $__t, 'message'=>session($__t)]; }
+        }
+        foreach ($errors->all() as $__e) { $__flashes[] = ['type'=>'error', 'message'=>$__e]; }
+    @endphp
+    @if(count($__flashes))
+    <script>
+    var __flashes = @json($__flashes);
+    __flashes.forEach(function(f) {
+        Swal.fire({ icon: f.type, title: f.message, confirmButtonText: 'OK' });
+    });
+    </script>
+    @endif
 </body>
 
 </html>

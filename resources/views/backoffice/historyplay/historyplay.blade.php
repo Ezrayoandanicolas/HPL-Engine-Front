@@ -1,110 +1,86 @@
 @extends('backoffice.layouts.main')
 @section('content')
+<div class="container-fluid">
     <div class="card mt-3">
         <div class="card-header">
-            <form id="searchForm" class="form-horizontal">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="date_start" class="form-text">Tanggal</label>
-                            <div class="tanggal">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="date" name="date_start" class="form-control" id="date_start"
-                                            value="">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="date" name="date_end" class="form-control" id="date_end"
-                                            value="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="extplayer">User</label>
-                            <select name="extplayer" class="form-control" id="extplayer">
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->extplayer }}">{{ $user->username }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" id="btn_search" class="btn btn-success"><i class="fa fa-search"></i>
-                                Filter</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <h4 class="card-title"><i class="fas fa-history mr-2"></i> Riwayat Permainan</h4>
         </div>
         <div class="card-body">
+            <form id="searchForm" class="form-inline mb-3" style="gap:8px">
+                <input type="date" name="date_start" class="form-control form-control-sm" id="date_start" value="{{ date('Y-m-d') }}">
+                <input type="date" name="date_end" class="form-control form-control-sm" id="date_end" value="{{ date('Y-m-d') }}">
+                <select name="extplayer" class="form-control form-control-sm" id="extplayer">
+                    <option value="">Semua User</option>
+                    @foreach ($users as $user)
+                    <option value="{{ $user->username }}">{{ $user->username }}</option>
+                    @endforeach
+                </select>
+                <select name="game_type" class="form-control form-control-sm" id="game_type">
+                    <option value="SLOT">Slot</option>
+                    <option value="LIVE">Live Casino</option>
+                    <option value="SPORTS">Sportsbook</option>
+                </select>
+                <button type="button" id="btn_search" class="btn btn-success btn-sm"><i class="fa fa-search mr-1"></i> Cari</button>
+            </form>
             <div id="results">
-                <!-- Hasil pencarian akan ditampilkan di sini -->
+                <div class="table-responsive">
+                    <table id="history-table" class="table table-hover table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Game</th>
+                                <th>Tipe</th>
+                                <th>Bet</th>
+                                <th>Win</th>
+                                <th>User</th>
+                                <th>Txn ID</th>
+                                <th>Waktu</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#btn_search').on('click', function() {
-                var formData = {
-                    date_start: $('#date_start').val(),
-                    date_end: $('#date_end').val(),
-                    extplayer: $('#extplayer').val(),
-                    _token: '{{ csrf_token() }}'
-                };
-
-                $.ajax({
-                    url: '/fetch-game-history',
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        var resultsDiv = $('#results');
-                        resultsDiv.empty();
-
-                        if (response.status === 'success' && response.data.length > 0) {
-                            var table = $(
-                                '<table class="table table-bordered" id="example2"><thead><tr><th>Game Code</th><th>Bet Money</th><th>Win Money</th><th>Transaction ID</th><th>Transaction Type</th></tr></thead><tbody></tbody></table>'
-                            );
-                            var tbody = table.find('tbody');
-
-                            $.each(response.data, function(index, entry) {
-                                var row = $('<tr></tr>');
-                                row.append('<td>' + entry.game_code + '</td>');
-                                row.append('<td>' + entry.bet_money + '</td>');
-                                row.append('<td>' + entry.win_money + '</td>');
-                                row.append('<td>' + entry.txn_id + '</td>');
-                                row.append('<td>' + entry.txn_type + '</td>');
-                                tbody.append(row);
-                            });
-
-                            resultsDiv.append(table);
-
-                            // Inisialisasi DataTables dengan responsif
-                            $('#example2').DataTable({
-                                paging: true,
-                                lengthChange: false,
-                                searching: true,
-                                ordering: true,
-                                info: true,
-                                autoWidth: false,
-                                responsive: true, // Mengaktifkan responsif
-                                order: [
-                                    [1, 'desc']
-                                ]
-                            });
-                        } else {
-                            resultsDiv.append(
-                                '<p>No results found for the selected criteria.</p>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            });
+</div>
+<script>
+$(function() {
+    var table = $('#history-table').DataTable({
+        paging: true, lengthChange: false, searching: false, ordering: true, info: false, autoWidth: false, responsive: true,
+        data: [],
+        columns: [
+            { data: 'no' },
+            { data: 'game_code' },
+            { data: 'type' },
+            { data: 'bet_money', render: function(d) { return Number(d||0).toLocaleString(); } },
+            { data: 'win_money', render: function(d) { return Number(d||0).toLocaleString(); } },
+            { data: 'user_code' },
+            { data: 'txn_id' },
+            { data: 'created_at' },
+        ]
+    });
+    $('#btn_search').on('click', function() {
+        $.ajax({
+            url: '/fetch-game-history',
+            type: 'POST',
+            data: {
+                date_start: $('#date_start').val(),
+                date_end: $('#date_end').val(),
+                extplayer: $('#extplayer').val(),
+                game_type: $('#game_type').val(),
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(res) {
+                var data = (res.data || []);
+                if (!Array.isArray(data)) data = [data];
+                var rows = data.map(function(d, i) { d.no = i+1; return d; });
+                table.clear().rows.add(rows).draw();
+            },
+            error: function() { alert('Gagal memuat data'); }
         });
-    </script>
+    });
+    $('#btn_search').click();
+});
+</script>
 @endsection

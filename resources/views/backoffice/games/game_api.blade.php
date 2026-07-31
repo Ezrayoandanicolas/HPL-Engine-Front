@@ -17,7 +17,7 @@
                         <th class="text-center">API Key</th>
                         <th class="text-center">Secret Key</th>
                         <th class="text-center">URL Request</th>
-                        <th class="text-center"></th>
+                        <th class="text-right"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,7 +29,7 @@
                         <td>{{ $item->api_key }}</td>
                         <td>{{ $item->secret_key }}</td>
                         <td>{{ $item->url_request }}</td>
-                        <td>
+                        <td class="text-right">
                             <button data-toggle="modal" data-id="{{ $item->id }}" data-obj="{{ json_encode($item) }}" type="button" class="btn btn-primary btn-edit">Ubah</button>
                         </td>
                     </tr>

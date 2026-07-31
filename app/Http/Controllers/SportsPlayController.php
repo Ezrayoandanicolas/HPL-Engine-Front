@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\API\Exa;
-use App\Models\Sport;
 use Illuminate\Support\Facades\Auth;
 use App\Services\WalletService;
 
@@ -18,8 +17,8 @@ class SportsPlayController extends Controller
 
     public function play($game_uid)
     {
-        $game = Sport::where('game_uid', $game_uid)->firstOrFail();
         $user = Auth::user();
+        if (!$user) return redirect('/login');
 
         $gameBalance = $this->wallet->getGameBalance($user);
         if ($gameBalance <= 0) {
@@ -39,12 +38,12 @@ class SportsPlayController extends Controller
             } catch (\Exception $e) {
                 // use fallback player ID
             }
-            $user->update(['exa_player_id' => $playerId]);
+            $user->exa_player_id = $playerId;
         }
 
         $result = $exa->launchGame(
             $playerId,
-            $game->game_uid,
+            $game_uid,
             'https://gamexaglobal.com'
         );
 

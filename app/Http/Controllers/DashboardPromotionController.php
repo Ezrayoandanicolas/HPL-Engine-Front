@@ -2,139 +2,109 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Promotion;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
-class DashboardPromotionController extends Controller
+class DashboardPromotionController extends BaseAdminController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $Promotion = Promotion::latest()->get();
-        return view('backoffice.promosi.promosi', [
-
-            'promotions' => $Promotion
-        ]);
+        $resp = $this->adminGet('promotions');
+        $promotions = $resp['data']['promotions'] ?? [];
+        $promotions = json_decode(json_encode($promotions));
+        return view('backoffice.promosi.promosi', compact('promotions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('Dashboard.Promotion.create', []);
+        return view('Dashboard.Promotion.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'title' => 'required|max:255',
-            'keterangan' => 'required|max:255',
-            'bonus' => 'required',
-            'jenis_pemberian' => 'required|max:255',
-            'jenis_promosi' => 'required|max:25',
-            'min_deposite' => 'required',
-            'max_deposite' => 'required',
-            'tanggal_mulai' => 'required',
-            'tanggal_akhir' => 'required',
-            'turnover' => 'required',
-            'img' => 'image|file|mimes:jpeg,png,webp,jpg|max:5050',
-            'body' => 'required'
-        ]);
+        $data = $request->except('_token', '_method');
 
-        if ($request->file('img')) {
-            $validateData['img'] = $request->file('img')->store('post-images');
+        if ($request->hasFile('img')) {
+            $authParams = $this->getAuthParams();
+            $multipart = [];
+            foreach ($data as $key => $value) {
+                if ($request->hasFile($key)) {
+                    $multipart[] = [
+                        'name' => $key,
+                        'contents' => fopen($request->file($key)->getPathname(), 'r'),
+                        'filename' => $request->file($key)->getClientOriginalName(),
+                    ];
+                } else {
+                    $multipart[] = ['name' => $key, 'contents' => $value];
+                }
+            }
+            foreach ($authParams as $key => $value) {
+                $multipart[] = ['name' => $key, 'contents' => $value];
+            }
+            $this->uploadFileToApi('promotions', $multipart);
+        } else {
+            $this->adminPost('promotions', $data);
         }
-
-        $validateData['user_id'] = auth()->User()->id;
-        $validateData['status'] = 'aktif';
-        $validateData['tanggal_mulai'] = $request->tanggal_mulai;
-        $validateData['tanggal_akhir'] = $request->tanggal_akhir;
-        Promotion::create($validateData);
 
         return redirect('/Admin/Dashboard/Promotion')->with('success', 'Promotion has been added!!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $resp = $this->adminGet("promotions/{$id}");
+        $promotion = $resp['data']['promotion'] ?? null;
+        if (!$promotion) {
+            return response()->json(['error' => 'Not found'], 404);
+        }
+        return response()->json(['promotion' => $promotion]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $Promotion = Promotion::findOrFail($id);
-        return view('Dashboard.Promotion.edit', [
-
-            'Promotion' => $Promotion
-
-        ]);
+        $resp = $this->adminGet("promotions/{$id}");
+        $promotion = $resp['data']['promotion'] ?? null;
+        if (!$promotion) abort(404);
+        $promotion = (object) $promotion;
+        return view('Dashboard.Promotion.edit', ['Promotion' => $promotion]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-       
+        $data = $request->except('_token', '_method');
+
+        if ($request->hasFile('img')) {
+            $authParams = $this->getAuthParams();
+            $multipart = [];
+            foreach ($data as $key => $value) {
+                if ($request->hasFile($key)) {
+                    $multipart[] = [
+                        'name' => $key,
+                        'contents' => fopen($request->file($key)->getPathname(), 'r'),
+                        'filename' => $request->file($key)->getClientOriginalName(),
+                    ];
+                } else {
+                    $multipart[] = ['name' => $key, 'contents' => $value];
+                }
+            }
+            foreach ($authParams as $key => $value) {
+                $multipart[] = ['name' => $key, 'contents' => $value];
+            }
+            $this->uploadFileToApi("promotions/{$id}", $multipart);
+        } else {
+            $this->adminPost("promotions/{$id}", $data);
+        }
+
+        return redirect('/Admin/Dashboard/Promotion')->with('success', 'Promotion has been Updated!!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Promotion $Promotion)
+    public function destroy($id)
     {
-        Promotion::destroy($Promotion->id);
-        if ($Promotion->img) {
-            Storage::delete($Promotion->img);
-        }
-        Promotion::destroy($Promotion->id);
-        return redirect('/Admin/Dashboard/Promotion')->with('success', 'New Posts has been deleted!!');
+        $this->adminDelete("promotions/{$id}");
+        return redirect('/Admin/Dashboard/Promotion')->with('success', 'Deleted!');
     }
 
     public function getPromotions()
     {
-        try {
-            // Mengambil semua data promosi dari database
-            $promotions = Promotion::all();
-
-            // Mengembalikan data promosi dalam bentuk JSON
-            return response()->json(['promotions' => $promotions], 200);
-        } catch (\Exception $e) {
-            // Jika terjadi kesalahan, mengembalikan pesan error
-            return response()->json(['error' => 'Failed to fetch promotions.'], 500);
-        }
+        $resp = $this->adminGet('promotions');
+        return response()->json(['promotions' => $resp['data']['promotions'] ?? []]);
     }
 }

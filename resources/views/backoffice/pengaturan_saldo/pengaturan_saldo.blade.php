@@ -172,6 +172,7 @@
                     {
                         sWidth: '10%',
                         mData: 'id',
+                        sClass: 'text-right',
                         mRender: render_transfer
                     }
                 ]

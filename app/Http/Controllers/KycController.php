@@ -2,31 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Network;
-use App\Models\Verifikasi;
 use Illuminate\Http\Request;
 
-class KycController extends Controller
+class KycController extends BaseAdminController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $verifikasi = Verifikasi::orderBy('created_at', 'DESC')->where('status', 'menunggu')->get();
-        // return response()->json($verifikasi);
-        return view('backoffice.kyc.kyc', compact('verifikasi'));
+        $resp = $this->adminGet('verifications', [
+            'status' => $request->input('status', 'menunggu'),
+            'search' => $request->input('search'),
+        ]);
+        $verifikasi = $resp['data']['verifications']['data'] ?? [];
+
+        return view('backoffice.kyc.kyc', [
+            'verifikasi' => $verifikasi,
+        ]);
+    }
+
+    public function newVerifications(Request $request)
+    {
+        $sinceId = $request->input('since_id', 0);
+        $resp = $this->adminGet('verifications-new', [
+            'since_id' => $sinceId,
+            'status'   => $request->input('status', 'menunggu'),
+        ]);
+        $newVerif = $resp['data']['verifications'] ?? [];
+
+        return response()->json([
+            'verifications' => $newVerif,
+        ]);
     }
 
     public function updateStatus(Request $request, $id)
     {
-
-        $verifikasi = Verifikasi::findOrFail($id);
-
-        if ($request->action === 'acc') {
-            $verifikasi->status = 'verifikasi';
-        } elseif ($request->action === 'tolak') {
-            $verifikasi->status = 'ditolak';
-        }
-
-        $verifikasi->save();
+        $this->adminPost("verifications/{$id}/update", ['action' => $request->action]);
         return redirect()->back()->with('success', 'KYC status updated successfully.');
     }
 }

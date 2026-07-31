@@ -2,99 +2,87 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Banner;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
-class BannerController extends Controller
+class BannerController extends BaseAdminController
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $Banner = Banner::all();
-        return view('backoffice.banner.banner', ['Banner' => $Banner]);
+        $resp = $this->adminGet('banners');
+        $Banner = $resp['data']['banners'] ?? [];
+        $Banner = json_decode(json_encode($Banner));
+        return view('backoffice.banner.banner', compact('Banner'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('Dashboard.Banner.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
+        $authParams = $this->getAuthParams();
+        $data = $request->except('_token', '_method');
 
-            'img' => 'image|file|mimes:jpeg,png,webp,jpg|max:4048',
-            'Judul' => 'required'
-
-        ]);
-
-        if ($request->file('img')) {
-            $validateData['img'] = $request->file('img')->store('post-images');
+        if ($request->hasFile('img')) {
+            $multipart = [];
+            foreach ($request->except('_token', '_method') as $key => $value) {
+                if ($request->hasFile($key)) {
+                    $multipart[] = [
+                        'name' => $key,
+                        'contents' => fopen($request->file($key)->getPathname(), 'r'),
+                        'filename' => $request->file($key)->getClientOriginalName(),
+                    ];
+                } else {
+                    $multipart[] = ['name' => $key, 'contents' => $value];
+                }
+            }
+            foreach ($authParams as $key => $value) {
+                $multipart[] = ['name' => $key, 'contents' => $value];
+            }
+            $this->uploadFileToApi('banners', $multipart);
+        } else {
+            $this->adminPost('banners', $data);
         }
-        $validateData['status'] = 1;
-
-        Banner::create($validateData);
-
         return redirect('/Admin/Dashboard/Banner')->with('success', 'Banner has been added!!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        $Banner = Banner::find($id);
-        return view('Dashboard.Banner.edit', ['Banner' => $Banner]);
+        $resp = $this->adminGet("banners/{$id}");
+        $Banner = $resp['data']['banner'] ?? null;
+        if (!$Banner) abort(404);
+        $Banner = (object) $Banner;
+        return view('Dashboard.Banner.edit', compact('Banner'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        $Banner = Banner::find($id);
-        if ($request->status != null) {
-            $Banner->status = $request->status;
-        } else {
-            $Banner->Judul = $request->Judul;
-            if ($request->hasFile('img')) {
-                $Banner->img = $request->file('img')->store('post-images');
-            }
+        $authParams = $this->getAuthParams();
+        $data = $authParams;
+        if ($request->status !== null) {
+            $data['status'] = $request->status;
         }
-        $Banner->save();
-
+        if ($request->has('Judul')) {
+            $data['Judul'] = $request->Judul;
+        } else {
+            $data['Judul'] = '';
+        }
+        if ($request->hasFile('img')) {
+            $multipart = [['name' => 'img', 'contents' => fopen($request->file('img')->getPathname(), 'r'), 'filename' => $request->file('img')->getClientOriginalName()]];
+            foreach ($data as $k => $v) {
+                $multipart[] = ['name' => $k, 'contents' => $v];
+            }
+            $this->uploadFileToApi("banners/{$id}", $multipart);
+        } else {
+            $this->adminPost("banners/{$id}", $data);
+        }
         return redirect('/Admin/Dashboard/Banner')->with('success', 'Banner has been Updated!!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $Banner = Banner::find($id);
-        if ($Banner->img) {
-            Storage::delete($Banner->img);
-        }
-        Banner::destroy($Banner->id);
+        $this->adminDelete("banners/{$id}");
         return redirect('/Admin/Dashboard/Banner')->with('success', 'Banner has been deleted!!');
     }
 }

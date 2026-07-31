@@ -53,7 +53,7 @@
                         <div class="promotion-list" id="content-promo-list-x">
                             @foreach ($promotion as $promotion)
                                 <div class="promotion-item" style="margin-top: 20px;">
-                                    <img src="{{ asset('storage/' . $promotion->img) }}">
+                                    <img src="{{ storageUrl($promotion->img) }}">
                                     <div class="promotion-footer">
                                         <div class="promotion-label">
                                             <h2>{{ $promotion->title }}</h2>

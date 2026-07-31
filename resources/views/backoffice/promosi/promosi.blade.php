@@ -342,7 +342,7 @@ $(function() {
             $('#edit-tanggal_akhir').val(p.tanggal_akhir);
             $('#edit-body').val(p.body);
             if (p.img) {
-                $('#edit-image-preview').html('<img src="/storage/' + p.img + '" class="img-thumbnail" style="max-height:80px">');
+                $('#edit-image-preview').html('<img src="{{ storageBaseUrl() }}' + p.img + '" class="img-thumbnail" style="max-height:80px">');
             } else {
                 $('#edit-image-preview').html('<span class="text-muted">Belum ada gambar</span>');
             }

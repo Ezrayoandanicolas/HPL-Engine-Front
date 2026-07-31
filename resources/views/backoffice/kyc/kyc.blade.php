@@ -8,7 +8,7 @@ function previewImage(src) {
 function kycRow(v, idx) {
     var badge = v.status === 'menunggu' ? 'badge-warning' : (v.status === 'verifikasi' ? 'badge-success' : 'badge-danger');
     var label = v.status === 'menunggu' ? 'Menunggu' : (v.status === 'verifikasi' ? 'Terverifikasi' : 'Ditolak');
-    var imgHtml = v.img ? '<a href="javascript:void(0)" onclick="previewImage(\'/storage/' + v.img + '\')"><img src="/storage/' + v.img + '" class="img-thumbnail" style="max-height:50px"></a>' : '<span class="text-muted">-</span>';
+    var imgHtml = v.img ? '<a href="javascript:void(0)" onclick="previewImage(\'{{ storageBaseUrl() }}' + v.img + '\')"><img src="{{ storageBaseUrl() }}' + v.img + '" class="img-thumbnail" style="max-height:50px"></a>' : '<span class="text-muted">-</span>';
     var csrf = $('meta[name="csrf-token"]').attr('content');
     var u = v.user || {};
     var aksi = '';
@@ -137,8 +137,8 @@ $(function() {
                             <td>{{ $v['fullName'] ?? '-' }}</td>
                             <td>
                                 @if (!empty($v['img']))
-                                <a href="javascript:void(0)" onclick="previewImage('{{ asset('storage/' . $v['img']) }}')">
-                                    <img src="{{ asset('storage/' . $v['img']) }}" alt="KYC" class="img-thumbnail" style="max-height:50px">
+                                <a href="javascript:void(0)" onclick="previewImage('{{ storageUrl($v['img']) }}')">
+                                    <img src="{{ storageUrl($v['img']) }}" alt="KYC" class="img-thumbnail" style="max-height:50px">
                                 </a>
                                 @else
                                 <span class="text-muted">-</span>

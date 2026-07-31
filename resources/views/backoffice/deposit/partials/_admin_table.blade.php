@@ -99,8 +99,8 @@
                         </td>
                         <td>
                             @if (!empty($t['img']))
-                            <a href="javascript:void(0)" onclick="previewImage('{{ asset('storage/' . $t['img']) }}')">
-                                <img src="{{ asset('storage/' . $t['img']) }}" alt="Bukti" class="img-thumbnail" style="max-height:50px">
+                            <a href="javascript:void(0)" onclick="previewImage('{{ storageUrl($t['img']) }}')">
+                                <img src="{{ storageUrl($t['img']) }}" alt="Bukti" class="img-thumbnail" style="max-height:50px">
                             </a>
                             @else
                             <span class="text-muted">-</span>

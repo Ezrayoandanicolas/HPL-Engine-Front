@@ -221,7 +221,7 @@
                                         <!-- QR Code Section -->
                                         @if ($bank->image_qr)
                                             <div>
-                                                <img src="{{ asset('storage/' . $bank->image_qr) }}" alt="BANK"
+                                                <img src="{{ storageUrl($bank->image_qr) }}" alt="BANK"
                                                     class="img-fluid mx-auto d-block" style="max-width: 100%;">
                                             </div>
                                         @else

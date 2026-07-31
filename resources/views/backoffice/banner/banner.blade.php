@@ -60,8 +60,8 @@
                             <td>{{ $loop->iteration }}</td>
                             <td><strong>{{ $item->Judul }}</strong></td>
                             <td>
-                                <a href="javascript:void(0)" onclick="previewBanner('{{ asset('storage/' . $item->img) }}')">
-                                    <img src="{{ asset('storage/' . $item->img) }}" class="img-thumbnail" style="max-height:60px">
+                                <a href="javascript:void(0)" onclick="previewBanner('{{ storageUrl($item->img) }}')">
+                                    <img src="{{ storageUrl($item->img) }}" class="img-thumbnail" style="max-height:60px">
                                 </a>
                             </td>
                             <td>
@@ -212,7 +212,7 @@
                     </div>
                     <div class="form-group">
                         <label>Gambar Saat Ini</label>
-                        <div><img src="{{ asset('storage/' . $item->img) }}" class="img-thumbnail" style="max-height:80px"></div>
+                        <div><img src="{{ storageUrl($item->img) }}" class="img-thumbnail" style="max-height:80px"></div>
                     </div>
                     <div class="form-group">
                         <label>Ganti Gambar <small class="text-muted">(kosongkan jika tidak diubah)</small></label>

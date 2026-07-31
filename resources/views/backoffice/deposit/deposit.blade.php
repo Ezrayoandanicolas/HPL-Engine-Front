@@ -9,7 +9,7 @@ function depositRow(t, idx) {
     var status = parseInt(t.status_id);
     var badge = status === 1 ? 'badge-warning' : (status === 2 ? 'badge-success' : 'badge-danger');
     var label = status === 1 ? 'Pending' : (status === 2 ? 'Sukses' : 'Ditolak');
-    var img = t.img ? '<a href="javascript:void(0)" onclick="previewImage(\'/storage/' + t.img + '\')"><img src="/storage/' + t.img + '" class="img-thumbnail" style="max-height:50px"></a>' : '<span class="text-muted">-</span>';
+    var img = t.img ? '<a href="javascript:void(0)" onclick="previewImage(\'{{ storageBaseUrl() }}' + t.img + '\')"><img src="{{ storageBaseUrl() }}' + t.img + '" class="img-thumbnail" style="max-height:50px"></a>' : '<span class="text-muted">-</span>';
     var u = t.user || {};
     var csrf = $('meta[name="csrf-token"]').attr('content');
     var aksi = '';

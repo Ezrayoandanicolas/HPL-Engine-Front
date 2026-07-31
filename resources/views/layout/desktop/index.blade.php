@@ -8,7 +8,7 @@
                     <div class="">
                         <a href="/promotion" target="_blank">
                             <img alt="AMSGROUP" height="600" loading="lazy"
-                                src="{{ asset('storage/' . $banner->img) }}" title="AMSGROUP" width="1920" />
+                                src="{{ storageUrl($banner->img) }}" title="AMSGROUP" width="1920" />
                         </a>
                     </div>
                 @endforeach
@@ -568,7 +568,7 @@
                     <div class="">
                         <a href="/promotion" target="_blank">
                             <img alt="AMSGROUP" height="600" loading="lazy"
-                                src="{{ asset('storage/' . $banner->img) }}" title="AMSGROUP" width="1920" />
+                                src="{{ storageUrl($banner->img) }}" title="AMSGROUP" width="1920" />
                         </a>
                     </div>
                 @endforeach

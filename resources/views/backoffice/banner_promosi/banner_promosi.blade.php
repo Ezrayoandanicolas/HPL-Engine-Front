@@ -42,7 +42,7 @@
                             <td>{{ $item->batas_waktu }}</td>
                             <td>{{ $item->kategori }}</td>
                             <td>
-                                <img src="{{ asset('storage/' . $item->gambar) }}" style="max-width:150px" />
+                                <img src="{{ storageUrl($item->gambar) }}" style="max-width:150px" />
                             </td>
                             <td>
                                 @if ($item->status == 1)
@@ -183,7 +183,7 @@
                                                         <input type="file" class="form-control-file" name="gambar"
                                                             value="{{ $item->gambar }}" id="gambar">
                                                         <div class="mt-3">
-                                                            <img src="{{ asset('storage/' . $item['gambar']) }}"
+                                                            <img src="{{ storageUrl($item['gambar']) }}"
                                                                 style="max-width:150px" />
                                                         </div>
                                                     </div>

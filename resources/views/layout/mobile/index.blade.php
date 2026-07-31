@@ -46,7 +46,7 @@
                      <div class="">
                          <a href="/promotion" target="_blank">
                              <img alt="AMSGROUP" height="600" loading="lazy"
-                                 src="{{ asset('storage/' . $banners->img) }}" title="{{ $banners->title }}"
+                                 src="{{ storageUrl($banners->img) }}" title="{{ $banners->title }}"
                                  width="1920" />
                          </a>
                      </div>

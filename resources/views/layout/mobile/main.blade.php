@@ -65,7 +65,7 @@
                 <header class="site-header">
                     <a href="/" class="logo">
                         <picture>
-                            <img alt="Logo" loading="lazy" src="{{ asset('storage/' . $setting->logo) }}" />
+                            <img alt="Logo" loading="lazy" src="{{ storageUrl($setting->logo) }}" />
                         </picture>
                     </a>
 

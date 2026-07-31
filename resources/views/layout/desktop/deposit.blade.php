@@ -382,7 +382,7 @@
                                                 </div>
                                                 @if ($bank->image_qr)
                                                     <div>
-                                                        <img src="{{ asset('storage/' . $bank->image_qr) }}"
+                                                        <img src="{{ storageUrl($bank->image_qr) }}"
                                                             alt="BANK" class="img-fluid mx-auto d-block"
                                                             style="max-width: 100%;">
                                                     </div>
@@ -411,9 +411,9 @@
                                                     <div data-section="right">
                                                         <div data-bank-icon="">
                                                             <div id="bank_info_logo"
-                                                                data-image-path="{{ asset('storage/') . $bank->image_qr }}"
+                                                                data-image-path="{{ storageUrl($bank->image_qr) }}"
                                                                 style="display: none;"><img
-                                                                    src="{{ asset('storage/') . $bank->image_qr }}">
+                                                                    src="{{ storageUrl($bank->image_qr) }}">
                                                             </div>
                                                             <h3 id="bank_info_name" class="bank-name"
                                                                 style="display: none;">{{ $bank->nama_bank }}</h3>
@@ -433,7 +433,7 @@
                                                         </div>
                                                         <div id="bank_info_logo_footer" style="display: block;">
                                                             @if ($bank->image_qr)
-                                                                <img src="{{ asset('storage/' . $bank->image_qr) }}"
+                                                        <img src="{{ storageUrl($bank->image_qr) }}"
                                                                     alt="Bank QR">
                                                             @else
                                                                 <span class="mt-2"> {{ $bank->nama_bank }}</span>

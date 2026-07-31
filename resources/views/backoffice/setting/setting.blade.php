@@ -61,7 +61,7 @@
                                     <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Logo Web</label>
                                     <div class="border rounded p-4 text-center bg-light mb-2" style="min-height:150px;display:flex;align-items:center;justify-content:center;">
                                         @if(!empty($setting['logo']))
-                                        <img class="img-fluid" src="{{ asset('storage/' . $setting['logo']) }}" style="max-height:120px">
+                                        <img class="img-fluid" src="{{ storageUrl($setting['logo']) }}" style="max-height:120px">
                                         @else
                                         <span class="text-muted"><i class="fas fa-image fa-2x d-block mb-2"></i>Belum ada logo</span>
                                         @endif
@@ -77,7 +77,7 @@
                                     <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Icon Web</label>
                                     <div class="border rounded p-4 text-center bg-light mb-2" style="min-height:150px;display:flex;align-items:center;justify-content:center;">
                                         @if(!empty($setting['icon']))
-                                        <img class="img-fluid" src="{{ asset('storage/' . $setting['icon']) }}" style="max-height:120px">
+                                        <img class="img-fluid" src="{{ storageUrl($setting['icon']) }}" style="max-height:120px">
                                         @else
                                         <span class="text-muted"><i class="fas fa-image fa-2x d-block mb-2"></i>Belum ada icon</span>
                                         @endif

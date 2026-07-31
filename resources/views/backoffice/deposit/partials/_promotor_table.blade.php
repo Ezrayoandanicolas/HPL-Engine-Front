@@ -63,8 +63,8 @@
                         <td>
                             @php $img = $t['img'] ?? $t->img ?? ''; @endphp
                             @if($img)
-                            <a href="javascript:void(0)" onclick="previewImage('{{ asset('storage/' . $img) }}')">
-                                <img src="{{ asset('storage/' . $img) }}" alt="Bukti" class="img-thumbnail" style="max-height:50px">
+                            <a href="javascript:void(0)" onclick="previewImage('{{ storageUrl($img) }}')">
+                                <img src="{{ storageUrl($img) }}" alt="Bukti" class="img-thumbnail" style="max-height:50px">
                             </a>
                             @else
                             <span class="text-muted">-</span>

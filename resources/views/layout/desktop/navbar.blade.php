@@ -9,7 +9,7 @@
                             <picture>
                         <img alt="Logo"
                             loading="lazy"
-                            src="{{ asset('storage/' . $setting->logo) }}"
+                            src="{{ storageUrl($setting->logo) }}"
                             style="transform:translateY(-8px);">
                     </picture>
                         </a>
@@ -773,7 +773,7 @@
                             <picture>
                         <img alt="Logo"
                             loading="lazy"
-                            src="{{ asset('storage/' . $setting->logo) }}"
+                            src="{{ storageUrl($setting->logo) }}"
                             style="transform:translateY(-8px);">
                     </picture>
                         </a>

@@ -36,7 +36,7 @@
                                 <div class="col-sm-4 text-center standard-button-group"
                                     style="background-color: #2c2c2c; color: #ffffff; padding: 15px; border-radius: 10px;">
                                     <div class="qr-code" id="referral-qr-code">
-                                        <img src="{{ asset('storage/' . $verifikasi->barcode) }}" alt="">
+                                        <img src="{{ storageUrl($verifikasi->barcode) }}" alt="">
                                     </div>
                                 </div>
                                 <div class="col-sm-8">

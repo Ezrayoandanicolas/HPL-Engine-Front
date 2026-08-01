@@ -60,7 +60,7 @@ class RegisterasiController extends FrontendController
             ['ref_code' => $refferalcode, 'ref_link' => $Url]
         ));
 
-        if (isset($response['success'])) {
+        if ($response['success'] ?? false) {
             $login = $this->apiPost('auth/login', [
                 'username' => $request->username,
                 'password' => $request->password,

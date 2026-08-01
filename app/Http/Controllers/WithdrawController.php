@@ -23,7 +23,7 @@ class WithdrawController extends FrontendController
             'amount' => 'required',
         ]);
         $response = $this->apiPost('withdraws', $request->all());
-        if (isset($response['success'])) {
+        if ($response['success'] ?? false) {
             return redirect('/withdraw')->with('success', 'Withdraw Berhasil');
         }
         return back()->with('error', $response['message'] ?? 'Withdraw gagal');

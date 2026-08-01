@@ -20,16 +20,28 @@ class DepositController extends FrontendController
         $request->validate([
             'bankMember' => 'required|max:255',
             'amount' => 'required',
-            'img' => 'image|file|mimes:jpeg,png,jpg|max:2024',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg|max:2024',
         ]);
-        $payload = $request->all();
-        if ($request->file('img')) {
-            $payload['img'] = $request->file('img')->store('post-images');
-        } else {
-            $payload['img'] = NULL;
+
+        $multipart = [];
+        foreach ($request->except('_token', '_method') as $key => $value) {
+            if ($request->hasFile($key)) {
+                $multipart[] = [
+                    'name' => $key,
+                    'contents' => fopen($request->file($key)->getPathname(), 'r'),
+                    'filename' => $request->file($key)->getClientOriginalName(),
+                ];
+            } elseif ($value !== null) {
+                $multipart[] = ['name' => $key, 'contents' => $value];
+            }
         }
-        $response = $this->apiPost('deposits', $payload);
-        if (isset($response['success'])) {
+        if (Auth::check()) {
+            $multipart[] = ['name' => 'user_id', 'contents' => Auth::id()];
+        }
+
+        $response = $this->api->postMultipart('deposits', $multipart);
+
+        if ($response['success'] ?? false) {
             return redirect('/deposit')->with('success', 'Deposit Berhasil');
         }
         return back()->with('error', $response['message'] ?? 'Deposit Gagal');

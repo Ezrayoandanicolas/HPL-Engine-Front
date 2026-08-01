@@ -14,7 +14,7 @@ class LoyalitasController extends FrontendController
     public function claimVoucher($voucherId)
     {
         $response = $this->apiPost('loyalitas/claim-voucher', ['voucher_id' => $voucherId]);
-        if (isset($response['success'])) {
+        if ($response['success'] ?? false) {
             return redirect('/loyalitas')->with('info', 'Berhasil diklaim');
         }
         return redirect()->back()->with('info', $response['message'] ?? 'Gagal mengklaim voucher');

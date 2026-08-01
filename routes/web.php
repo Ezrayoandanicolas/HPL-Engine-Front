@@ -42,7 +42,7 @@ use App\Http\Controllers\DreamtechController;
 use App\Http\Controllers\HacksawController;
 use App\Http\Controllers\LoyalitasController;
 use App\Http\Controllers\PromotionController;
-use App\Http\Controllers\AdvantplayController;
+use App\Http\Controllers\NotificationController;use App\Http\Controllers\AdvantplayController;
 use App\Http\Controllers\SettingWebController;
 use App\Http\Controllers\SportsController;
 use App\Http\Controllers\AdminLogoutController;
@@ -103,8 +103,11 @@ Route::get('/chat-sse/{token}', [ChatSseController::class, 'sse']);
 Route::middleware(['check.web'])->group(function () {
 
     Route::get('/promotion', [PromotionController::class, 'index']);
+    Route::get('/promotion-list', [NotificationController::class, 'promos']);
+    Route::get('/message-list', [NotificationController::class, 'messages']);
     Route::post('/ubah-bahasa', [LanguageController::class, 'ubahBahasa'])->name('change.language');
     Route::get('/', [HomeController::class, 'index']);
+    Route::get('/home', [HomeController::class, 'index']);
     Route::get('/balance', function () {
         if (!Auth::check()) return response()->json(['main' => 0, 'slot' => 0, 'game' => 0]);
         $api = app(\App\Services\ApiService::class);

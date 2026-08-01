@@ -296,6 +296,80 @@
     }
     $(document).ready(function() {
         updateAnnouncementCount();
+
+        function loadPromoTab() {
+            var $list = $('#mobile_notification_list');
+            $list.empty();
+            $list.append('<div class="notification-item" style="text-align:center;padding:20px;"><p>Memuat promo...</p></div>');
+            $.get('/promotion-list', function(response) {
+                $list.empty();
+                var items = Array.isArray(response) ? response : (response.data || []);
+                if (!items.length) {
+                    $('#mobile_empty_notification_container').show();
+                    return;
+                }
+                $('#mobile_empty_notification_container').hide();
+                items.forEach(function(p) {
+                    var title = p.title || 'Promo';
+                    var bonus = p.bonus;
+                    var date = new Date(p.created_at).toLocaleString();
+                    var message = bonus ? 'Anda berhasil klaim promo ' + title + ' dengan bonus ' + bonus : 'Anda berhasil klaim promo ' + title;
+                    var html = '<div class="notification-item" data-notification-type="promo">' +
+                        '<div class="notification-image" data-message-category="Promo">' +
+                        '<img loading="lazy" src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Promotion.svg?v=20240708-4">' +
+                        '</div>' +
+                        '<div class="notification-content">' +
+                        '<div class="notification-header"><span>Promo</span><span>' + date + '</span></div>' +
+                        '<h3 class="notification-title">' + title + '</h3>' +
+                        '<p>' + message + '</p></div></div>';
+                    $list.append(html);
+                });
+            }).fail(function() {
+                $list.empty();
+                $('#mobile_empty_notification_container').show();
+            });
+        }
+
+        function loadInfoTab() {
+            var $list = $('#mobile_notification_list');
+            $list.empty();
+            $list.append('<div class="notification-item" style="text-align:center;padding:20px;"><p>Memuat pesan...</p></div>');
+            $.get('/message-list', function(response) {
+                $list.empty();
+                var items = Array.isArray(response) ? response : (response.data || []);
+                if (!items.length) {
+                    $('#mobile_empty_notification_container').show();
+                    return;
+                }
+                $('#mobile_empty_notification_container').hide();
+                items.forEach(function(m) {
+                    var title = m.title || 'Informasi';
+                    var body = m.body || '';
+                    var html = '<div class="notification-item" data-notification-type="info">' +
+                        '<div class="notification-content"><div class="notification-header"><span>Info</span></div>' +
+                        '<h3 class="notification-title">' + title + '</h3>' +
+                        '<p class="notification-message">' + body + '</p></div></div>';
+                    $list.append(html);
+                });
+            }).fail(function() {
+                $list.empty();
+                $('#mobile_empty_notification_container').show();
+            });
+        }
+
+        $('.notification-tab-item').on('click', function() {
+            var tab = $(this).data('tab');
+            $('.notification-tab-item').attr('data-active', 'false');
+            $(this).attr('data-active', 'true');
+            $('#mobile_empty_notification_container').hide();
+            if (tab === 'promo') {
+                loadPromoTab();
+            } else if (tab === 'info') {
+                loadInfoTab();
+            } else {
+                updateAnnouncementCount();
+            }
+        });
     });
 </script>
 <script>

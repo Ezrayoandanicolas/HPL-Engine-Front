@@ -30,7 +30,7 @@ class BonusController extends FrontendController
     public function update($id)
     {
         $response = $this->apiPost('bonus/claim', ['promo_id' => $id]);
-        if (isset($response['success'])) {
+        if ($response['success'] ?? false) {
             return back()->with('success', 'Klaim Bonus Berhasil!');
         }
         return back()->with('info', $response['message'] ?? 'Gagal mengklaim bonus. Silakan coba lagi.');

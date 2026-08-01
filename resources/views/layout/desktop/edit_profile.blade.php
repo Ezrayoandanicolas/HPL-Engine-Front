@@ -27,8 +27,8 @@
                                                     data-val-regex="The field FullName must match the regular expression '^[0-9a-zA-Z ]*$'."
                                                     data-val-regex-pattern="^[0-9a-zA-Z ]*$"
                                                     data-val-required="The FullName field is required." id="FullName"
-                                                    name="FullName" placeholder="Nama Lengkap" readonly="readonly"
-                                                    type="text" value="Mardi Santoso"> <span
+                                                    name="FullName" placeholder="Nama Lengkap"
+                                                    type="text" value="{{ Auth()->user()->name ?: Auth()->user()->accName }}"> <span
                                                     class="standard-required-message">Nama lengkap hanya boleh berisi
                                                     karakter alfanumerik.</span>
                                             </div>
@@ -96,7 +96,7 @@
                                                     data-val-regex="The field ContactNo must match the regular expression '^[0-9]+$'."
                                                     data-val-regex-pattern="^[0-9]+$"
                                                     data-val-required="The ContactNo field is required." id="ContactNo"
-                                                    name="ContactNo" type="text" value=""> <span
+                                                    name="ContactNo" type="text" value="{{ Auth()->user()->phone }}"> <span
                                                     class="standard-required-message">Harap masukkan nomor kontak yang
                                                     valid!</span>
                                                 <button class="copy-input-button" id="copy_contact_button"
@@ -113,7 +113,7 @@
                                                 <input autocomplete="off" class="form-control" data-val="true"
                                                     data-val-email="The Email field is not a valid e-mail address."
                                                     id="Email" name="Email" placeholder="Email" type="text"
-                                                    value=""> <span class="standard-required-message">Harap masukkan
+                                                    value="{{ Auth()->user()->email }}"> <span class="standard-required-message">Harap masukkan
                                                     email yang
                                                     valid!</span>
                                             </div>
@@ -138,7 +138,7 @@
                                                 <input class="form-control" data-val="true"
                                                     data-val-regex="The field WhatsApp must match the regular expression '^[0-9]+$'."
                                                     data-val-regex-pattern="^[0-9]+$" id="WhatsApp" name="WhatsApp"
-                                                    placeholder="Nomor WhatsApp" type="text" value="">
+                                                    placeholder="Nomor WhatsApp" type="text" value="{{ Auth()->user()->whatsapp }}">
                                                 <span class="standard-required-message">Harap masukkan numerik saja</span>
                                             </div>
                                         </div>

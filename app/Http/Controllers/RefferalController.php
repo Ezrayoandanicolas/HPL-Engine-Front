@@ -6,7 +6,6 @@ use Endroid\QrCode\QrCode;
 use Illuminate\Http\Request;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class RefferalController extends FrontendController
 {
@@ -34,34 +33,34 @@ class RefferalController extends FrontendController
             'terms' => 'required|accepted',
         ]);
 
-        $payload = $request->all();
-
-        if ($request->file('img')) {
-            $payload['img'] = $request->file('img')->store('post-images');
-        }
-
         $qrCode = new QrCode($qrCodeContent);
         $writer = new PngWriter();
         $qrCodeData = $writer->write($qrCode);
 
         $filename = 'qrcode_' . $user->id . '_' . time() . '.png';
-        $barcodePath = 'post-images/' . $filename;
 
-        $saved = Storage::put($barcodePath, $qrCodeData->getString());
+        $multipart = [
+            ['name' => 'fullName', 'contents' => $request->input('fullName')],
+            ['name' => 'terms', 'contents' => '1'],
+            [
+                'name' => 'img',
+                'contents' => fopen($request->file('img')->getRealPath(), 'r'),
+                'filename' => $request->file('img')->getClientOriginalName(),
+            ],
+            [
+                'name' => 'barcode',
+                'contents' => $qrCodeData->getString(),
+                'filename' => $filename,
+            ],
+        ];
 
-        if ($saved) {
-            $payload['barcode'] = $barcodePath;
-        } else {
-            return redirect()->back()->withErrors(['msg' => 'Failed to save QR code image.']);
-        }
+        $response = $this->api->postMultipart('referral/submit-verification', $multipart);
 
-        $response = $this->apiPost('referral/submit-verification', $payload);
-
-        if (isset($response['success'])) {
+        if ($response['success'] ?? false) {
             return redirect()->back()->with('success', 'Verifikasi referral berhasil.');
         }
 
-        return redirect()->back()->withErrors(['msg' => 'Gagal menyimpan verifikasi.']);
+        return redirect()->back()->withErrors(['msg' => $response['message'] ?? 'Gagal menyimpan verifikasi.']);
     }
 
 

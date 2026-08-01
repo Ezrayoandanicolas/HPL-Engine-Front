@@ -28,11 +28,22 @@ class ProfileController extends FrontendController
     public function update(Request $request)
     {
         if (!Auth::check()) return redirect('/');
-        $request->validate([
-            'accName' => 'required|max:255',
-            'noHp' => 'nullable|max:255',
-        ]);
-        $response = $this->apiPost('profile/update', $request->only('accName', 'noHp'));
+
+        $response = $this->apiPost('profile/update', $request->only(
+            'FullName', 'accName', 'noHp', 'ContactNo', 'WhatsApp', 'Country', 'Email'
+        ));
+
+        if (!$response['success'] ?? true) {
+            return back()->with('error', $response['message'] ?? 'Gagal mengubah profile');
+        }
+
+        if (isset($response['data']['user'])) {
+            session(['api_user' => array_merge(
+                session('api_user', []),
+                (array) $response['data']['user']
+            )]);
+        }
+
         return redirect('/profile')->with('success', 'Profile Berhasil Diubah');
     }
 
@@ -47,12 +58,17 @@ class ProfileController extends FrontendController
     {
         if (!Auth::check()) return redirect('/');
         $request->validate([
-            'old_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
+            'OldPassword' => 'required',
+            'password' => 'required|min:6|confirmed',
+            'VerificationCode' => 'required|captcha',
         ]);
-        $response = $this->apiPost('profile/change-password', $request->only('old_password', 'new_password', 'new_password_confirmation'));
-        if (isset($response['error'])) {
-            return back()->with('error', $response['error']);
+        $response = $this->apiPost('profile/change-password', [
+            'old_password' => $request->input('OldPassword'),
+            'new_password' => $request->input('password'),
+            'new_password_confirmation' => $request->input('password_confirmation'),
+        ]);
+        if (!$response['success'] ?? true) {
+            return back()->with('error', $response['message'] ?? 'Gagal mengubah password');
         }
         return redirect('/profile')->with('success', 'Password Berhasil Diubah');
     }

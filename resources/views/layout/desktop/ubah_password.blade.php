@@ -37,7 +37,7 @@
                                             data-val-regex="The field NewPassword must match the regular expression '^(?=.{8,20}$)(?=.*?[a-z])(?=.*?[0-9]).*$'."
                                             data-val-regex-pattern="^(?=.{8,20}$)(?=.*?[a-z])(?=.*?[0-9]).*$"
                                             data-val-required="The NewPassword field is required." id="NewPassword"
-                                            name="NewPassword" placeholder="Kata Sandi Baru" type="password">
+                                            name="password" placeholder="Kata Sandi Baru" type="password">
                                         <span class="standard-required-message">Kata Sandi harus terdiri dari 8-20 karakter
                                             <br> Dan harus mengandung huruf dan angka</span>
                                     </div>
@@ -50,7 +50,7 @@
                                             data-val-equalto="'ConfirmPassword' and 'NewPassword' do not match."
                                             data-val-equalto-other="*.NewPassword"
                                             data-val-required="The ConfirmPassword field is required." id="ConfirmPassword"
-                                            name="ConfirmPassword" placeholder="Ulangi Kata Sandi" type="password">
+                                            name="password_confirmation" placeholder="Ulangi Kata Sandi" type="password">
                                         <span class="standard-required-message">Kata sandi tidak cocok.</span>
                                     </div>
                                 </div>

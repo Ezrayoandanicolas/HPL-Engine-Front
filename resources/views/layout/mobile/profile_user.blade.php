@@ -65,7 +65,7 @@
                                 <div class="standard-content-block">
                                     <div class="banking-details-header">
                                         <label>Detail Perbankan</label>
-                                        <a href="/mobile/bank-account">
+                                        <a href="/bank-member/account">
                                             <img loading="lazy"
                                                 src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/tabs/edit.svg?v=20240708-4">
                                         </a>
@@ -327,7 +327,7 @@
                                                                 data-val-regex-pattern="^[0-9a-zA-Z ]*$"
                                                                 data-val-required="The FullName field is required."
                                                                 id="FullName" name="FullName" placeholder="Nama Lengkap"
-                                                                type="text" value="Mardi Santoso">
+                                                                type="text" value="{{ Auth()->user()->name ?: Auth()->user()->accName }}">
                                                             <span class="standard-required-message">Nama lengkap hanya
                                                                 boleh berisi karakter alfanumerik.</span>
                                                         </div>
@@ -386,7 +386,7 @@
                                                                     data-val-regex-pattern="^[0-9]+$"
                                                                     data-val-required="The ContactNo field is required."
                                                                     id="ContactNo" name="ContactNo" type="text"
-                                                                    value="088837876512">
+                                                                    value="{{ Auth()->user()->phone }}">
                                                                 <span class="standard-required-message">Harap masukkan
                                                                     nomor
                                                                     kontak yang valid!</span>
@@ -399,7 +399,7 @@
                                                         <div class="form-group">
                                                             <label for="Email">
                                                                 <a class="not-verified-status"
-                                                                    href="/otp/verification/email" target="_blank">
+                                                                    href="/ubah/profile">
                                                                     Click here to verify your Email
                                                                     <i class="fa fa-external-link-alt"></i>
                                                                 </a>
@@ -408,7 +408,7 @@
                                                                 data-val="true"
                                                                 data-val-email="The Email field is not a valid e-mail address."
                                                                 id="Email" name="Email" placeholder="Email"
-                                                                type="text" value="sandhika@gmail.com">
+                                                                type="text" value="{{ Auth()->user()->email }}">
                                                             <span class="standard-required-message">Harap masukkan email
                                                                 yang
                                                                 valid!</span>
@@ -425,7 +425,7 @@
                                                         <div class="form-group">
                                                             <label for="WhatsApp">
                                                                 <a class="not-verified-status"
-                                                                    href="/otp/verification/whatsapp" target="_blank">
+                                                                    href="/ubah/profile">
                                                                     Click here to verify your WhatsApp
                                                                     <i class="fa fa-external-link-alt"></i>
                                                                 </a>
@@ -434,7 +434,7 @@
                                                                 data-val-regex="The field WhatsApp must match the regular expression '^[0-9]+$'."
                                                                 data-val-regex-pattern="^[0-9]+$" id="WhatsApp"
                                                                 name="WhatsApp" placeholder="Nomor WhatsApp"
-                                                                type="text" value="088837876512">
+                                                                type="text" value="{{ Auth()->user()->whatsapp }}">
                                                             <span class="standard-required-message">Harap masukkan numerik
                                                                 saja</span>
                                                         </div>

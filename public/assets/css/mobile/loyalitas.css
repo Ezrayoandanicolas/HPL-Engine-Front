@@ -972,6 +972,14 @@ tr.introjs-showElement > th {
     border-radius: 8px;
     background-color: #292929;
 }
+.loyalty-menu-container .loyalty-menu-item > div > i {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #292929;
+    font-size: 22px;
+    line-height: 1;
+    color: #f7a103;
+}
 .loyalty-menu-container .loyalty-menu-item [data-has-notification="true"] {
     position: relative;
 }

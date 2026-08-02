@@ -42,15 +42,13 @@
                         <div class="loyalty-menu-container" id="loyalty_menu">
                             <a href="/missions" class="loyalty-menu-item" id="loyalty_menu_mission">
                                 <div data-has-notification="false">
-                                    <img loading="lazy"
-                                        src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/loyalty/menu/mission.svg?v=20240813">
+                                    <i class="fas fa-list-check"></i>
                                 </div>
                                 Misi
                             </a>
                             <a href="/penukaran" class="loyalty-menu-item" id="loyalty_menu_mission">
                                 <div data-has-notification="false">
-                                    <img loading="lazy"
-                                        src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/loyalty/menu/lucky-draw-result.svg?v=20240813">
+                                    <i class="fas fa-ticket-simple"></i>
                                 </div>
                                 penukaran
                             </a>

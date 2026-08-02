@@ -3,27 +3,20 @@
     <link rel="stylesheet" href="../../../assets/css/mobile/message.css">
     <div class="messaging-side-menu">
         <button type="button" class="back-button" onclick="history.back();">
-            <img loading="lazy"
-                src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/back.svg?v=20240708-4">
+            <i class="fas fa-arrow-left"></i>
         </button>
         <div>
             Kotak Masuk
         </div>
         <div>
             <a href="#" data-target="#announcement-container" class="nav-link" data-active="true" data-count="">
-                <img loading="lazy"
-                    src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/announcement.svg?v=20240708-4"
-                    style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/announcement-active.svg?v=20240708-4);">
+                <i class="fas fa-bullhorn"></i>
             </a>
             <a href="#" data-target="#message-container" class="nav-link" data-active="false">
-                <img loading="lazy"
-                    src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/inbox.svg?v=20240708-4"
-                    style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/inbox-active.svg?v=20240708-4);">
+                <i class="fas fa-inbox"></i>
             </a>
             <a href="#" data-target="#comment-container" class="nav-link" data-active="false">
-                <img loading="lazy"
-                    src="//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/new-message.svg?v=20240708-4"
-                    style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/message/menu/new-message-active.svg?v=20240708-4);">
+                <i class="fas fa-comment-dots"></i>
             </a>
         </div>
     </div>

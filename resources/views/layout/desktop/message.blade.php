@@ -93,16 +93,15 @@
                                     @empty
                                     @endforelse
                                     </div>
-                                    <div id="announcement-transaksi-section">
-                                    @foreach ($transaksi as $transaksi)
-                                        @if ($transaksi->count() > 0)
-                                            @if ($transaksi->notes == 'read')
+<div id="announcement-transaksi-section">
+                                    @forelse ($transaksi as $trx)
+                                            @if ($trx->notes == 'read')
                                                 <div class="notification-list" id="notification_list">
                                                     <a href="#" style="display: block;">
                                                         <div class="notification-item" data-seen="true"
                                                             data-notification-type="transaction"
                                                             data-rec-id="972D41C3-802C-480D-A186-2B6568E6E15A">
-                                                            @if ($transaksi->status_id == 1)
+                                                            @if ($trx->status_id == 1)
                                                                 <div class="notification-image"
                                                                     data-message-category="Transaction"
                                                                     data-message-subcategory="Deposit"
@@ -110,7 +109,7 @@
                                                                     <img loading="lazy"
                                                                         src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg?v=20240708-4">
                                                                 </div>
-                                                            @elseif($transaksi->status_id == 2)
+                                                            @elseif($trx->status_id == 2)
                                                                 <div class="notification-image"
                                                                     data-message-category="Transaction"
                                                                     data-message-subcategory="Deposit"
@@ -118,7 +117,7 @@
                                                                     <img loading="lazy"
                                                                         src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg?v=20240708-4">
                                                                 </div>
-                                                            @elseif($transaksi->status_id == 3)
+                                                            @elseif($trx->status_id == 3)
                                                                 <div class="notification-image"
                                                                     data-message-category="Transaction"
                                                                     data-message-subcategory="Deposit"
@@ -128,68 +127,68 @@
                                                                 </div>
                                                             @else
                                                             @endif
-                                                            @if ($transaksi->type == 1)
+                                                            @if ($trx->type == 1)
                                                                 <div class="notification-content">
                                                                     <div class="notification-header">
                                                                         <span>Deposit</span>
-                                                                        <span>{{ $transaksi->created_at }}</span>
+                                                                        <span>{{ $trx->created_at }}</span>
                                                                     </div>
 
-                                                                    @if ($transaksi->status_id == 1)
+                                                                    @if ($trx->status_id == 1)
                                                                         <h3 class="notification-title">Deposit : Menunggu
                                                                         </h3>
                                                                         <p>Permintaan Deposit IDR {{ $damount }} anda
                                                                             Menunggu.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif($transaksi->status_id == 2)
+                                                                    @elseif($trx->status_id == 2)
                                                                         <h3 class="notification-title">Deposit : Disetujui
                                                                         </h3>
                                                                         <p>Permintaan Deposit IDR {{ $damount }} anda
                                                                             Disetujui.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif ($transaksi->status_id == 3)
+                                                                    @elseif ($trx->status_id == 3)
                                                                         <h3 class="notification-title">Deposit : Gagal</h3>
                                                                         <p>Permintaan Deposit IDR {{ $damount }} anda
                                                                             Gagal.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
                                                                     @else
                                                                     @endif
                                                                 </div>
-                                                            @elseif($transaksi->type == 2)
+                                                            @elseif($trx->type == 2)
                                                                 <div class="notification-content">
                                                                     <div class="notification-header">
                                                                         <span>Withdraw</span>
-                                                                        <span>{{ $transaksi->created_at }}</span>
+                                                                        <span>{{ $trx->created_at }}</span>
                                                                     </div>
 
-                                                                    @if ($transaksi->status_id == 1)
+                                                                    @if ($trx->status_id == 1)
                                                                         <h3 class="notification-title">Withdraw : Menunggu
                                                                         </h3>
                                                                         <p>Permintaan Withdraw IDR {{ $wamount }} anda
                                                                             Menunggu.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif($transaksi->status_id == 2)
+                                                                    @elseif($trx->status_id == 2)
                                                                         <h3 class="notification-title">Withdraw : Disetujui
                                                                         </h3>
                                                                         <p>Permintaan Withdraw IDR {{ $wamount }} anda
                                                                             Disetujui.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif ($transaksi->status_id == 3)
+                                                                    @elseif ($trx->status_id == 3)
                                                                         <h3 class="notification-title">Withdraw : Gagal</h3>
                                                                         <p>Permintaan Withdraw IDR {{ $wamount }} anda
                                                                             Gagal.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
                                                                     @else
                                                                     @endif
@@ -201,11 +200,11 @@
                                                 </div>
                                             @else
                                                 <div class="notification-list" id="notification_list">
-                                                    <a href="/transaksi/{{ $transaksi->id }}" style="display: block;">
+                                                    <a href="/transaksi/{{ $trx->id }}" style="display: block;">
                                                         <div class="notification-item" data-seen="false"
                                                             data-notification-type="transaction"
                                                             data-rec-id="972D41C3-802C-480D-A186-2B6568E6E15A">
-                                                            @if ($transaksi->status_id == 1)
+                                                            @if ($trx->status_id == 1)
                                                                 <div class="notification-image"
                                                                     data-message-category="Transaction"
                                                                     data-message-subcategory="Deposit"
@@ -213,7 +212,7 @@
                                                                     <img loading="lazy"
                                                                         src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg?v=20240708-4">
                                                                 </div>
-                                                            @elseif($transaksi->status_id == 2)
+                                                            @elseif($trx->status_id == 2)
                                                                 <div class="notification-image"
                                                                     data-message-category="Transaction"
                                                                     data-message-subcategory="Deposit"
@@ -221,7 +220,7 @@
                                                                     <img loading="lazy"
                                                                         src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg?v=20240708-4">
                                                                 </div>
-                                                            @elseif($transaksi->status_id == 3)
+                                                            @elseif($trx->status_id == 3)
                                                                 <div class="notification-image"
                                                                     data-message-category="Transaction"
                                                                     data-message-subcategory="Deposit"
@@ -232,69 +231,69 @@
                                                             @else
                                                             @endif
 
-                                                            @if ($transaksi->type == 1)
+                                                            @if ($trx->type == 1)
                                                                 <div class="notification-content">
                                                                     <div class="notification-header">
                                                                         <span>Deposit</span>
-                                                                        <span>{{ $transaksi->created_at }}</span>
+                                                                        <span>{{ $trx->created_at }}</span>
                                                                     </div>
 
-                                                                    @if ($transaksi->status_id == 1)
+                                                                    @if ($trx->status_id == 1)
                                                                         <h3 class="notification-title">Deposit : Menunggu
                                                                         </h3>
                                                                         <p>Permintaan Deposit IDR {{ $damount }} anda
                                                                             Menunggu.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif($transaksi->status_id == 2)
+                                                                    @elseif($trx->status_id == 2)
                                                                         <h3 class="notification-title">Deposit : Disetujui
                                                                         </h3>
                                                                         <p>Permintaan Deposit IDR {{ $damount }} anda
                                                                             Disetujui.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif ($transaksi->status_id == 3)
+                                                                    @elseif ($trx->status_id == 3)
                                                                         <h3 class="notification-title">Deposit : Gagal</h3>
                                                                         <p>Permintaan Deposit IDR {{ $damount }} anda
                                                                             Gagal.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
                                                                     @else
                                                                     @endif
                                                                 </div>
-                                                            @elseif($transaksi->type == 2)
+                                                            @elseif($trx->type == 2)
                                                                 <div class="notification-content">
                                                                     <div class="notification-header">
                                                                         <span>Withdraw</span>
-                                                                        <span>{{ $transaksi->created_at }}</span>
+                                                                        <span>{{ $trx->created_at }}</span>
                                                                     </div>
 
-                                                                    @if ($transaksi->status_id == 1)
+                                                                    @if ($trx->status_id == 1)
                                                                         <h3 class="notification-title">Withdraw : Menunggu
                                                                         </h3>
                                                                         <p>Permintaan Withdraw IDR {{ $wamount }} anda
                                                                             Menunggu.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif($transaksi->status_id == 2)
+                                                                    @elseif($trx->status_id == 2)
                                                                         <h3 class="notification-title">Withdraw : Disetujui
                                                                         </h3>
                                                                         <p>Permintaan Withdraw IDR {{ $wamount }} anda
                                                                             Disetujui.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
-                                                                    @elseif ($transaksi->status_id == 3)
+                                                                    @elseif ($trx->status_id == 3)
                                                                         <h3 class="notification-title">Withdraw : Gagal
                                                                         </h3>
                                                                         <p>Permintaan Withdraw IDR {{ $wamount }} anda
                                                                             Gagal.
                                                                             Nomor Ticket :
-                                                                            {{ $transaksi->id . 'Nex-U09' }}
+                                                                            {{ $trx->id . 'Nex-U09' }}
                                                                         </p>
                                                                     @else
                                                                     @endif
@@ -305,9 +304,8 @@
                                                     </a>
                                                 </div>
                                             @endif
-                                        @else
-                                            <div class="empty-notification-container" id="empty_notification_container"
-                                                style="display: none;">
+                                        @empty
+<div class="empty-notification-container" id="empty_notification_container">
                                                 <div class="empty-notification-image">
                                                     <picture>
                                                         <source
@@ -324,8 +322,7 @@
                                                     <p>Saat Anda mendapatkan notifikasi, mereka akan muncul di sini</p>
                                                 </div>
                                             </div>
-                                        @endif
-                                    @endforeach
+                                        @endforelse
                                 </div>
                             </div>
                             <div class="tab-content" id="message-container" style="display: none">

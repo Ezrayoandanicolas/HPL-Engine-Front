@@ -13,6 +13,7 @@ class MessageController extends FrontendController
         $transaksi = $transactions['transaksi'] ?? [];
         $damount = $transactions['damount'] ?? 'N/A';
         $wamount = $transactions['wamount'] ?? 'N/A';
+        $transaksi = json_decode(json_encode($transaksi));
         $resp = $this->apiGet('admin/messages', ['recipient_id' => Auth::id()]);
         $adminMessages = $resp['data'] ?? [];
         return view('message', array_merge(compact('transaksi', 'wamount', 'damount', 'adminMessages'), $data));

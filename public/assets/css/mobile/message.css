@@ -17,6 +17,17 @@ body[data-route="new-message"] .standard-form-container {
     background: none;
     border: none;
     padding: 0;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1;
+}
+.messaging-side-menu .nav-link i,
+.messaging-side-menu > .back-button i {
+    font-size: 22px;
+    line-height: 1;
+}
+.messaging-side-menu a[data-active="true"] i {
+    color: #f7a103;
 }
 .messaging-side-menu img {
     display: inline-block;
@@ -26,6 +37,7 @@ body[data-route="new-message"] .standard-form-container {
 .messaging-side-menu a {
     display: inline-block;
     position: relative;
+    color: #fff;
 }
 .messaging-side-menu a + a {
     margin-left: 15px;

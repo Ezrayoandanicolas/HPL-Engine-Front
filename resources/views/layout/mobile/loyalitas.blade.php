@@ -73,8 +73,8 @@
                                                 <tr class="caption">
                                                     <th> <span class="prev">&lt; </span> </th>
                                                     <th colspan="5" class="month-name">
-                                                        <div class="month-element">august</div>
-                                                        <div class="month-element">2024</div>
+                                                        <div class="month-element">{{ $calendar['month_lower'] }}</div>
+                                                        <div class="month-element">{{ $calendar['year'] }}</div>
                                                     </th>
                                                     <th><span class="next">&gt;</span> </th>
                                                 </tr>
@@ -88,298 +88,22 @@
                                                     <th>sa</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div time="1722183443342" data-tooltip=""
-                                                            class="day lastMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>28</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722269843342" data-tooltip=""
-                                                            class="day lastMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>29</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722356243342" data-tooltip=""
-                                                            class="day lastMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>30</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722442643342" data-tooltip=""
-                                                            class="day lastMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>31</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722529043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="group-event" style="padding: 10px;">
-                                                                <span>1</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722615443342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>2</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722701843342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>3</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div time="1722788243342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>4</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722874643342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>5</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1722961043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>6</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723047443342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>7</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723133843342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>8</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723220243342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>9</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723306643342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>10</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div time="1723393043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>11</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723479443342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>12</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723565843342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>13</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723652243342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>14</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723738643342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>15</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723825043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>16</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1723911443342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>17</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div time="1723997843342" data-tooltip=""
-                                                            class="day toMonth  valid real-today">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>18</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724084243342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>19</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724170643342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>20</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724257043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>21</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724343443342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>22</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724429843342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>23</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724516243342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>24</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div time="1724602643342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>25</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724689043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>26</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724775443342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>27</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724861843342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>28</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1724948243342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>29</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1725034643342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="" style="padding: 10px;">
-                                                                <span>30</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div time="1725121043342" data-tooltip=""
-                                                            class="day toMonth  valid ">
-                                                            <div class="group-event" style="padding: 10px;">
-                                                                <span>31</span>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+            <tbody>
+            @foreach ($calendar['rows'] as $row)
+                <tr>
+                    @foreach ($row as $c)
+                        <td>
+                            <div data-tooltip=""
+                                class="day {{ $c['type'] }}  valid {{ !empty($c['today']) ? 'real-today' : '' }}">
+                                <div class="" style="padding: 10px;">
+                                    <span>{{ $c['n'] }}</span>
+                                </div>
+                            </div>
+                        </td>
+                    @endforeach
+                </tr>
+            @endforeach
+            </tbody>
                                         </table>
                                         <div class="dp-clearfix"></div>
                                         <div class="time">
@@ -408,3 +132,4 @@
 
     <script src="../../../assets/js/mobile/loyalitas.js" defer></script>
 @endsection
+

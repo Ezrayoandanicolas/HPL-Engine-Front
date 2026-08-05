@@ -1,6 +1,7 @@
 @extends('layout.desktop.main')
 @section('content')
     <link rel="stylesheet" href="../../../assets/css/desktop/deposit.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/message.css">
     <div class="site-content-container" data-container-background="general">
         <div class="container">
             <div class="row">
@@ -65,7 +66,7 @@
                                     Info <span>(0)</span>
                                 </div>
                             </div>
-                            <div class="tab-content" id="announcement-container">
+                            <div class="tab-content" id="announcement-container" style="display: block;margin-top: 20px;">
                                 <div class="notification-content">
                                     <div id="announcement-admin-section">
                                     @forelse ($adminMessages as $msg)

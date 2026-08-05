@@ -144,15 +144,66 @@ $setting = (object) $settingData;
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
+        var notifiedIds = [];
+
+        var depositToast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 6000,
+            timerProgressBar: true,
+            showCloseButton: true,
+            customClass: {
+                popup: 'swal2-deposit-toast',
+                title: 'swal2-toast-title',
+                htmlContainer: 'swal2-toast-body'
+            },
+            showClass: { popup: 'animate__animated animate__fadeInRight animate__faster' },
+            hideClass: { popup: 'animate__animated animate__fadeOutRight animate__faster' },
+            didOpen: function(toast) {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
+        var withdrawToast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 6000,
+            timerProgressBar: true,
+            showCloseButton: true,
+            customClass: {
+                popup: 'swal2-withdraw-toast',
+                title: 'swal2-toast-title',
+                htmlContainer: 'swal2-toast-body'
+            },
+            showClass: { popup: 'animate__animated animate__fadeInRight animate__faster' },
+            hideClass: { popup: 'animate__animated animate__fadeOutRight animate__faster' },
+            didOpen: function(toast) {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
+            }
+        });
+
         function checkDeposits() {
             $.ajax({
                 url: '/deposits/today',
                 method: 'GET',
                 success: function(data) {
                     if (data.length > 0) {
-                        // Putar audio jika ada deposit dengan status 1
-                        const audioElement = document.getElementById('notification-deposit');
-                        audioElement.play().catch((error) => console.error('Pemutaran audio gagal:', error));
+                        document.getElementById('notification-deposit').play().catch(function(){});
+
+                        data.forEach(function(d) {
+                            if (notifiedIds.indexOf(d.id) !== -1) return;
+                            notifiedIds.push(d.id);
+                            var u = d.user || {};
+                            var amount = new Intl.NumberFormat('id-ID').format(d.amount || 0);
+                            depositToast.fire({
+                                title: '<span class="toast-icon">&#x1F4B0;</span> Deposit Baru',
+                                html: '<strong>Rp ' + amount + '</strong><br><small style="color:#9ca3af">' + (u.username || '-') + ' &middot; ' + moment(d.created_at).fromNow() + '</small>'
+                            });
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
@@ -161,19 +212,25 @@ $setting = (object) $settingData;
             });
         }
 
-
         setInterval(checkDeposits, 15000);
-    </script>
-      <script>
+
         function checkWithdraws() {
             $.ajax({
                 url: '/withdraw/today',
                 method: 'GET',
                 success: function(data) {
                     if (data.length > 0) {
-                        // Putar audio jika ada deposit dengan status 1
-                        const audioElements = document.getElementById('notification-withdraw');
-                        audioElements.play().catch((error) => console.error('Pemutaran audio gagal:', error));
+                        document.getElementById('notification-withdraw').play().catch(function(){});
+                        data.forEach(function(w) {
+                            if (notifiedIds.indexOf(w.id) !== -1) return;
+                            notifiedIds.push(w.id);
+                            var u = w.user || {};
+                            var amount = new Intl.NumberFormat('id-ID').format(w.amount || 0);
+                            withdrawToast.fire({
+                                title: '<span class="toast-icon">&#x1F4B8;</span> Withdraw Baru',
+                                html: '<strong>Rp ' + amount + '</strong><br><small style="color:#9ca3af">' + (u.username || '-') + ' &middot; ' + moment(w.created_at).fromNow() + '</small>'
+                            });
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
@@ -181,7 +238,6 @@ $setting = (object) $settingData;
                 }
             });
         }
-
 
         setInterval(checkWithdraws, 15000);
 
@@ -205,6 +261,7 @@ $setting = (object) $settingData;
         checkNotifications();
     </script>
     <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @php
         $__flashes = [];
@@ -215,12 +272,119 @@ $setting = (object) $settingData;
     @endphp
     @if(count($__flashes))
     <script>
-    var __flashes = @json($__flashes);
-    __flashes.forEach(function(f) {
-        Swal.fire({ icon: f.type, title: f.message, confirmButtonText: 'OK' });
-    });
+    (function() {
+        var customSwal = Swal.mixin({
+            customClass: {
+                popup: 'swal2-modern-popup',
+                title: 'swal2-modern-title',
+                htmlContainer: 'swal2-modern-text',
+                confirmButton: 'swal2-modern-btn',
+                icon: 'swal2-modern-icon'
+            },
+            confirmButtonText: 'OK',
+            buttonsStyling: false,
+            showCloseButton: true,
+            showClass: { popup: 'animate__animated animate__fadeInDown animate__faster' },
+            hideClass: { popup: 'animate__animated animate__fadeOutUp animate__faster' }
+        });
+
+        var __flashes = @json($__flashes);
+        __flashes.forEach(function(f) {
+            var cfg = { icon: f.type === 'LoginError' ? 'error' : f.type, title: f.message };
+
+            if (f.type === 'success') {
+                cfg.title = '<span style="color:#059669">&#10003; Berhasil</span>';
+                cfg.html = '<p style="color:#6b7280;font-size:14px;margin-top:8px">' + f.message + '</p>';
+                cfg.icon = null;
+            } else if (f.type === 'error' || f.type === 'LoginError') {
+                cfg.title = '<span style="color:#dc2626">&#10007; Gagal</span>';
+                cfg.html = '<p style="color:#6b7280;font-size:14px;margin-top:8px">' + f.message + '</p>';
+                cfg.icon = null;
+            } else if (f.type === 'warning') {
+                cfg.title = '<span style="color:#d97706">&#9888; Peringatan</span>';
+                cfg.html = '<p style="color:#6b7280;font-size:14px;margin-top:8px">' + f.message + '</p>';
+                cfg.icon = null;
+            } else if (f.type === 'info') {
+                cfg.title = '<span style="color:#0891b2">&#8505; Informasi</span>';
+                cfg.html = '<p style="color:#6b7280;font-size:14px;margin-top:8px">' + f.message + '</p>';
+                cfg.icon = null;
+            }
+
+            customSwal.fire(cfg);
+        });
+    })();
     </script>
+    <style>
+        .swal2-modern-popup {
+            border-radius: 16px !important;
+            box-shadow: 0 25px 60px rgba(0,0,0,.22), 0 8px 20px rgba(0,0,0,.1) !important;
+            padding: 28px 32px !important;
+            max-width: 440px !important;
+        }
+        .swal2-modern-title {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            padding: 0 !important;
+        }
+        .swal2-modern-text {
+            font-size: 14px !important;
+            margin: 0 !important;
+        }
+        .swal2-modern-btn {
+            display: inline-block !important;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+            color: #fff !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 10px 32px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            cursor: pointer !important;
+            transition: all .2s !important;
+            box-shadow: 0 4px 14px rgba(99,102,241,.35) !important;
+        }
+        .swal2-modern-btn:hover {
+            transform: translateY(-1px) !important;
+            box-shadow: 0 6px 20px rgba(99,102,241,.45) !important;
+        }
+        .swal2-modern-icon {
+            border: none !important;
+        }
+    </style>
     @endif
+    <style>
+        .swal2-deposit-toast {
+            background: #fff !important;
+            border-left: 4px solid #059669 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 8px 30px rgba(5,150,105,.15), 0 2px 8px rgba(0,0,0,.08) !important;
+            padding: 14px 18px !important;
+        }
+        .swal2-withdraw-toast {
+            background: #fff !important;
+            border-left: 4px solid #d97706 !important;
+            border-radius: 10px !important;
+            box-shadow: 0 8px 30px rgba(217,119,6,.15), 0 2px 8px rgba(0,0,0,.08) !important;
+            padding: 14px 18px !important;
+        }
+        .swal2-toast-title {
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: #1f2937 !important;
+        }
+        .swal2-toast-body {
+            font-size: 13px !important;
+            color: #374151 !important;
+        }
+        .toast-icon {
+            font-size: 18px;
+            margin-right: 6px;
+        }
+        .swal2-timer-progress-bar {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
+            height: 3px !important;
+        }
+    </style>
 </body>
 
 </html>

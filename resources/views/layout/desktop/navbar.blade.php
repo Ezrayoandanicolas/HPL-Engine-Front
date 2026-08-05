@@ -509,30 +509,7 @@
                                                     </div>
                                                     <div class="notification-content">
                                                         <div class="notification-list" id="notification_list">
-                                                            <a href="/desktop/messages/Announcement/04EE56E5-045B-4EF9-84FE-BD4199A351DB/Deposit/D15030853"
-                                                                style="display: block;">
-                                                                <div class="notification-item" data-seen="true"
-                                                                    data-notification-type="transaction"
-                                                                    data-rec-id="04EE56E5-045B-4EF9-84FE-BD4199A351DB"
-                                                                    data-message-sub-category="Deposit">
-                                                                    <div class="notification-image"
-                                                                        data-transaction-status="REJ">
-                                                                        <img loading="lazy"
-                                                                            src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg?v=20240708-4">
-                                                                    </div>
-                                                                    <div class="notification-content">
-                                                                        <div class="notification-header">
-                                                                            <span>Deposit</span>
-                                                                            <span>18-Jul-2024 11:40:39 PM</span>
-                                                                        </div>
-                                                                        <h3 class="notification-title">Deposit :
-                                                                            Ditolak</h3>
-                                                                        <p>Permintaan deposit IDR 50.00 anda telah
-                                                                            ditolak. Nomor Tiket : D15030853</p>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-
+                                                            <div class="notif-loading">Memuat notifikasi...</div>
                                                             <input id="request_verification_token" type="hidden"
                                                                 value="k7bXnOXjNeISS20SF7R-iiR56yXxEZwSDkjMw0kRPnWZF6jeVajxWeYoUlz8s72vhHeeLIektFk56dSoD-aFPYME0va--xn1NGql4mwRuL01">
                                                         </div>
@@ -577,6 +554,7 @@
                                     </div>
                                 </div>
 
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
                                 <script>
                                     document.getElementById('unread_announcements').addEventListener('click', function(event) {
                                         event.preventDefault();
@@ -622,90 +600,59 @@
                                         $.ajax({
                                             url: '/getAllTransaksi',
                                             type: 'GET',
-                                            dataType: 'json',
-                                            success: function(response) {
-                                                var $notificationList = $('#notification_list');
-                                                $notificationList.empty(); // Kosongkan list notifikasi sebelumnya
+                                             dataType: 'json',
+                                             success: function(response) {
+                                                 var $notificationList = $('#notification_list');
+                                                 $notificationList.empty();
 
-                                                response.forEach(function(deposit) {
+                                                 if (!response || !response.length) {
+                                                     $('#empty_notification_container').show();
+                                                 } else {
+                                                     $('#empty_notification_container').hide();
+                                                     response.forEach(function(tx) {
+                                                         var date = new Date(tx.created_at);
+                                                         var timeAgo = moment(date).fromNow();
+                                                         var amount = new Intl.NumberFormat('id-ID').format(tx.amount || 0);
 
-                                                    var formattedDate = new Date(deposit.created_at).toLocaleString();
+                                                         var typeLabel = parseInt(tx.type) === 1 ? 'Deposit' : 'Withdraw';
+                                                         var typeIcon = parseInt(tx.type) === 1 ? 'deposit' : 'withdraw';
 
-                                                    var ticketNumber =
-                                                        generateRandomTicketNumber();
+                                                         var statusClass, statusLabel, statusIcon;
+                                                         switch (tx.status_id) {
+                                                             case 1: statusClass='pending'; statusLabel='Menunggu'; statusIcon='⏳'; break;
+                                                             case 2: statusClass='approved'; statusLabel='Disetujui'; statusIcon='✓'; break;
+                                                             case 3: statusClass='rejected'; statusLabel='Ditolak'; statusIcon='✕'; break;
+                                                             default: statusClass='unknown'; statusLabel='-'; statusIcon='?'; break;
+                                                         }
 
-                                                    var statusText = '';
-                                                    var statusMessage = '';
-                                                    switch (deposit.status_id) {
-                                                        case 1:
-                                                            statusText = 'Menunggu';
-                                                            statusMessage = 'NEW';
-                                                            break;
-                                                        case 2:
-                                                            statusText = 'Disetujui';
-                                                            statusMessage = 'ACC';
-                                                            break;
-                                                        case 3:
-                                                            statusText = 'Ditolak';
-                                                            statusMessage = 'REJ';
-                                                            break;
-                                                        default:
-                                                            statusText = 'Tidak Diketahui';
-                                                            statusMessage = 'UNKNOWN';
-                                                    }
+                                                         var isUnread = tx.notes !== 'read';
+                                                         var seenAttr = isUnread ? 'false' : 'true';
+                                                         var unreadClass = isUnread ? ' notif-unread' : '';
 
-                                                    var displayView = '';
-                                                    switch (deposit.notes) {
-                                                        case 'read':
-                                                            displayView = 'true';
-                                                            break;
-                                                        case 'unread':
-                                                            displayView = 'false';
-                                                            break;
-                                                        default:
-                                                            displayView = 'Unknown Type';
-                                                            break;
-                                                    }
-                                                    var typeText = '';
-                                                    switch (deposit.type) {
-                                                        case '1':
-                                                            typeText = 'Deposit';
-                                                            break;
-                                                        case '2':
-                                                            typeText = 'Withdraw';
-                                                            break;
-                                                        default:
-                                                            typeText = 'Unknown Type';
-                                                            break;
-                                                    }
+                                                         var ticket = generateRandomTicketNumber();
 
-                                                    var notificationHtml = `
-                        <a href="/message" style="display: block;">
-                            <div class="notification-item" data-seen="${displayView}" data-notification-type="${deposit.type}" data-rec-id="${deposit.id}" data-message-sub-category="Deposit">
-                                <div class="notification-image" data-message-category="Transaction" data-message-subcategory="Deposit" data-transaction-status="${statusMessage}">
-                                    <img loading="lazy" src="//d33egg70nrp50s.cloudfront.net/Images/announcement/Deposit.svg?v=20240708-4">
-                                </div>
-                                <div class="notification-content">
-                                    <div class="notification-header">
-                                        <span>${typeText}</span>
-                                        <span>${formattedDate}</span>
-                                    </div>
-                                    <h3 class="notification-title">${typeText} : ${statusText}</h3>
-                                    <p>Permintaan deposit IDR ${deposit.amount} anda telah ${statusText}. Nomor Tiket : ${ticketNumber}</p>
-                                </div>
-                            </div>
-                        </a>
-                    `;
-                                                    $notificationList.append(notificationHtml);
-                                                });
-
-                                                // Menyembunyikan kontainer notifikasi kosong jika ada
-                                                if (response.length === 0) {
-                                                    $('#empty_notification_container').show();
-                                                } else {
-                                                    $('#empty_notification_container').hide();
-                                                }
-                                            },
+                                                         var html = '<a href="/message" class="notif-link">' +
+                                                             '<div class="notif-card' + unreadClass + '" data-seen="' + seenAttr + '" data-rec-id="' + tx.id + '">' +
+                                                                 '<div class="notif-icon ' + typeIcon + '">' +
+                                                                     '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+                                                                         (parseInt(tx.type) === 1
+                                                                             ? '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>'
+                                                                             : '<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 21H3v-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>') +
+                                                                     '</svg>' +
+                                                                 '</div>' +
+                                                                 '<div class="notif-body">' +
+                                                                     '<div class="notif-top">' +
+                                                                         '<span class="notif-type">' + typeLabel + '</span>' +
+                                                                         '<span class="notif-badge ' + statusClass + '">' + statusIcon + ' ' + statusLabel + '</span>' +
+                                                                     '</div>' +
+                                                                     '<div class="notif-amount">Rp ' + amount + '</div>' +
+                                                                     '<div class="notif-time">' + timeAgo + ' &middot; Tiket #' + ticket + '</div>' +
+                                                                 '</div>' +
+                                                             '</div></a>';
+                                                         $notificationList.append(html);
+                                                     });
+                                                 }
+                                             },
                                             error: function(xhr, status, error) {
                                                 console.error('Error fetching notifications:', error);
                                             }
@@ -714,6 +661,18 @@
 
                                     $(document).ready(function() {
                                         updateAnnouncementCount();
+
+                                        $('.notification-tab-item').on('click', function() {
+                                            $('.notification-tab-item').attr('data-active', 'false');
+                                            $(this).attr('data-active', 'true');
+
+                                            var tab = $(this).data('tab');
+                                            if (tab === 'transaction') {
+                                                updateAnnouncementCount();
+                                            } else {
+                                                $('#notification_list').html('<div class="notif-loading">Belum ada notifikasi</div>');
+                                            }
+                                        });
                                     });
                                 </script>
                                 <script>
@@ -738,6 +697,83 @@
                                         });
                                     });
                                 </script>
+                                <style>
+                                    #notification_popup .modal-content { background: #111827; border: none; border-radius: 18px; overflow: hidden; }
+                                    #notification_popup .modal-header { border-bottom: none; padding: 22px 28px 0; }
+                                    #notification_popup .modal-title { color: #f1f5f9; font-size: 18px; font-weight: 700; }
+                                    #notification_popup .modal-header .close { color: #475569; opacity: .6; text-shadow: none; font-size: 22px; margin-top: -2px; }
+                                    #notification_popup .modal-header .close:hover { color: #f1f5f9; opacity: 1; }
+                                    #notification_popup .modal-body { padding: 0; background: #111827; }
+                                    #notification_popup .modal-footer { border-top: none; padding: 16px 28px 22px; background: #111827; }
+                                    #notification_popup_body { padding: 0; background: #111827; }
+                                    .notification-popup-title { display: none; }
+                                    .notification-tabs {
+                                        display: flex; gap: 2px; background: transparent;
+                                    }
+                                    .notification-tab-item {
+                                        padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer;
+                                        color: #64748b; border-radius: 8px; transition: all .15s; margin-right: 2px;
+                                    }
+                                    .notification-tab-item[data-active="true"] { color: #e2e8f0; background: #1e293b; }
+                                    .notification-tab-item:hover:not([data-active="true"]) { color: #cbd5e1; background: rgba(255,255,255,.04); }
+                                    .notification-tab-item span { font-size: 11px; margin-left: 4px; }
+                                    .notification-tab-item[data-active="true"] span { color: #ef4444; font-weight: 700; }
+                                    .notification-content { border-radius: 14px; overflow: hidden; padding-bottom: 8px; }
+                                    .notification-footer {
+                                        display: flex; justify-content: space-between; padding: 12px 28px 20px;
+                                        background: #111827;
+                                    }
+                                    .notification-footer a { font-size: 13px; color: #e2e8f0; text-decoration: none; font-weight: 500; }
+                                    .notification-footer a:hover { color: #fff; opacity: .8; }
+                                    .empty-notification-container { text-align: center; padding: 52px 20px; background: #1e293b; }
+                                    .empty-notification-container h3 { color: #cbd5e1; font-size: 15px; font-weight: 600; margin-top: 16px; }
+                                    .empty-notification-container p { color: #64748b; font-size: 13px; }
+                                    #notification_list { max-height: 420px; overflow-y: auto; padding: 0; margin-top: 0; background: #1e293b; }
+                                    .notif-loading { text-align: center; padding: 44px 16px; color: #475569; font-size: 13px; }
+                                    .notif-link { text-decoration: none !important; display: block; padding: 0 16px; }
+                                    .notif-link:first-child .notif-card { padding-top: 18px; }
+                                    .notif-link:last-child .notif-card { border-bottom: none; padding-bottom: 10px; }
+                                    .notif-card {
+                                        display: flex; align-items: flex-start; gap: 14px;
+                                        padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+                                        transition: all .2s ease; position: relative;
+                                    }
+                                    .notif-link:hover .notif-card .notif-amount { color: #a5b4fc; }
+                                    .notif-card.notif-unread { background: transparent; }
+                                    .notif-icon {
+                                        flex-shrink: 0; width: 40px; height: 40px; border-radius: 12px;
+                                        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+                                        font-size: 18px;
+                                    }
+                                    .notif-icon.deposit { background: rgba(34,197,94,.1); color: #22c55e; }
+                                    .notif-icon.withdraw { background: rgba(234,179,8,.1); color: #eab308; }
+                                    .notif-body { flex: 1; min-width: 0; }
+                                    .notif-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+                                    .notif-type { font-size: 14px; font-weight: 600; color: #e2e8f0; }
+                                    .notif-badge {
+                                        font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 6px;
+                                        white-space: nowrap; letter-spacing: .2px;
+                                    }
+                                    .notif-badge.pending { background: rgba(234,179,8,.12); color: #eab308; }
+                                    .notif-badge.approved { background: rgba(34,197,94,.12); color: #22c55e; }
+                                    .notif-badge.rejected { background: rgba(239,68,68,.12); color: #ef4444; }
+                                    .notif-badge.unknown { background: rgba(100,116,139,.1); color: #94a3b8; }
+                                    .notif-amount { font-size: 13px; font-weight: 500; color: #94a3b8; transition: color .2s; }
+                                    .notif-time { font-size: 12px; color: #475569; margin-top: 2px; }
+                                    .notif-card.notif-unread .notif-type { font-weight: 700; }
+                                    .notif-card.notif-unread .notif-amount { color: #cbd5e1; }
+                                    .notif-card.notif-unread:before {
+                                        content: ''; position: absolute; left: -16px; top: 12px; bottom: 12px;
+                                        width: 3px; border-radius: 0 3px 3px 0; background: #6366f1;
+                                    }
+                                    #popup_modal_dismiss_button {
+                                        background: #1e293b !important; border: 1px solid rgba(255,255,255,.06) !important;
+                                        border-radius: 10px !important; padding: 8px 32px !important;
+                                        font-weight: 500 !important; font-size: 14px !important; color: #cbd5e1 !important;
+                                        transition: all .15s !important;
+                                    }
+                                    #popup_modal_dismiss_button:hover { background: #334155 !important; color: #f1f5f9 !important; }
+                                </style>
                                 <div class="user-info-item">
                                     <a href="#"
                                         onclick="window.closeWindows(); document.querySelector('#logout-form').submit()">

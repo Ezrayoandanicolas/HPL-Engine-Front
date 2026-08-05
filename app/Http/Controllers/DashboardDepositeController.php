@@ -44,6 +44,16 @@ class DashboardDepositeController extends BaseAdminController
         ]);
     }
 
+    public function statusCheck(Request $request)
+    {
+        $resp = $this->adminGet('deposits-status-check', [
+            'ids' => $request->input('ids', ''),
+        ]);
+        $removedIds = $resp['data']['removed_ids'] ?? [];
+
+        return response()->json(['removed_ids' => $removedIds]);
+    }
+
     public function edit($id)
     {
         $resp = $this->adminGet("deposites/{$id}");

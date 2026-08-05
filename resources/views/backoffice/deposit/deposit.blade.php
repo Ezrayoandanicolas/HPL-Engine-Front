@@ -29,7 +29,7 @@ function depositRow(t, idx) {
     } else {
         aksi = '<span class="badge badge-danger">Sudah ditolak</span>';
     }
-    return '<tr>' +
+    return '<tr data-id="' + t.id + '">' +
         '<td>' + idx + '</td>' +
         '<td>' + moment(t.created_at).fromNow() + '</td>' +
         '<td><strong>' + (u.username || '-') + '</strong></td>' +
@@ -58,10 +58,28 @@ $(function() {
         });
     }
     setInterval(checkNew, 10000);
+
+    function checkStatus() {
+        var ids = [];
+        $('#deposit-table1 tbody tr[data-id]').each(function() {
+            ids.push($(this).data('id'));
+        });
+        if (!ids.length) return;
+        $.get('/Admin/Dashboard/Tranksaksi/status-check', { ids: ids.join(',') }, function(res) {
+            if (res.removed_ids && res.removed_ids.length) {
+                res.removed_ids.forEach(function(id) {
+                    $('#deposit-table1 tbody tr[data-id="' + id + '"]').fadeOut(400, function() {
+                        $(this).remove();
+                    });
+                });
+            }
+        });
+    }
+    setInterval(checkStatus, 15000);
 });
 </script>
 <div id="depositContent" class="container-fluid">
-    @if (Auth()->User()->role == 'admin')
+    @if (Auth()->User()->role == 'admin' || Auth()->User()->role == 'cashier')
         @include('backoffice.deposit.partials._admin_table', ['Tranksaksi' => $Tranksaksi])
     @elseif(Auth()->User()->role == 'promotor')
         @include('backoffice.deposit.partials._promotor_table', ['userrefDeposite' => $userrefDeposite])

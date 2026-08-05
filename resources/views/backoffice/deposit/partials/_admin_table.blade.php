@@ -76,8 +76,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($Tranksaksi as $t)
-                    <tr>
+                     @forelse ($Tranksaksi as $t)
+                    <tr data-id="{{ $t['id'] }}">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ \Carbon\Carbon::parse($t['created_at'])->diffForHumans() }}</td>
                         <td><strong>{{ $t['user']['username'] ?? '-' }}</strong></td>

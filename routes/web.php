@@ -38,6 +38,7 @@ use App\Http\Controllers\ToptrendController;
 use App\Http\Controllers\TurnoverController;
 use App\Http\Controllers\WithdrawController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\DreamtechController;
 use App\Http\Controllers\HacksawController;
 use App\Http\Controllers\LoyalitasController;
@@ -82,7 +83,7 @@ use App\Http\Controllers\DashboardSportsbookController;
 use App\Http\Controllers\DashboardMessageController;
 use App\Http\Controllers\DashboardGgrController;
 use App\Http\Controllers\DashboardActivityController;
-
+use App\Http\Controllers\QrisSettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -241,6 +242,8 @@ Route::middleware(['check.web'])->group(function () {
         Route::post('/update-daily-reward', [HomeController::class, 'resetReward']);
         Route::get('/deposit', [DepositController::class, 'index']);
         Route::post('/deposit', [DepositController::class, 'store']);
+        Route::post('/deposit/qris', [DepositController::class, 'createQris']);
+        Route::post('/deposit/qris/check', [DepositController::class, 'checkQris']);
         Route::get('/history', [HistoryDepositController::class, 'index']);
        
         Route::POST('/transaction/getDepositHistory', [HistoryDepositController::class, 'getDepositHistory']);
@@ -308,7 +311,9 @@ Route::middleware(['check.web'])->group(function () {
     Route::get('/Admin/Dashboard/Withdraw/new-withdraws', [DashboardWithdrawController::class, 'newWithdraws'])->middleware('admin');
     Route::PUT('/Admin/Dashboard/Tranksaksi/{id}/update', [DashboardDepositeController::class, 'update']);
     Route::get('/Admin/Dashboard/Tranksaksi/new-deposits', [DashboardDepositeController::class, 'newDeposits'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Tranksaksi/status-check', [DashboardDepositeController::class, 'statusCheck'])->middleware('admin');
     Route::get('/Admin/Dashboard', [DashboardController::class, 'index'])->middleware('admin');
+    Route::get('/cashier/dashboard', [CashierController::class, 'dashboard'])->middleware('admin');
     Route::resource('/Admin/Dashboard/User', DashboardUserController::class);
     Route::put('/Admin/Dashboard/User/{id}', [DashboardUserController::class, 'updateUser']);
     Route::resource('/Admin/Dashboard/Tranksaksi', DashboardDepositeController::class)->Middleware('admin');
@@ -328,6 +333,8 @@ Route::middleware(['check.web'])->group(function () {
     Route::GET('/Setting', [SettingWebController::class, 'index'])->middleware('admin');
     Route::POST('/Setting', [SettingWebController::class, 'store'])->middleware('admin');
     Route::resource('/Admin/Dashboard/Manage-Bank', BankController::class)->middleware('admin');
+    Route::GET('/Admin/Dashboard/Qris-Setting', [QrisSettingController::class, 'index'])->middleware('admin');
+    Route::POST('/Admin/Dashboard/Qris-Setting', [QrisSettingController::class, 'store'])->middleware('admin');
     Route::post('/Logout', [AdminLogoutController::class, 'Logout'])->name('Logout');
     Route::POST('/Admin/Logout', [AdminLogoutController::class, 'AdminLogout'])->name('Logouts')->middleware('admin');
     Route::put('/Admin/Dashboard/User/{id}', [DashboardUserController::class, 'update'])->name('user.update');

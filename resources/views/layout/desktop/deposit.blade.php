@@ -11,16 +11,16 @@
 
                         <div class="standard-form-content deposit-container">
                             <div id="payment_method_selection" class="payment-method-selection">
-                                {{-- <div>
-                                    <input type="radio" name="PaymentType" id="payment_method_QR" value="QR" checked>
+                                <div>
+                                    <input type="radio" name="PaymentType" id="payment_method_QR" value="QR">
                                     <label for="payment_method_QR">
                                         <img loading="lazy"
                                             src="//d33egg70nrp50s.cloudfront.net/Images/payment-types/QR.svg?v=20240708-4">
                                         <span>QRIS</span>
                                     </label>
-                                </div> --}}
+                                </div>
                                 <div>
-                                    <input type="radio" name="PaymentType" id="payment_method_BANK" value="BANK">
+                                    <input type="radio" name="PaymentType" id="payment_method_BANK" value="BANK" checked>
                                     <label for="payment_method_BANK">
                                         <img loading="lazy"
                                             src="//d33egg70nrp50s.cloudfront.net/Images/payment-types/BANK.svg?v=20240708-4">
@@ -36,28 +36,24 @@
                                     </label>
                                 </div> --}}
                             </div>
-                            {{-- <form action="/deposit" enctype="multipart/form-data" id="form_QR" class="active"
-                                method="post">
+                            <form action="/deposit" enctype="multipart/form-data" id="form_QR" method="post"
+                                style="display: none;">
+                                @csrf
                                 <div class="form-group deposit-form-group">
                                     <div class="head">
                                         <label for="PaymentMethod">
                                             Metode Pembayaran
                                         </label>
                                         <div>
-                                            <a href="/desktop/history/deposit">
+                                            <a href="/history#tab-deposit">
                                                 Riwayat Deposit
                                             </a>
                                         </div>
                                     </div>
-                                    <div data-section="input">
-
-                                        <span class="field-validation-valid" data-valmsg-for="PaymentType"
-                                            data-valmsg-replace="true"></span>
-                                    </div>
                                     <hr class="deposit-gap">
                                 </div>
                                 <div class="form-group deposit-form-group">
-                                    <label for="Amount">
+                                    <label for="qris_amount">
                                         Jumlah
                                         <span data-section="asterisk">*</span>
                                     </label>
@@ -66,160 +62,32 @@
                                             <div data-field="amount">
                                                 <input autocomplete="off" class="form-control deposit_amount_input"
                                                     data-val="true" data-val-required="The Amount field is required."
-                                                    id="Amount" inputmode="decimal" name="Amount" type="text"
+                                                    id="qris_amount" inputmode="decimal" name="amount" type="text"
                                                     value="">
                                             </div>
-                                            <div class="real-deposit-amount transfer_amount"><span>IDR</span> 0</div>
+                                            <div class="real-deposit-amount transfer_amount"><span>IDR</span> <span
+                                                    id="qris_amount_display" style="font-size: 2.5rem">0</span></div>
                                         </div>
                                         <div class="deposit-amount-range">
-                                            <span id="deposit_amount_range_label">Min: 25.00 | Max: 10,000.00</span>
+                                            <span>Min: {{ number_format((($setting->min_deposit ?? 25000) / 1000), 2) }} | Max: {{ number_format((($setting->max_deposit ?? 20000000) / 1000), 2) }}</span>
                                         </div>
-                                    </div>
-                                    <input data-val="true" data-val-number="The field FastDepositNumber must be a number."
-                                        data-val-required="The FastDepositNumber field is required."
-                                        id="fast_deposit_number" name="FastDepositNumber" type="hidden" value="0.53">
-                                </div>
-                                <div class="deposit-form-group">
-                                    <div class="form-group">
-                                        <div class="to-account-label-container">
-                                            <label for="ToAccount">
-                                                Akun Tujuan
-                                                <span data-section="asterisk">*</span>
-                                            </label>
-                                        </div>
-                                        <div data-section="input">
-                                            <div class="pseudo_event_listener"
-                                                style="position: absolute; height: 34px; width: 180.214px;"></div><select
-                                                name="CompanyBankId" id="deposit_to_bank_select" class="form-control"
-                                                data-qr="true" data-val="true"
-                                                data-val-required="Pilih bank perusahaan untuk disetor"
-                                                style="pointer-events: none;">
-                                                <option value="84617a92-0a85-4f6b-845f-1a6f7b1e49d2" data-bank-name="QRIS"
-                                                    data-account-holder="NEXUSPAY DEPOSIT QR" data-account-number="QRIS"
-                                                    data-supported-banks="NEXUSPAY DEPOSIT QR" data-is-auto-approve="true"
-                                                    data-conversion-rate="0.0" data-minimum-deposit-amount="25.000000"
-                                                    data-maximum-deposit-amount="10000.000000"
-                                                    data-deposit-amount-range="Min: 25.00 | Max: 10,000.00"
-                                                    data-high-priority="true" data-admin-fee="1.10%"
-                                                    data-bank-id="84617a92-0a85-4f6b-845f-1a6f7b1e49d2"
-                                                    data-payment-type="QR" data-qr-code="" data-qr-code-format=""
-                                                    data-is-online="true"
-                                                    data-bank-logo="//d33egg70nrp50s.cloudfront.net/Images/bank-thumbnails/QRIS.webp?v=20240708-4"
-                                                    data-is-maintenance="false">
-                                                    QRIS
-                                                </option>
-                                            </select>
-                                            <span class="standard-required-message">Pilih bank perusahaan untuk
-                                                disetor</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div data-section="input" data-bank-type="qr" class="bank-info" id="bank_info"
-                                            data-high-priority="true" data-has-qr-code="false">
-                                            <div data-bank-info="header">
-                                                <h1 id="bank_info_account_name_header" style="display: none;">NEXUSPAY
-                                                    DEPOSIT QR</h1>
-                                                <div class="bank-account-number-container"
-                                                    id="bank_info_account_number_header_container" style="display: none;">
-                                                    <h2 id="bank_info_account_no_header">QRIS</h2>
-                                                </div>
-                                            </div>
-                                            <div data-bank-info="qrcode" id="bank_qr_code"></div>
-                                            <div data-bank-info="details">
-                                                <div data-section="left">
-                                                    <div class="recommended-for-instant-process">Rekomendasi<span>(Proses
-                                                            Instan)</span></div>
-                                                    <h4 id="qr_code_note" style="display: none;">Pindai/Screenshot Kode QR
-                                                        ini untuk transfer ke provider yang dituju</h4>
-                                                    <div class="admin-fee-container">
-                                                        Biaya Admin:
-                                                        <div class="admin-fee admin_fee_display">1.10%</div>
-                                                    </div>
-                                                    <a id="download_qr_code_button" class="download-qr-code-button"
-                                                        download="" style="display: none;">
-                                                        <img loading="lazy"
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/icons/wallet/download.svg?v=20240708-4">
-                                                        Unduh
-                                                    </a>
-                                                </div>
-                                                <div data-section="right">
-                                                    <div data-bank-icon="">
-                                                        <div id="bank_info_logo"
-                                                            data-image-path="//d33egg70nrp50s.cloudfront.net/Images/banks/"
-                                                            style="display: none;"><img
-                                                                src="//d33egg70nrp50s.cloudfront.net/Images/banks/qris.svg">
-                                                        </div>
-                                                        <h3 id="bank_info_name" class="bank-name" style="display: none;">
-                                                            QRIS</h3>
-                                                    </div>
-                                                    <h1 id="bank_info_account_name" style="display: none;">NEXUSPAY
-                                                        DEPOSIT QR</h1>
-                                                    <div class="bank-account-number-container"
-                                                        id="bank_info_account_number_container" style="display: none;">
-                                                        <h2 id="bank_info_account_no">QRIS</h2>
-                                                    </div>
-                                                    <div id="bank_info_logo_footer" style="display: block;"><img
-                                                            src="//d33egg70nrp50s.cloudfront.net/Images/banks/qris.svg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <input id="bank_info_account_no_hidden_input" name="ToAccountNumber"
-                                                type="hidden" value="QRIS">
-                                        </div>
-                                        <div class="deposit-summary-container">
-                                            <div class="deposit-summary-header" id="deposit_summary_header">
-                                                <span class="summary-title">Jumlah yang ditransfer</span>
-                                                <span class="summary-transfer-amount transfer-amount transfer_amount"
-                                                    data-location="summary"><span>IDR</span> 0</span>
-                                                <span class="toggler" id="deposit_summary_detail_toggler">
-                                                    <i class="glyphicon glyphicon-chevron-down"></i>
-                                                </span>
-                                            </div>
-                                            <div class="deposit-summary-content" id="deposit_summary_content">
-                                                <div class="deposit-summary-body">
-                                                    <span class="deposit-summary-title">Rincian Deposit</span>
-                                                    <div class="deposit-detail-container">
-                                                        <div class="deposit-detail-item">
-                                                            <span>Jumlah yang ditransfer</span>
-                                                            <span class="transfer-amount transfer_amount"><span>IDR</span>
-                                                                0</span>
-                                                        </div>
-                                                        <div class="deposit-detail-item" id="unique_code_container"
-                                                            style="display: none;">
-                                                            <span>Kode unik</span>
-                                                            <span class="unique-code" id="unique_code"></span>
-                                                        </div>
-                                                        <div class="deposit-detail-item">
-                                                            <span>Biaya Admin</span>
-                                                            <span class="admin_fee_display">1.10%</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="deposit-summary-footer">
-                                                    <span>Jumlah yang didapat</span>
-                                                    <span id="net_credited_amount"><span>IDR</span> 0</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group deposit-form-group" id="transaction_receipt_container"
-                                    hidden="">
-                                    <label for="TransactionReceipt">Bukti Transfer</label>
-                                    <div data-section="input" class="transaction-receipt-input-container">
-                                        <input class="form-control" id="transaction_receipt_input"
-                                            name="TransactionReceipt" type="file" value="">
-                                        <span class="upload-success-indicator" id="upload_success_indicator"
-                                            style="display: none;">
-                                            <img loading="lazy"
-                                                src="//d33egg70nrp50s.cloudfront.net/Images/icons/wallet/check-circle.svg?v=20240708-4">
-                                        </span>
                                     </div>
                                 </div>
                                 <div class="standard-button-group">
-                                    <input type="submit" class="btn btn-primary" value="KIRIM">
+                                    <button type="button" id="qris_create_btn" class="btn btn-primary">BUAT
+                                        QRIS</button>
                                 </div>
-                            </form> --}}
+                                <div id="qris_result" class="qris-result"
+                                    style="display: none; margin-top: 20px; text-align: center;">
+                                    <div class="qris-status" id="qris_status"
+                                        style="font-weight: bold; margin-bottom: 12px;"></div>
+                                    <div id="qris_qr_container"
+                                        style="background: #fff; padding: 10px; border-radius: 8px; display: inline-block;">
+                                        <img id="qris_qr_image" src="" alt="QRIS" style="max-width: 240px; width: 100%;">
+                                    </div>
+                                    <div id="qris_trx_id" style="margin-top: 10px; font-size: 12px; word-break: break-all;"></div>
+                                </div>
+                            </form>
 
                             <form action="/deposit" enctype="multipart/form-data" id="form_BANK" method="post">
                                 @csrf
@@ -1029,10 +897,12 @@
 
             function updateForms(selectedValue) {
                 for (let key in forms) {
-                    if (key === selectedValue) {
-                        forms[key].style.display = 'block';
-                    } else {
-                        forms[key].style.display = 'none';
+                    if (forms[key]) {
+                        if (key === selectedValue) {
+                            forms[key].style.display = 'block';
+                        } else {
+                            forms[key].style.display = 'none';
+                        }
                     }
                 }
             }
@@ -1043,7 +913,131 @@
             });
 
             // Initialize forms display
-            updateForms(document.querySelector('input[name="PaymentType"]:checked').value);
+            var checkedRadio = document.querySelector('input[name="PaymentType"]:checked');
+            updateForms(checkedRadio ? checkedRadio.value : 'BANK');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var qrisAmountInput = document.getElementById('qris_amount');
+            var qrisAmountDisplay = document.getElementById('qris_amount_display');
+            var qrisCreateBtn = document.getElementById('qris_create_btn');
+            var qrisResult = document.getElementById('qris_result');
+            var qrisStatus = document.getElementById('qris_status');
+            var qrisQrImage = document.getElementById('qris_qr_image');
+            var qrisTrxId = document.getElementById('qris_trx_id');
+
+            if (!qrisAmountInput || !qrisCreateBtn) {
+                return;
+            }
+
+            qrisAmountInput.addEventListener('input', function() {
+                var amountValue = qrisAmountInput.value;
+                var formattedAmount = (parseInt(amountValue) || 0) * 1000;
+                qrisAmountDisplay.textContent = formattedAmount.toLocaleString('id-ID');
+            });
+
+            function showQrisError(message) {
+                qrisResult.style.display = 'block';
+                qrisStatus.textContent = message;
+                qrisStatus.style.color = '#dc3545';
+                qrisQrImage.style.display = 'none';
+                qrisTrxId.textContent = '';
+            }
+
+            qrisCreateBtn.addEventListener('click', function() {
+                var amount = qrisAmountInput.value;
+                if (!amount || parseInt(amount) <= 0) {
+                    alert('Masukkan jumlah deposit terlebih dahulu.');
+                    return;
+                }
+
+                qrisCreateBtn.disabled = true;
+                qrisCreateBtn.textContent = 'MEMBUAT QRIS...';
+                qrisResult.style.display = 'block';
+                qrisStatus.textContent = 'Membuat pembayaran QRIS...';
+                qrisStatus.style.color = '#28a745';
+                qrisQrImage.style.display = 'none';
+
+                $.ajax({
+                    type: "POST",
+                    url: "/deposit/qris",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        amount: amount
+                    },
+                    success: function(response) {
+                        qrisCreateBtn.disabled = false;
+                        qrisCreateBtn.textContent = 'BUAT QRIS';
+
+                        if (!(response.success)) {
+                            showQrisError(response.message || 'Gagal membuat QRIS.');
+                            return;
+                        }
+
+                        var data = response.data;
+                        qrisStatus.textContent = 'Scan QRIS ini untuk membayar';
+                        qrisStatus.style.color = '#28a745';
+                        qrisQrImage.style.display = 'block';
+                        qrisQrImage.src = data.qr_image_url || data.qr_string;
+                        qrisTrxId.textContent = 'Ref: ' + data.trx_id;
+
+                        pollQrisStatus(data.trx_id);
+                    },
+                    error: function(error) {
+                        qrisCreateBtn.disabled = false;
+                        qrisCreateBtn.textContent = 'BUAT QRIS';
+                        var msg = 'Gagal membuat QRIS.';
+                        if (error.responseJSON && error.responseJSON.message) {
+                            msg = error.responseJSON.message;
+                        }
+                        showQrisError(msg);
+                    }
+                });
+            });
+
+            function pollQrisStatus(trxId) {
+                var attempts = 0;
+                var timer = setInterval(function() {
+                    attempts++;
+                    $.ajax({
+                        type: "POST",
+                        url: "/deposit/qris/check",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            trx_id: trxId
+                        },
+                        success: function(response) {
+                            if (response.success && response.data &&
+                                response.data.payment_status === 'paid') {
+                                clearInterval(timer);
+                                qrisStatus.textContent = 'PEMBAYARAN BERHASIL! Deposit Anda sudah masuk.';
+                                qrisStatus.style.color = '#28a745';
+                                setTimeout(function() {
+                                    window.location.href = '/history';
+                                }, 3000);
+                            } else if (response.success && response.data &&
+                                response.data.payment_status === 'failed') {
+                                clearInterval(timer);
+                                qrisStatus.textContent = 'Pembayaran gagal/kedaluwarsa.';
+                                qrisStatus.style.color = '#dc3545';
+                            }
+                        },
+                        error: function() {
+                            clearInterval(timer);
+                            qrisStatus.textContent = 'Gagal mengecek status. Silakan refresh.';
+                            qrisStatus.style.color = '#dc3545';
+                        }
+                    });
+
+                    if (attempts >= 120) {
+                        clearInterval(timer);
+                        qrisStatus.textContent = 'Waktu menunggu habis. Silakan cek status di riwayat.';
+                        qrisStatus.style.color = '#ffc107';
+                    }
+                }, 5000);
+            }
         });
     </script>
 @endsection

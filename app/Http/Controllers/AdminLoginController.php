@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class AdminLoginController extends Controller
+class AdminLoginController extends FrontendController
 {
     public function index()
     {
@@ -14,21 +13,39 @@ class AdminLoginController extends Controller
 
     public function auth(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'username' => 'required',
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            $user = Auth::user();
-            session(['api_user' => $user->toArray()]);
+        $response = $this->apiPost('auth/login', [
+            'username' => $request->username,
+            'password' => $request->password,
+        ]);
 
-            if (Auth::user()->role == 'cashier') {
-                return redirect('/cashier/dashboard');
-            }
-            return redirect('/Admin/Dashboard');
+        if (!$response['success']) {
+            return back()->with('error', 'Username atau password salah.');
         }
-        return back()->with('error', 'Login tidak berhasil!!');
+
+        $userData = $response['data']['user'] ?? null;
+        if (!$userData || !isset($userData['id'])) {
+            return back()->with('error', 'Gagal login.');
+        }
+
+        $role = $userData['role'] ?? '';
+        if (!in_array($role, ['admin', 'cashier', 'promotor'])) {
+            return back()->with('error', 'Akun member tidak bisa login di panel admin.');
+        }
+
+        session([
+            'api_token' => $response['data']['token'] ?? null,
+            'api_user' => $userData,
+        ]);
+        $request->session()->regenerate();
+
+        if ($role === 'cashier') {
+            return redirect('/cashier/dashboard');
+        }
+        return redirect('/Admin/Dashboard');
     }
 }

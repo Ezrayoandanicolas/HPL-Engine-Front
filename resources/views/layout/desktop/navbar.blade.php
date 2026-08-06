@@ -708,7 +708,7 @@
                                     #notification_popup_body { padding: 0; background: #111827; }
                                     .notification-popup-title { display: none; }
                                     .notification-tabs {
-                                        display: flex; gap: 2px; background: transparent;
+                                        display: flex; gap: 2px; background: transparent; padding: 10px;
                                     }
                                     .notification-tab-item {
                                         padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer;

@@ -75,6 +75,7 @@
                         <option value="">Semua Role</option>
                         <option value="member" {{ ($selectedRole ?? '') == 'member' ? 'selected' : '' }}>Member</option>
                         <option value="admin" {{ ($selectedRole ?? '') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="cashier" {{ ($selectedRole ?? '') == 'cashier' ? 'selected' : '' }}>Cashier</option>
                     </select>
                     <button type="submit" class="btn btn-primary btn-sm mr-1"><i class="fa fa-search"></i></button>
                     <button data-toggle="modal" data-target="#tambah" type="button" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Member Baru</button>
@@ -164,6 +165,7 @@
                                                 <select class="form-control" name="role">
                                                     <option value="member" {{ ($item->role ?? '') == 'member' ? 'selected' : '' }}>Member</option>
                                                     <option value="admin" {{ ($item->role ?? '') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                                    <option value="cashier" {{ ($item->role ?? '') == 'cashier' ? 'selected' : '' }}>Cashier</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">

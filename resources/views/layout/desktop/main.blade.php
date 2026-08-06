@@ -1018,9 +1018,22 @@ window.addEventListener('DOMContentLoaded', function() {
             <div class="bar3"></div>
         </div>
         <ul>
+            @php
+                $sosmedLinks = collect($setting->sosmed_links ?? [])->filter(fn($l) => trim($l['label'] ?? '') !== '' || trim($l['url'] ?? '') !== '');
+            @endphp
+            @forelse ($sosmedLinks as $link)
+            <li>
+                <a href="{{ $link['url'] ?? '#' }}" target="_blank">
+                    <img src="{{ $link['image'] ?? '' }}" alt="{{ $link['label'] ?? '' }}">
+                </a>
+                <div>
+                    {{ $link['label'] ?? '' }}
+                </div>
+            </li>
+            @empty
             <li>
                 <a href="#" target="_blank">
-                    <img src="https://hayoloh.org/img/lgo188viplink1.gif" alt="Link Vip 1 RAJAWALI88">
+                    <img src="https://hayoloh.org/img/lgo188viplink1.gif" alt="Link Vip 1">
                 </a>
                 <div>
                     Link Vip 1
@@ -1028,7 +1041,7 @@ window.addEventListener('DOMContentLoaded', function() {
             </li>
             <li>
                 <a href="https://rajawali88.online" target="_blank">
-                    <img src="https://hayoloh.org/img/lgo188viplink2.gif" alt="Link Vip 2 RAJAWALI88">
+                    <img src="https://hayoloh.org/img/lgo188viplink2.gif" alt="Link Vip 2">
                 </a>
                 <div>
                     Link Vip 2
@@ -1042,6 +1055,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     RTP SLOT
                 </div>
             </li>
+            @endforelse
         </ul>
     </div>
 

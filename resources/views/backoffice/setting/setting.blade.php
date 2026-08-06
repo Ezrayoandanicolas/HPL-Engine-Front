@@ -150,6 +150,71 @@
                         <hr class="my-4">
 
                         <div class="d-flex align-items-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center rounded-circle bg-primary text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-share-alt"></i></div>
+                            <h5 class="mb-0 ml-3">Link VIP / Sosmed</h5>
+                        </div>
+                        <p class="text-muted small">Kelola link yang tampil di widget "Klik Saya!" (floating button). Tambah, ubah, atau hapus item sesuai kebutuhan.</p>
+                        @php
+                            $sosmedLinks = $setting['sosmed_links'] ?? [];
+                            if (is_string($sosmedLinks)) { $sosmedLinks = json_decode($sosmedLinks, true) ?: []; }
+                            $sosmedLinks = is_array($sosmedLinks) ? $sosmedLinks : [];
+                        @endphp
+                        <div id="sosmed-container">
+                            @forelse ($sosmedLinks as $i => $link)
+                            <div class="row g-2 sosmed-row align-items-end">
+                                <div class="col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Label</label>
+                                        <input type="text" name="sosmed_label[]" class="form-control form-control-lg shadow-sm" placeholder="Link Vip 1" value="{{ $link['label'] ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        <label class="small font-weight-medium text-muted text-uppercase tracking-wider">URL</label>
+                                        <input type="text" name="sosmed_url[]" class="form-control form-control-lg shadow-sm" placeholder="https://example.com" value="{{ $link['url'] ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Gambar (URL)</label>
+                                        <input type="text" name="sosmed_image[]" class="form-control form-control-lg shadow-sm" placeholder="https://...gif" value="{{ $link['image'] ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-sm btn-danger remove-sosmed-row"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            @empty
+                            <div class="row g-2 sosmed-row align-items-end">
+                                <div class="col-md-3">
+                                    <div class="form-group mb-0">
+                                        <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Label</label>
+                                        <input type="text" name="sosmed_label[]" class="form-control form-control-lg shadow-sm" placeholder="Link Vip 1">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        <label class="small font-weight-medium text-muted text-uppercase tracking-wider">URL</label>
+                                        <input type="text" name="sosmed_url[]" class="form-control form-control-lg shadow-sm" placeholder="https://example.com">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-0">
+                                        <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Gambar (URL)</label>
+                                        <input type="text" name="sosmed_image[]" class="form-control form-control-lg shadow-sm" placeholder="https://...gif">
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-sm btn-danger remove-sosmed-row"><i class="fas fa-times"></i></button>
+                                </div>
+                            </div>
+                            @endforelse
+                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="add-sosmed-row"><i class="fas fa-plus"></i> Tambah Link</button>
+
+                        <hr class="my-4">
+
+                        <div class="d-flex align-items-center mb-4">
                             <div class="d-flex align-items-center justify-content-center rounded-circle bg-info text-white" style="width:38px;height:38px;font-size:16px;"><i class="fas fa-coins"></i></div>
                             <h5 class="mb-0 ml-3">Fee & Limit</h5>
                         </div>
@@ -233,4 +298,34 @@
     border-color: #6f42c1;
 }
 </style>
+<script>
+$(document).ready(function() {
+    function sosmedRowHtml() {
+        return '<div class="row g-2 sosmed-row align-items-end">' +
+            '<div class="col-md-3"><div class="form-group mb-0">' +
+            '<label class="small font-weight-medium text-muted text-uppercase tracking-wider">Label</label>' +
+            '<input type="text" name="sosmed_label[]" class="form-control form-control-lg shadow-sm" placeholder="Link Vip 1"></div></div>' +
+            '<div class="col-md-4"><div class="form-group mb-0">' +
+            '<label class="small font-weight-medium text-muted text-uppercase tracking-wider">URL</label>' +
+            '<input type="text" name="sosmed_url[]" class="form-control form-control-lg shadow-sm" placeholder="https://example.com"></div></div>' +
+            '<div class="col-md-4"><div class="form-group mb-0">' +
+            '<label class="small font-weight-medium text-muted text-uppercase tracking-wider">Gambar (URL)</label>' +
+            '<input type="text" name="sosmed_image[]" class="form-control form-control-lg shadow-sm" placeholder="https://...gif"></div></div>' +
+            '<div class="col-md-1"><button type="button" class="btn btn-sm btn-danger remove-sosmed-row"><i class="fas fa-times"></i></button></div>' +
+            '</div>';
+    }
+
+    $('#add-sosmed-row').on('click', function() {
+        $('#sosmed-container').append(sosmedRowHtml());
+    });
+
+    $(document).on('click', '.remove-sosmed-row', function() {
+        if ($('.sosmed-row').length > 1) {
+            $(this).closest('.sosmed-row').remove();
+        } else {
+            $(this).closest('.sosmed-row').find('input').val('');
+        }
+    });
+});
+</script>
 @endsection

@@ -59,6 +59,7 @@ class admin
             'Admin/Dashboard',
             'dashboard',
             'cashier/dashboard',
+            'cashier/deposit-history',
             'Admin/Dashboard/GgrBalance',
             'Admin/Profile',
             'Admin/Logout',

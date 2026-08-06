@@ -401,6 +401,12 @@
                                     <p>Data Member</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="/cashier/deposit-history" class="nav-link">
+                                    <i class="fas fa-history nav-icon"></i>
+                                    <p>Riwayat Deposit</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-header">Provider</li>

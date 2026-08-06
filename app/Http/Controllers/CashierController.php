@@ -27,4 +27,22 @@ class CashierController extends BaseAdminController
             'pendingWithdraws' => $wdResp['data']['transactions'] ?? [],
         ]);
     }
+
+    public function depositHistory(Request $request)
+    {
+        $resp = $this->adminGet('transactions/deposits-all', [
+            'status_id' => $request->input('status_id'),
+            'search'    => $request->input('search'),
+            'date_from' => $request->input('date_from'),
+            'date_to'   => $request->input('date_to'),
+        ]);
+        $deposits = collect($resp['data']['transactions']['data'] ?? [])
+            ->map(fn($d) => json_decode(json_encode($d)));
+
+        return view('backoffice.cashier.deposit_history', [
+            'deposits' => $deposits,
+            'status'   => $request->input('status_id'),
+            'search'   => $request->input('search'),
+        ]);
+    }
 }

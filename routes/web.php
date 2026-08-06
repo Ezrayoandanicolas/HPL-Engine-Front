@@ -314,6 +314,7 @@ Route::middleware(['check.web'])->group(function () {
     Route::get('/Admin/Dashboard/Tranksaksi/status-check', [DashboardDepositeController::class, 'statusCheck'])->middleware('admin');
     Route::get('/Admin/Dashboard', [DashboardController::class, 'index'])->middleware('admin');
     Route::get('/cashier/dashboard', [CashierController::class, 'dashboard'])->middleware('admin');
+    Route::get('/cashier/deposit-history', [CashierController::class, 'depositHistory'])->middleware('admin');
     Route::resource('/Admin/Dashboard/User', DashboardUserController::class);
     Route::put('/Admin/Dashboard/User/{id}', [DashboardUserController::class, 'updateUser']);
     Route::resource('/Admin/Dashboard/Tranksaksi', DashboardDepositeController::class)->Middleware('admin');

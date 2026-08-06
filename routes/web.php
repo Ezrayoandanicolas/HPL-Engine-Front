@@ -387,20 +387,11 @@ Route::middleware(['check.web'])->group(function () {
     Route::get('/Admin/Dashboard/Activity', [DashboardActivityController::class, 'index'])->middleware('admin');
     
 });
-Route::post('/session/online', function () {
-
+Route::post('/session/online', function (\App\Services\ApiService $api) {
     if (Auth::check()) {
-
-        Auth::user()->update([
-            'last_seen_at' => now()
-        ]);
-
+        $api->post('auth/ping', ['user_id' => Auth::id()]);
     }
-
-    return response()->json([
-        'status' => true
-    ]);
-
+    return response()->json(['status' => true]);
 })->middleware('auth');
 
     

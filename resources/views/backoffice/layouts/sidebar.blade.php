@@ -260,9 +260,17 @@
                         </ul>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ URL::to('Admin/Dashboard/Bonus') }}" class="nav-link">
+                                <a href="/Admin/Dashboard/Bonus" class="nav-link">
                                     <i class="fas fa-toilet-paper nav-icon"></i>
                                     <p>Bonus</p>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/Admin/Dashboard/Qris-Setting" class="nav-link">
+                                    <i class="fas fa-qrcode nav-icon"></i>
+                                    <p>QRIS Setting</p>
                                 </a>
                             </li>
                         </ul>
@@ -299,6 +307,101 @@
                             <i class="fas fa-envelope nav-icon"></i>
                             <p>Pesan</p>
                         </a>
+                    </li>
+                    <li class="nav-header">Provider</li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Fiver" class="nav-link">
+                            <i class="nav-icon fas fa-cloud-upload-alt"></i>
+                            <p>Transfer Provider</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/GgrBalance" class="nav-link">
+                            <i class="nav-icon fas fa-wallet"></i>
+                            <p>Saldo GGR Member</p>
+                        </a>
+                    </li>
+                    <li class="nav-header">Profile</li>
+                    <li class="nav-item">
+                        <a href="/Admin/Profile" class="nav-link">
+                            <i class="nav-icon fas fa-user-tie"></i>
+                            <p>
+                                Profil Admin
+                            </p>
+                        </a>
+                    </li>
+                @elseif (Auth()->User()->role == 'cashier')
+                    <li class="nav-header">Dashboard Menu</li>
+                    <li class="nav-item">
+                        <a href="{{ URL::to('cashier/dashboard') }}" class="nav-link">
+                            <i class="nav-icon 	fas fa-home"></i>
+                            <p>
+                                Dashboard
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Livechat" class="nav-link">
+                            <i class="fas fa-comment-dots nav-icon"></i>
+                            <p>Live Chat</p>
+                            @if($unreadLivechat > 0)
+                            <span class="badge badge-danger right" id="livechatBadge">{{ $unreadLivechat }}</span>
+                            @else
+                            <span class="badge badge-danger right" id="livechatBadge" style="display:none">0</span>
+                            @endif
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/Voucher" class="nav-link">
+                            <i class="nav-icon fa fa-ticket-alt"></i>
+                            <p>
+                                Voucher
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-header">Data Payment</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-balance-scale-left"></i>
+                            <p>
+                                Payment
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/Admin/Dashboard/Tranksaksi" class="nav-link">
+                                    <i class="fas fa-donate nav-icon"></i>
+                                    <p>Deposit</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Admin/Dashboard/Withdraw" class="nav-link">
+                                    <i class="fas fa-donate nav-icon"></i>
+                                    <p>Withdraw</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-header">Profile Member</li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon far fa-id-card"></i>
+                            <p>
+                                Member Management
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="/Admin/Dashboard/User" class="nav-link">
+                                    <i class="fas fa-ghost nav-icon"></i>
+                                    <p>Data Member</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-header">Provider</li>
                     <li class="nav-item">

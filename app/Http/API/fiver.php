@@ -8,6 +8,7 @@ class fiver
 {
     public $agen = "tokengames";
     public $token = "af9395d2c665e2812e76e8a123edbffa";
+    public $secret = "d9b91ffb95d8471539ca596dc61d613d";
     public $url = "https://api.nexusggr.com";
 
     public function create($username)
@@ -150,7 +151,7 @@ class fiver
         return $this->sg_connect($this->url, $param);
     }
 
-    public function callList($provider, $gamecode, $username)
+    public function callList($provider, $gamecode)
     {
         $param = [
             'method' => 'call_list',
@@ -158,13 +159,12 @@ class fiver
             'agent_token' => $this->token,
             'provider_code' => $provider,
             'game_code' => $gamecode,
-            'user_code' => $username,
         ];
 
         return $this->sg_connect($this->url, $param);
     }
 
-    public function callApply($provider, $gamecode, $username, $win_amount, $call_type, $bet_multiplier = null)
+    public function callApply($provider, $gamecode, $username, $win_amount, $call_type)
     {
         $callTypeMap = [
             'normal' => 1,
@@ -183,10 +183,6 @@ class fiver
             'call_rtp' => (float) $win_amount,
             'call_type' => $mappedCallType,
         ];
-
-        if ($bet_multiplier !== null) {
-            $param['bet_multiplier'] = $bet_multiplier;
-        }
 
         Log::info('=== CALL APPLY REQUEST ===', $param);
 

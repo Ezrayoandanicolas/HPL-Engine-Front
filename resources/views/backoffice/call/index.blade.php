@@ -270,25 +270,14 @@
                 </div>
                 <div class="form-group">
                     <label>Win Amount (Target)</label>
-                    <input type="number" class="form-control" id="caWinAmount" placeholder="Contoh: 5000" step="0.01" required>
+                    <input type="number" class="form-control" id="caWinAmount" placeholder="Klik badge Available Calls" step="0.01" required>
+                    <small class="text-warning">Gunakan nilai dari tombol "Available Calls" — isi manual di luar daftar akan ditolak.</small>
                 </div>
                 <div class="form-group">
                     <label>Call Type</label>
                     <select class="form-control" id="caCallType">
                         <option value="normal">Normal Call (1)</option>
                         <option value="buy">Buy Call (2)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Bet Multiplier (Opsional)</label>
-                    <select class="form-control" id="caBetMultiplier">
-                        <option value="">-- Tidak digunakan --</option>
-                        <option value="1">1x</option>
-                        <option value="2">2x</option>
-                        <option value="3">3x</option>
-                        <option value="4.05">4.05x</option>
-                        <option value="5">5x</option>
-                        <option value="10">10x</option>
                     </select>
                 </div>
                 <div class="mb-2">
@@ -305,8 +294,24 @@
     </div>
 </div>
 
-<script>
+ <script>
 const CSRF = '{{ csrf_token() }}';
+$.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+
+function errMsg(jqXHR) {
+    let detail = 'HTTP ' + (jqXHR.status || '?');
+    if (jqXHR.responseJSON && jqXHR.responseJSON.message) detail += ': ' + jqXHR.responseJSON.message;
+    else if (jqXHR.responseText) {
+        try {
+            const j = JSON.parse(jqXHR.responseText);
+            if (j && j.message) detail += ': ' + j.message;
+        } catch (e) {
+            const t = jqXHR.responseText.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+            if (t && t.length < 300) detail += ': ' + t;
+        }
+    }
+    return detail;
+}
 
 // ======== SET CALL (OPEN MODAL) ========
 $(document).on('click', '.set-call-btn', function() {
@@ -317,9 +322,10 @@ $(document).on('click', '.set-call-btn', function() {
     $('#caDisplayBet').text($(this).data('bet'));
     $('#caWinAmount').val('');
     $('#caCallType').val('normal');
-    $('#caBetMultiplier').val('');
     $('#caResult').html('');
+    $('#caCallListResult').html('');
     $('#callApplyModal').modal('show');
+    fetchCallList();
 });
 
 // ======== CALL APPLY ========
@@ -331,11 +337,10 @@ function doCallApply() {
         username: $('#caUsername').val(),
         win_amount: $('#caWinAmount').val(),
         call_type: $('#caCallType').val(),
-        bet_multiplier: $('#caBetMultiplier').val() || null,
     };
 
     if (!data.win_amount || parseFloat(data.win_amount) <= 0) {
-        alert('Win Amount harus diisi!'); return;
+        alert('Pilih nilai dari tombol Available Calls!'); return;
     }
 
     const $btn = $('#caApplyBtn');
@@ -354,8 +359,8 @@ function doCallApply() {
         } else {
             $('#caResult').html('<div class="alert alert-danger">❌ ' + (res.msg || 'Gagal') + '</div>');
         }
-    }).fail(function() {
-        $('#caResult').html('<div class="alert alert-danger">❌ Server error</div>');
+    }).fail(function(jqXHR) {
+        $('#caResult').html('<div class="alert alert-danger">❌ ' + errMsg(jqXHR) + '</div>');
     }).always(function() {
         $btn.prop('disabled', false).html('Apply Call');
     });
@@ -372,11 +377,22 @@ function fetchCallList() {
         _token: CSRF,
         provider: provider,
         game_code: gameCode,
-        username: $('#caUsername').val(),
     }, function(res) {
         if (res.status === 'success' && res.data && res.data.calls) {
+            const calls = res.data.calls;
+            const hasBuy = calls.some(function(c) {
+                return String(c.call_type || '').toLowerCase().indexOf('buy') !== -1;
+            });
+
+            const $buyOpt = $('#caCallType option[value="buy"]');
+            if (hasBuy) {
+                $buyOpt.prop('disabled', false).text('Buy Call (2)');
+            } else {
+                $buyOpt.prop('disabled', true).text('Buy Call (2) - game tidak punya fitur Buy');
+            }
+
             let html = '<div class="card card-body p-2 bg-dark text-white"><small><strong>Available Calls:</strong><br>';
-            (res.data.calls).forEach(function(c, i) {
+            calls.forEach(function(c, i) {
                 html += `<span class="badge badge-info mr-1 mb-1 call-option" style="cursor:pointer" data-rtp="${c.rtp}">${c.call_type}: ${c.rtp}</span>`;
             });
             html += '</small></div>';
@@ -384,6 +400,8 @@ function fetchCallList() {
         } else {
             $('#caCallListResult').html('<div class="alert alert-warning py-1 px-2 mb-0"><small>Tidak ada call tersedia.</small></div>');
         }
+    }).fail(function(jqXHR) {
+        $('#caCallListResult').html('<div class="alert alert-danger py-1 px-2 mb-0"><small>❌ ' + errMsg(jqXHR) + '</small></div>');
     });
 }
 
@@ -409,8 +427,8 @@ $(document).on('click', '.cancel-call-btn', function() {
             alert('❌ ' + (res.msg || 'Gagal'));
             $btn.prop('disabled', false).html('Cancel');
         }
-    }).fail(function() {
-        alert('❌ Server error');
+    }).fail(function(jqXHR) {
+        alert('❌ ' + errMsg(jqXHR));
         $btn.prop('disabled', false).html('Cancel');
     });
 });
@@ -448,6 +466,8 @@ function refreshPlayers() {
                 tbody.html('<tr><td colspan="11" class="text-center text-muted">Tidak ada player aktif</td></tr>');
             }
         }
+    }).fail(function(jqXHR) {
+        $('#playersTable tbody').html('<tr><td colspan="11" class="text-center text-danger">Error: ' + errMsg(jqXHR) + '</td></tr>');
     });
 }
 
@@ -458,6 +478,8 @@ function refreshHistory() {
             renderHistory(res.data.data);
             $('#historyOffset').data('offset', 50).text('Menampilkan 50 terakhir');
         }
+    }).fail(function(jqXHR) {
+        $('#historyTable tbody').html('<tr><td colspan="13" class="text-center text-danger">Error: ' + errMsg(jqXHR) + '</td></tr>');
     });
 }
 
@@ -527,8 +549,8 @@ function applySingleRtp() {
         } else {
             $('#rtpSingleResult').html('<div class="alert alert-danger">❌ ' + (res.msg || 'Gagal') + '</div>');
         }
-    }).fail(function() {
-        $('#rtpSingleResult').html('<div class="alert alert-danger">❌ Server error</div>');
+    }).fail(function(jqXHR) {
+        $('#rtpSingleResult').html('<div class="alert alert-danger">❌ ' + errMsg(jqXHR) + '</div>');
     });
 }
 
@@ -547,8 +569,8 @@ function applyBulkRtp() {
         } else {
             $('#rtpBulkResult').html('<div class="alert alert-danger">❌ ' + (res.msg || 'Gagal') + '</div>');
         }
-    }).fail(function() {
-        $('#rtpBulkResult').html('<div class="alert alert-danger">❌ Server error</div>');
+    }).fail(function(jqXHR) {
+        $('#rtpBulkResult').html('<div class="alert alert-danger">❌ ' + errMsg(jqXHR) + '</div>');
     });
 }
 </script>
@@ -578,8 +600,8 @@ function searchGameLog() {
         } else {
             $('#gameLogResult').html('<div class="alert alert-info">Tidak ada data</div>');
         }
-    }).fail(function() {
-        $('#gameLogResult').html('<div class="alert alert-danger">Gagal.</div>');
+    }).fail(function(jqXHR) {
+        $('#gameLogResult').html('<div class="alert alert-danger">Gagal: ' + errMsg(jqXHR) + '</div>');
     });
 }
 
@@ -592,7 +614,7 @@ function viewGameHistory(user, provider, gameCode) {
         } else {
             alert(res.msg || 'History tidak tersedia');
         }
-    }).fail(function() { alert('Gagal'); });
+    }).fail(function(jqXHR) { alert('Gagal: ' + errMsg(jqXHR)); });
 }
 </script>
 @endsection

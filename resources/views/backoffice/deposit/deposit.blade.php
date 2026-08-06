@@ -29,7 +29,7 @@ function depositRow(t, idx) {
     } else {
         aksi = '<span class="badge badge-danger">Sudah ditolak</span>';
     }
-    return '<tr data-id="' + t.id + '">' +
+    return '<tr data-id="' + t.id + '" data-amount="' + (t.amount || 0) + '">' +
         '<td>' + idx + '</td>' +
         '<td>' + moment(t.created_at).fromNow() + '</td>' +
         '<td><strong>' + (u.username || '-') + '</strong></td>' +
@@ -41,6 +41,29 @@ function depositRow(t, idx) {
         '<td>' + img + '</td>' +
         '<td class="text-right">' + aksi + '</td>' +
         '</tr>';
+}
+
+function updateSummaryCards() {
+    var rows = $('#deposit-table1 tbody tr[data-id]');
+    var total = rows.length;
+    var pending = 0;
+    var pendAmount = 0;
+    var rejected = 0;
+    rows.each(function() {
+        var $r = $(this);
+        var statusText = $r.find('td .badge').text().trim().toLowerCase();
+        var amount = parseFloat($r.data('amount')) || 0;
+        if (statusText === 'pending') {
+            pending++;
+            pendAmount += amount;
+        } else if (statusText === 'ditolak') {
+            rejected++;
+        }
+    });
+    $('#summaryCards .small-box:eq(0) h3').text(total);
+    $('#summaryCards .small-box:eq(1) h3').text(pending);
+    $('#summaryCards .small-box:eq(2) h3').text('Rp ' + new Intl.NumberFormat('id-ID').format(pendAmount));
+    $('#summaryCards .small-box:eq(3) h3').text(rejected);
 }
 $(function() {
     var lastId = {{ collect($Tranksaksi)->max('id') ?? 0 }};
@@ -54,6 +77,7 @@ $(function() {
                     tbody.append(depositRow(t, rowCount));
                 });
                 lastId = res.transactions[res.transactions.length - 1].id;
+                updateSummaryCards();
             }
         });
     }
@@ -70,6 +94,7 @@ $(function() {
                 res.removed_ids.forEach(function(id) {
                     $('#deposit-table1 tbody tr[data-id="' + id + '"]').fadeOut(400, function() {
                         $(this).remove();
+                        updateSummaryCards();
                     });
                 });
             }

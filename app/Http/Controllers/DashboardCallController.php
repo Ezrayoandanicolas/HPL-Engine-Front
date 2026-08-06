@@ -51,10 +51,9 @@ class DashboardCallController extends BaseAdminController
         $request->validate([
             'provider'  => 'required',
             'game_code' => 'required',
-            'username'  => 'required',
         ]);
 
-        $raw = $this->fiver->callList($request->provider, $request->game_code, $request->username);
+        $raw = $this->fiver->callList($request->provider, $request->game_code);
         $result = $this->parseResult($raw);
         return response()->json($result);
     }
@@ -67,16 +66,47 @@ class DashboardCallController extends BaseAdminController
             'username'       => 'required',
             'win_amount'     => 'required|numeric|min:1',
             'call_type'      => 'required|in:normal,buy',
-            'bet_multiplier' => 'nullable|numeric',
         ]);
+
+        $rawList = $this->fiver->callList($request->provider, $request->game_code);
+        $decodedList = json_decode($rawList, true);
+        $availableRtp = [];
+        $hasBuyCall = false;
+        if ($decodedList && isset($decodedList['status']) && (int) $decodedList['status'] === 1 && !empty($decodedList['calls'])) {
+            foreach ($decodedList['calls'] as $c) {
+                $availableRtp[] = (int) ($c['rtp'] ?? 0);
+                if (stripos((string) ($c['call_type'] ?? ''), 'buy') !== false) {
+                    $hasBuyCall = true;
+                }
+            }
+        }
+
+        $winAmount = (int) $request->win_amount;
+
+        if (empty($availableRtp)) {
+            return response()->json(['status' => 'error', 'msg' => 'Tidak ada call tersedia untuk game ini.']);
+        }
+
+        if (!in_array($winAmount, $availableRtp, true)) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Win Amount tidak valid. Pilih salah satu nilai dari Available Calls (' . min($availableRtp) . ' - ' . max($availableRtp) . ').',
+            ]);
+        }
+
+        if ($request->call_type === 'buy' && !$hasBuyCall) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Game ini tidak memiliki fitur Buy Bonus. Gunakan call type Normal.',
+            ]);
+        }
 
         $raw = $this->fiver->callApply(
             $request->provider,
             $request->game_code,
             $request->username,
-            $request->win_amount,
-            $request->call_type,
-            $request->bet_multiplier
+            $winAmount,
+            $request->call_type
         );
         $result = $this->parseResult($raw);
         return response()->json($result);

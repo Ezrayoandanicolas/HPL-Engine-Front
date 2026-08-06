@@ -31,6 +31,17 @@ class LoginController extends FrontendController
 
         $userData = $response['data']['user'] ?? null;
         if ($userData && isset($userData['id'])) {
+            if (isset($userData['role']) && in_array($userData['role'], ['cashier'])) {
+                session([
+                    'api_token' => $response['data']['token'] ?? null,
+                    'api_user' => $userData,
+                ]);
+                $request->session()->regenerate();
+                return redirect('/cashier/dashboard');
+            }
+            if (isset($userData['role']) && in_array($userData['role'], ['admin', 'promotor'])) {
+                return redirect('/Admin/Login')->with('error', 'Akun staff tidak dapat login sebagai member.');
+            }
             session([
                 'api_token' => $response['data']['token'] ?? null,
                 'api_user' => $userData,

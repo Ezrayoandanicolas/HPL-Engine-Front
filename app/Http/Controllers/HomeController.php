@@ -10,6 +10,9 @@ class HomeController extends FrontendController
     public function index()
     {
         if (Auth::check()) {
+            if (Auth::user()->role == 'cashier') {
+                return redirect('/cashier/dashboard');
+            }
             if (Auth::user()->role == 'admin') {
                 return redirect('/Admin/Dashboard');
             }

@@ -39,6 +39,12 @@
                                     </p>
                                 </div>
                             </div>
+                            @if (session('error'))
+                                <div class="alert alert-danger" style="margin-bottom: 1rem;">{{ session('error') }}</div>
+                            @endif
+                            @if (session('success'))
+                                <div class="alert alert-success" style="margin-bottom: 1rem;">{{ session('success') }}</div>
+                            @endif
                             <form action="/Admin/Login" class="signin-form" method="POST">
                                 @csrf
                                 <div class="form-group mb-3">

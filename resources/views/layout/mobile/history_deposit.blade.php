@@ -315,25 +315,8 @@
             });
         });
 
-        //Ajax untuk memunculkan  Deposite User Hari ini
-        $(document).ready(function() {
-            // Kirim permintaan AJAX untuk mendapatkan riwayat deposit user hari ini
-            $.ajax({
-                url: "/getTodayDeposit",
-                type: "GET",
-                success: function(response) {
-                    if (response.length > 0) {
-                        updateTable(response);
-                    } else {
-                        $("#depositHistoryTable tbody").empty();
-                    }
-                },
-                error: function(error) {
-                    console.error(error);
-                },
-            });
-        });
-
+        // Load riwayat deposit terbaru (bukan hanya hari ini) saat halaman dibuka,
+        // agar member langsung melihat data. Tombol Apply tetap memakai rentang manual.
         $(document).ready(function() {
             var dataTable = $("#depositHistoryTable").DataTable({
                 lengthMenu: [
@@ -348,22 +331,41 @@
                 dataTable.page.len(selectedValue).draw();
             });
 
-            $.ajax({
-                url: "/getTodayDeposit",
-                type: "GET",
-                success: function(response) {
-                    if (response.length > 0) {
+            // Isi default rentang 30 hari terakhir agar tabel tidak kosong saat dibuka
+            var now = new Date();
+            var from = new Date();
+            from.setDate(from.getDate() - 30);
+            var fmt = function(d) {
+                return d.getFullYear() + '-' +
+                    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(d.getDate()).padStart(2, '0');
+            };
+            $("#startDate").val(fmt(from));
+            $("#endDate").val(fmt(now));
 
-                        updateTable(response);
-                    } else {
-
-                        $("#depositHistoryTable tbody").empty();
+            function loadRecentDeposits() {
+                $.ajax({
+                    type: "POST",
+                    url: "/transaction/getDepositHistory",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        startDate: fmt(from) + " 00:00:00",
+                        endDate: fmt(now) + " 23:59:59"
+                    },
+                    success: function(response) {
+                        if (response && Array.isArray(response.data)) {
+                            updateTable(response.data);
+                        } else {
+                            $("#depositHistoryTable tbody").empty();
+                        }
+                    },
+                    error: function(error) {
+                        console.error("Error fetching recent deposit history:", error);
                     }
-                },
-                error: function(error) {
-                    console.error(error);
-                },
-            });
+                });
+            }
+
+            loadRecentDeposits();
         });
 
         function updateTable(data) {
@@ -447,10 +449,15 @@
                         url: "/transaction/getWithdrawHistory",
                         data: payloads,
                         success: function(response) {
-                            if (response && response.data) {
-                                updateWithdrawTablemobile(response.data);
+                            var rows = response && response.data ? response.data : null;
+                            if (rows && typeof rows === 'object' && !Array.isArray(rows) && Array.isArray(rows.data)) {
+                                rows = rows.data;
+                            }
+                            if (Array.isArray(rows)) {
+                                updateWithdrawTablemobile(rows);
                             } else {
                                 console.error("Invalid response format:", response);
+                                $("#withdrawHistoryTableMobile tbody").empty();
                             }
                         },
                         error: function(error) {
@@ -462,18 +469,39 @@
                 }
             });
 
+            // Load riwayat penarikan terbaru (bukan hanya hari ini) saat halaman dibuka
+            var nowW = new Date();
+            var fromW = new Date();
+            fromW.setDate(fromW.getDate() - 30);
+            var fmtW = function(d) {
+                return d.getFullYear() + '-' +
+                    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+                    String(d.getDate()).padStart(2, '0');
+            };
+            $("#startDateWithdrawMobile").val(fmtW(fromW));
+            $("#endDateWithdrawMobile").val(fmtW(nowW));
+
             $.ajax({
-                url: "/getTodayWithdraw",
-                type: "GET",
+                type: "POST",
+                url: "/transaction/getWithdrawHistory",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    startDateWithdraw: fmtW(fromW) + " 00:00:00",
+                    endDateWithdraw: fmtW(nowW) + " 23:59:59"
+                },
                 success: function(response) {
-                    if (response) {
-                        updateWithdrawTablemobile(response);
+                    var rows = response && response.data ? response.data : [];
+                    if (rows && typeof rows === 'object' && !Array.isArray(rows) && Array.isArray(rows.data)) {
+                        rows = rows.data == null ? [] : rows.data;
+                    }
+                    if (Array.isArray(rows)) {
+                        updateWithdrawTablemobile(rows);
                     } else {
                         $("#withdrawHistoryTableMobile tbody").empty();
                     }
                 },
                 error: function(error) {
-                    console.error("Error fetching today's withdraw history:", error);
+                    console.error("Error fetching recent withdraw history:", error);
                 },
             });
         });

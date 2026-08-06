@@ -46,4 +46,36 @@ class DepositController extends FrontendController
         }
         return back()->with('error', $response['message'] ?? 'Deposit Gagal');
     }
+
+    public function createQris(Request $request)
+    {
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'message' => 'Unauthenticated'], 401);
+        }
+
+        $request->validate([
+            'amount' => 'required|numeric|min:0.01',
+        ]);
+
+        $response = $this->api->post('qris/deposit', [
+            'amount' => $request->amount,
+        ]);
+
+        return response()->json($response);
+    }
+
+    public function checkQris(Request $request)
+    {
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'message' => 'Unauthenticated'], 401);
+        }
+
+        $request->validate(['trx_id' => 'required|string']);
+
+        $response = $this->api->post('qris/check', [
+            'trx_id' => $request->trx_id,
+        ]);
+
+        return response()->json($response);
+    }
 }

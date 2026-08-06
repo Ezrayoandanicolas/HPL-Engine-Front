@@ -261,7 +261,7 @@
                     }
 
                     var displayView = deposit.notes === 'read' ? 'true' : 'false';
-                    var typeText = deposit.type === '1' ? 'Deposit' : 'Withdraw';
+                    var typeText = parseInt(deposit.type) === 1 ? 'Deposit' : 'Withdraw';
 
                     var notificationHtml = `
                     <a href="/message" style="display: block;">

@@ -18,13 +18,6 @@ class PlayController extends Controller
         }
         $game = (object) $gameData;
 
-        $slotBalance = (float) Auth::user()->saldo_slot;
-        if ($slotBalance <= 0) {
-            return redirect()->route('transfer', [
-                'from' => 'main', 'to' => 'slot'
-            ])->with('warning', 'Saldo Slot kosong. Transfer dulu.');
-        }
-
         $fiver = new fiver();
         $raw = $fiver->opengame(Auth::user()->username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);

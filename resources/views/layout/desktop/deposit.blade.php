@@ -81,6 +81,9 @@
                                     style="display: none; margin-top: 20px; text-align: center;">
                                     <div class="qris-status" id="qris_status"
                                         style="font-weight: bold; margin-bottom: 12px;"></div>
+                                    <div id="qris_amount_info" style="font-size: 15px; margin-bottom: 12px; display: none;">
+                                        Nominal yang harus dibayar: <strong id="qris_amount_value" style="font-size: 18px;"></strong>
+                                    </div>
                                     <div id="qris_qr_container"
                                         style="background: #fff; padding: 10px; border-radius: 8px; display: inline-block;">
                                         <img id="qris_qr_image" src="" alt="QRIS" style="max-width: 240px; width: 100%;">
@@ -982,6 +985,13 @@
                         qrisQrImage.style.display = 'block';
                         qrisQrImage.src = data.qr_image_url || data.qr_string;
                         qrisTrxId.textContent = 'Ref: ' + data.trx_id;
+
+                        var qrisAmountInfo = document.getElementById('qris_amount_info');
+                        var qrisAmountValue = document.getElementById('qris_amount_value');
+                        if (qrisAmountInfo && data.amount) {
+                            qrisAmountValue.textContent = 'Rp ' + Number(data.amount).toLocaleString('id-ID');
+                            qrisAmountInfo.style.display = 'block';
+                        }
 
                         pollQrisStatus(data.trx_id);
                     },

@@ -23,8 +23,17 @@ class PlayController extends Controller
         $provider = $providerResp['data']['provider'] ?? 'fiver';
 
         $apiClient = $provider === 'dc' ? new DigitalCreative() : new fiver();
-        $raw = $apiClient->opengame(Auth::user()->username, $game->game_code, $game->game_provider);
+        $username = Auth::user()->username;
+        $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);
+
+        // User belum terdaftar di provider, buat otomatis lalu coba launch lagi
+        $msg = $result['msg'] ?? ($result['code'] ?? '');
+        if (in_array($msg, ['INVALID_USER', 'USER_NOT_FOUND'], true)) {
+            $apiClient->create($username);
+            $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
+            $result = json_decode($raw, true);
+        }
 
         \Illuminate\Support\Facades\Log::info('GAME LAUNCH RESPONSE', ['raw' => $raw, 'parsed' => $result]);
 

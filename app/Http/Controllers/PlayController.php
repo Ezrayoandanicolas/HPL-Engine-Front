@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Services\ApiService;
 use App\Http\API\fiver;
+use App\Http\API\DigitalCreative;
 
 class PlayController extends Controller
 {
@@ -18,8 +19,11 @@ class PlayController extends Controller
         }
         $game = (object) $gameData;
 
-        $fiver = new fiver();
-        $raw = $fiver->opengame(Auth::user()->username, $game->game_code, $game->game_provider);
+        $providerResp = $api->get('admin/game-provider');
+        $provider = $providerResp['data']['provider'] ?? 'fiver';
+
+        $apiClient = $provider === 'dc' ? new DigitalCreative() : new fiver();
+        $raw = $apiClient->opengame(Auth::user()->username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);
 
         \Illuminate\Support\Facades\Log::info('GAME LAUNCH RESPONSE', ['raw' => $raw, 'parsed' => $result]);

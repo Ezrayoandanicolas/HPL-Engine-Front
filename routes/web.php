@@ -76,6 +76,7 @@ use App\Http\Controllers\DashboardLiveChatController;
 use App\Http\Controllers\ChatSseController;
 use App\Http\Controllers\DashboardNavigationMenuController;
 use App\Http\Controllers\DashboardFiverController;
+use App\Http\Controllers\DashboardGameProviderController;
 use App\Http\Controllers\DashboardCallController;
 use App\Http\Controllers\DashboardBonusController;
 use App\Http\Controllers\DashboardStatisticController;
@@ -360,6 +361,13 @@ Route::middleware(['check.web'])->group(function () {
     Route::get('/admin-chat-sse/{id}', [ChatSseController::class, 'adminSse'])->middleware('admin');
     Route::get('/admin-chat-sessions-sse', [ChatSseController::class, 'sessionsSse'])->middleware('admin');
     
+    // Game Provider (Fiver / Digital Creative)
+    Route::get('/Admin/Dashboard/GameProvider', [DashboardGameProviderController::class, 'index'])->middleware('admin');
+    Route::post('/Admin/Dashboard/GameProvider/switch', [DashboardGameProviderController::class, 'switch'])->middleware('admin');
+    Route::post('/Admin/Dashboard/GameProvider/sync-providers', [DashboardGameProviderController::class, 'syncProviders'])->middleware('admin');
+    Route::post('/Admin/Dashboard/GameProvider/sync-games', [DashboardGameProviderController::class, 'syncGames'])->middleware('admin');
+    Route::post('/Admin/Dashboard/GameProvider/sync-all-games', [DashboardGameProviderController::class, 'syncAllGames'])->middleware('admin');
+
     // Fiver / NEXUS Tools
     Route::get('/Admin/Dashboard/Fiver', [DashboardFiverController::class, 'index'])->middleware('admin');
     Route::post('/Admin/Dashboard/Fiver/reset-user', [DashboardFiverController::class, 'resetUser'])->middleware('admin');

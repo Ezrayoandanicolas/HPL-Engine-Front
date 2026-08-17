@@ -321,6 +321,12 @@
                             <p>Saldo GGR Member</p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="/Admin/Dashboard/GameProvider" class="nav-link">
+                            <i class="nav-icon fas fa-exchange-alt"></i>
+                            <p>Game Provider</p>
+                        </a>
+                    </li>
                     <li class="nav-header">Profile</li>
                     <li class="nav-item">
                         <a href="/Admin/Profile" class="nav-link">

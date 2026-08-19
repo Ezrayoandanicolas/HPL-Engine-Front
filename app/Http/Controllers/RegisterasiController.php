@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use App\Http\API\DigitalCreative;
 
 class RegisterasiController extends FrontendController
 {
@@ -54,6 +55,12 @@ class RegisterasiController extends FrontendController
             'username.regex' => 'Nama pengguna harus terdiri dari 3-12 karakter.',
             'password.regex' => 'Password harus mengandung huruf dan angka.',
         ]);
+
+        $dc = new DigitalCreative();
+        $dcCheck = json_decode($dc->userbalance($request->username), true);
+        if (isset($dcCheck['status']) && (int) $dcCheck['status'] === 1) {
+            return back()->with('error', 'Username sudah terdaftar di sistem game.');
+        }
 
         $response = $this->apiPost('auth/register', array_merge(
             $request->all(),

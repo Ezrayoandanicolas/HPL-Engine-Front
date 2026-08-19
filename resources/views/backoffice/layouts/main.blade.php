@@ -143,6 +143,8 @@ $setting = (object) $settingData;
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('/../../Admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         var notifiedIds = [];
 
@@ -262,7 +264,6 @@ $setting = (object) $settingData;
     </script>
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @php
         $__flashes = [];
         foreach (['success','error','info','warning','LoginError'] as $__t) {

@@ -33,7 +33,7 @@ abstract class BaseAdminController extends Controller
 
     protected function adminDelete(string $endpoint, array $params = []): array
     {
-        return $this->api->post("admin/{$endpoint}", $params);
+        return $this->api->delete("admin/{$endpoint}", $params);
     }
 
     protected function getAuthParams(): array

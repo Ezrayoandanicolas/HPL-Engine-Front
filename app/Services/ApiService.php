@@ -74,6 +74,18 @@ class ApiService
         }
     }
 
+    public function delete(string $endpoint, array $params = []): array
+    {
+        try {
+            $url = $this->baseUrl . '/' . ltrim($endpoint, '/');
+            $response = $this->client->delete($url, ['query' => $this->withUserId($params)]);
+            return $this->handleResponse($response);
+        } catch (GuzzleException $e) {
+            Log::error('API DELETE Error: ' . $e->getMessage());
+            return $this->errorResponse($e->getMessage());
+        }
+    }
+
     private function handleResponse($response): array
     {
         $body = json_decode($response->getBody(), true);

@@ -256,7 +256,7 @@ class fiver
             'user_code' => $username,
             'game_code' => $gamecode,
             'provider_code' => $game_provider,
-            'lang' => 'en',
+            'lang' => 'id',
         ];
 
         Log::info('================ GAME LAUNCH REQUEST ================');

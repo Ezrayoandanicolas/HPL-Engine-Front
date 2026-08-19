@@ -114,10 +114,18 @@ Route::middleware(['check.web'])->group(function () {
         if (!Auth::check()) return response()->json(['main' => 0, 'slot' => 0, 'game' => 0]);
         $api = app(\App\Services\ApiService::class);
         $response = $api->get('wallet/balance', ['user_id' => Auth::id()]);
+
+        $userData = session('api_user', []);
+        $userData['saldo'] = $response['main'] ?? ($userData['saldo'] ?? 0);
+        $userData['saldo_slot'] = $response['slot'] ?? ($userData['saldo_slot'] ?? 0);
+        $userData['saldo_game'] = $response['game'] ?? ($userData['saldo_game'] ?? 0);
+        session(['api_user' => $userData]);
+
         return response()->json([
-            'main' => (float) ($response['main'] ?? 0),
-            'slot' => (float) ($response['slot'] ?? 0),
-            'game' => (float) ($response['game'] ?? 0),
+            'main'  => (float) ($response['main'] ?? 0),
+            'slot'  => (float) ($response['slot'] ?? 0),
+            'game'  => (float) ($response['game'] ?? 0),
+            'total' => (float) ($response['total'] ?? ((float) ($response['main'] ?? 0) + (float) ($response['slot'] ?? 0) + (float) ($response['game'] ?? 0))),
         ]);
     });
     Route::get('/login', [LoginController::class, 'index'])->name('login');

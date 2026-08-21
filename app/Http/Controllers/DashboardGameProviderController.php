@@ -25,7 +25,7 @@ class DashboardGameProviderController extends BaseAdminController
 
     public function switch(Request $request)
     {
-        $request->validate(['provider' => 'required|in:fiver,dc']);
+        $request->validate(['provider' => 'required|in:fiver,dc,xapi']);
 
         $resp = $this->adminPost('game-provider', ['provider' => $request->provider]);
 

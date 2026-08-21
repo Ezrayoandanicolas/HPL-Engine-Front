@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\ApiService;
 use App\Http\API\fiver;
 use App\Http\API\DigitalCreative;
+use App\Http\API\XApi;
 
 class PlayController extends Controller
 {
@@ -22,7 +23,11 @@ class PlayController extends Controller
         $providerResp = $api->get('admin/game-provider');
         $provider = $providerResp['data']['provider'] ?? 'fiver';
 
-        $apiClient = $provider === 'dc' ? new DigitalCreative() : new fiver();
+        $apiClient = match ($provider) {
+            'dc' => new DigitalCreative(),
+            'xapi' => new XApi(),
+            default => new fiver(),
+        };
         $username = Auth::user()->username;
         $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);

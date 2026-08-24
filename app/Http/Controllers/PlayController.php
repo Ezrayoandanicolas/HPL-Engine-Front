@@ -34,21 +34,16 @@ class PlayController extends Controller
         };
         $username = Auth::user()->username;
 
-        // Seamless mode: X-API akan panggil callback kita untuk balance/bet/win
-        // Tidak perlu deposit ke X-API
-
         $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);
 
         // Selalu pastikan aas_user_code tersimpan untuk seamless callback
-        $currentUser = \App\Models\User::where('username', $username)->first();
-        if ($currentUser && !$currentUser->aas_user_code) {
+        if (!Auth::user()->aas_user_code) {
             $createRaw = $apiClient->create($username);
             $createResult = json_decode($createRaw, true);
             $aasCode = $createResult['aas_user_code'] ?? null;
             if ($aasCode) {
-                $currentUser->aas_user_code = $aasCode;
-                $currentUser->save();
+                $api->post('user/update-aas-code', ['aas_user_code' => $aasCode]);
             }
         }
 
@@ -59,11 +54,7 @@ class PlayController extends Controller
             $createResult = json_decode($createRaw, true);
             $aasCode = $createResult['aas_user_code'] ?? null;
             if ($aasCode) {
-                $user = \App\Models\User::where('username', $username)->first();
-                if ($user) {
-                    $user->aas_user_code = $aasCode;
-                    $user->save();
-                }
+                $api->post('user/update-aas-code', ['aas_user_code' => $aasCode]);
             }
             $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
             $result = json_decode($raw, true);

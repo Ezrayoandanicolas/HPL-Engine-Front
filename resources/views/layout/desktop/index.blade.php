@@ -7,8 +7,8 @@
                 @foreach ($banner as $banner)
                     <div class="">
                         <a href="/promotion" target="_blank">
-                            <img alt="AMSGROUP" height="600" loading="lazy"
-                                src="{{ storageUrl($banner->img) }}" title="AMSGROUP" width="1920" />
+                            <img alt="{{ $setting->web }}" height="600" loading="lazy"
+                                src="{{ storageUrl($banner->img) }}" title="{{ $setting->web }}" width="1920" />
                         </a>
                     </div>
                 @endforeach
@@ -111,17 +111,15 @@
                                 style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/home/news.png?v=20240708-4);"></i>
                             <div data-section="announcements">
                                 <ul class="announcement-list" id="announcement_list">
-                                    <li>Selamat Datang di {{ $setting->web }} - Situs Judi Online Terbesar &amp; Terpercaya
-                                        Indonesia.
-                                    </li>
-                                    <li>Link anti NAWALA ( Internet Sehat ) https://bit.ly/{{ $setting->web }}</li>
-                                    <li>Pemeliharaan Terjadwal: Crowd Play pada 2023-11-30 dari 7.00 AM sampai 2025-06-02
-                                        6.30 PM (GMT + 7). Selama waktu ini, Crowd Play permainan tidak akan tersedia. Kami
-                                        memohon maaf atas ketidaknyamanan yang mungkin ditimbulkan.</li>
+                                    @foreach(explode('|', $setting->announcement_text ?? '') as $item)
+                                        @if(trim($item))
+                                            <li>{{ trim($item) }}</li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
                             <div data-section="date">
-                                11/07/2024 (Kam) 16.31 (GMT+07)
+                                {{ \Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y (D) H.i (GMT+7)') }}
                             </div>
                         </div>
 
@@ -354,8 +352,8 @@
                 @foreach ($banner as $banner)
                     <div class="">
                         <a href="/promotion" target="_blank">
-                            <img alt="AMSGROUP" height="600" loading="lazy"
-                                src="{{ storageUrl($banner->img) }}" title="AMSGROUP" width="1920" />
+                            <img alt="{{ $setting->web }}" height="600" loading="lazy"
+                                src="{{ storageUrl($banner->img) }}" title="{{ $setting->web }}" width="1920" />
                         </a>
                     </div>
                 @endforeach
@@ -384,17 +382,15 @@
                                 style="--image-src: url(https://d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/desktop/home/news.png?v=20240708-4);"></i>
                             <div data-section="announcements">
                                 <ul class="announcement-list" id="announcement_list">
-                                    <li>Selamat Datang di {{ $setting->web }} - Situs Judi Online Terbesar &amp; Terpercaya
-                                        Indonesia.
-                                    </li>
-                                    <li>Link anti NAWALA ( Internet Sehat ) https://bit.ly/{{ $setting->web }}</li>
-                                    <li>Pemeliharaan Terjadwal: Crowd Play pada 2023-11-30 dari 7.00 AM sampai 2025-06-02
-                                        6.30 PM (GMT + 7). Selama waktu ini, Crowd Play permainan tidak akan tersedia. Kami
-                                        memohon maaf atas ketidaknyamanan yang mungkin ditimbulkan.</li>
+                                    @foreach(explode('|', $setting->announcement_text ?? '') as $item)
+                                        @if(trim($item))
+                                            <li>{{ trim($item) }}</li>
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
                             <div data-section="date">
-                                11/07/2024 (Kam) 16.31 (GMT+07)
+                                {{ \Carbon\Carbon::now('Asia/Jakarta')->format('d/m/Y (D) H.i (GMT+7)') }}
                             </div>
                         </div>
 

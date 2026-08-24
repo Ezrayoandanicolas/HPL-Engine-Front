@@ -7,25 +7,17 @@
         <div id="ER_1720862066402">
             <div class="tickercontainer">
                 <div class="mask">
-                    <ul class="announcement-list newsticker" id="announcement_list"
-                        style="width: 4125px; left: -1250.58px;">
-                        <li class="tick-clones">Pemeliharaan Terjadwal: Crowd Play pada 2023-11-30 dari 7.00 AM
-                            sampai
-                            2025-06-02 6.30 PM (GMT + 7). Selama waktu ini, Crowd Play permainan tidak akan
-                            tersedia.
-                            Kami memohon maaf atas ketidaknyamanan yang mungkin ditimbulkan.</li>
-                        <li>Selamat Datang di {{ $setting->web }} - Situs Judi Online Terbesar &amp; Terpercaya
-                            Indonesia.</li>
-                        
-                        <li>Pemeliharaan Terjadwal: Crowd Play pada 2023-11-30 dari 7.00 AM sampai 2025-06-02 6.30
-                            PM
-                            (GMT + 7). Selama waktu ini, Crowd Play permainan tidak akan tersedia. Kami memohon
-                            maaf
-                            atas ketidaknyamanan yang mungkin ditimbulkan.</li>
-                        <li class="tick-clones">Selamat Datang di {{ $setting->web }} - Situs Judi Online Terbesar
-                            &amp; Terpercaya
-                            Indonesia.</li>
-                        
+                    <ul class="announcement-list newsticker" id="announcement_list">
+                        @foreach(explode('|', $setting->announcement_text ?? '') as $item)
+                            @if(trim($item))
+                                <li>{{ trim($item) }}</li>
+                            @endif
+                        @endforeach
+                        @foreach(explode('|', $setting->announcement_text ?? '') as $item)
+                            @if(trim($item))
+                                <li class="tick-clones">{{ trim($item) }}</li>
+                            @endif
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -765,7 +757,7 @@
         @foreach ($banner as $banners)
             <div class="">
                 <a href="/promotion" target="_blank">
-                    <img alt="AMSGROUP" height="600" loading="lazy"
+                    <img alt="{{ $setting->web }}" height="600" loading="lazy"
                         src="{{ storageUrl($banners->img) }}" title="{{ $banners->title }}"
                         width="1920" />
                 </a>

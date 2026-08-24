@@ -12,6 +12,10 @@ class PlayController extends Controller
 {
     public function show($id)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
         $api = app(ApiService::class);
         $gameResp = $api->get("games/{$id}");
         $gameData = $gameResp['data']['game'] ?? null;
@@ -29,13 +33,27 @@ class PlayController extends Controller
             default => new fiver(),
         };
         $username = Auth::user()->username;
+
+        // Seamless mode: X-API akan panggil callback kita untuk balance/bet/win
+        // Tidak perlu deposit ke X-API
+
         $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);
 
         // User belum terdaftar di provider, buat otomatis lalu coba launch lagi
         $msg = $result['msg'] ?? ($result['code'] ?? '');
         if (in_array($msg, ['INVALID_USER', 'USER_NOT_FOUND'], true)) {
-            $apiClient->create($username);
+            $createRaw = $apiClient->create($username);
+            $createResult = json_decode($createRaw, true);
+            // Simpan aas_user_code untuk seamless callback
+            $aasCode = $createResult['aas_user_code'] ?? null;
+            if ($aasCode) {
+                $user = \App\Models\User::where('username', $username)->first();
+                if ($user) {
+                    $user->aas_user_code = $aasCode;
+                    $user->save();
+                }
+            }
             $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
             $result = json_decode($raw, true);
         }

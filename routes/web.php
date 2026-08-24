@@ -240,6 +240,7 @@ Route::middleware(['check.web'])->group(function () {
         
         // Rute PlayController yang sudah dibenahi
         Route::get('/gameplay/{id}/show', [PlayController::class, 'show']);
+
         Route::get('/sports/play/{game_uid}', [SportsPlayController::class, 'play'])
         ->middleware('auth')
         ->name('sports.play');

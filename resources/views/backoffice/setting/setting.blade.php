@@ -47,6 +47,13 @@
                                     <input name="running_text" type="text" class="form-control form-control-lg shadow-sm" placeholder="Text berjalan di halaman utama" value="{{ $setting['running_text'] ?? '' }}">
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Announcement (Pesan Berita)</label>
+                                    <textarea name="announcement_text" class="form-control form-control-lg shadow-sm" rows="4" placeholder="Pisahkan setiap pesan dengan tanda | (pipe). Contoh: Pesan 1|Pesan 2|Pesan 3">{{ $setting['announcement_text'] ?? '' }}</textarea>
+                                    <small class="form-text text-muted">Pisahkan dengan <code>|</code> untuk beberapa pesan. Pesan akan ditampilkan bergantian di halaman utama.</small>
+                                </div>
+                            </div>
                         </div>
 
                         <hr class="my-4">
@@ -117,6 +124,13 @@
                                 <div class="form-group">
                                     <label class="small font-weight-medium text-muted text-uppercase tracking-wider">SEO Metadata</label>
                                     <textarea name="seo" class="form-control shadow-sm" rows="8" spellcheck="false" placeholder="Meta tags, Google Analytics, dll">{{ $setting['seo'] ?? '' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="small font-weight-medium text-muted text-uppercase tracking-wider">Footer SEO Content</label>
+                                    <textarea name="footer_seo" class="form-control shadow-sm" rows="12" spellcheck="false" placeholder="Konten SEO di footer website">{{ $setting['footer_seo'] ?? '' }}</textarea>
+                                    <small class="form-text text-muted">Konten SEO yang ditampilkan di bagian footer website. Gunakan HTML jika diperlukan.</small>
                                 </div>
                             </div>
                         </div>

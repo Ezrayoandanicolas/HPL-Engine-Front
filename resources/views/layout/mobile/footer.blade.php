@@ -239,7 +239,7 @@
                                   src="https://d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/platform-engine/siam-engine.webp?v=606181553" />
                           </picture>
                       </a>
-                      ©2024 {{ $setting->web }}. Hak cipta dilindungi | 18+
+                      ©2017-{{ date('Y') }} {{ $setting->web }}. Hak cipta dilindungi | 18+
                   </div>
               </div>
           </div>

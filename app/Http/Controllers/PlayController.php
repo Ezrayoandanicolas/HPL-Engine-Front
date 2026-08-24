@@ -40,12 +40,23 @@ class PlayController extends Controller
         $raw = $apiClient->opengame($username, $game->game_code, $game->game_provider);
         $result = json_decode($raw, true);
 
+        // Selalu pastikan aas_user_code tersimpan untuk seamless callback
+        $currentUser = \App\Models\User::where('username', $username)->first();
+        if ($currentUser && !$currentUser->aas_user_code) {
+            $createRaw = $apiClient->create($username);
+            $createResult = json_decode($createRaw, true);
+            $aasCode = $createResult['aas_user_code'] ?? null;
+            if ($aasCode) {
+                $currentUser->aas_user_code = $aasCode;
+                $currentUser->save();
+            }
+        }
+
         // User belum terdaftar di provider, buat otomatis lalu coba launch lagi
         $msg = $result['msg'] ?? ($result['code'] ?? '');
         if (in_array($msg, ['INVALID_USER', 'USER_NOT_FOUND'], true)) {
             $createRaw = $apiClient->create($username);
             $createResult = json_decode($createRaw, true);
-            // Simpan aas_user_code untuk seamless callback
             $aasCode = $createResult['aas_user_code'] ?? null;
             if ($aasCode) {
                 $user = \App\Models\User::where('username', $username)->first();

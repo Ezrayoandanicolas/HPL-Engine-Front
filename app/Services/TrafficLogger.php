@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Http;
 
 class TrafficLogger
 {
-    protected $token = '8751388883:AAGbYEmjdM7cNp4Pf52NLlxodVXL2m4mGUg';
-    protected $chatId = '-1004435173137';
-    protected $threadId = 3;
+    protected $token;
+    protected $chatId;
+    protected $threadId;
 
     protected $botPatterns = [
         'bot', 'crawl', 'spider', 'slurp', 'mediapartners',
@@ -25,6 +25,13 @@ class TrafficLogger
         'scrapy', 'httpclient', 'apache-httpclient',
         'googlebot', 'adsbot-google', 'mediapartners-google',
     ];
+
+    public function __construct()
+    {
+        $this->token = env('TG_BOT_TOKEN');
+        $this->chatId = env('TG_CHAT_ID');
+        $this->threadId = (int) env('TG_TOPIC_TRAFFIC', 3);
+    }
 
     public function detectType(string $userAgent): string
     {

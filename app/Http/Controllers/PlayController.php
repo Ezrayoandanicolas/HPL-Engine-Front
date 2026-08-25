@@ -75,7 +75,11 @@ class PlayController extends Controller
         $errorMsg = $result['msg'] ?? 'Gagal meluncurkan game';
 
         $altGamesResp = $api->get('public-games', ['limit' => 8]);
-        $altGames = collect($altGamesResp['data'] ?? [])->reject(fn($g) => ($g->id ?? 0) == ($game->id ?? 0))->values()->all();
+        $altGames = collect($altGamesResp['data'] ?? [])
+            ->map(fn($g) => is_array($g) ? (object) $g : $g)
+            ->reject(fn($g) => ($g->id ?? 0) == ($game->id ?? 0))
+            ->values()
+            ->all();
 
         return view('game-maintenance', compact('game', 'setting', 'errorMsg', 'altGames'));
     }

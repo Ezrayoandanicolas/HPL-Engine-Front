@@ -1,5 +1,6 @@
 @extends(view()->shared('device') == 'mobile' ? 'layout.mobile.main' : 'layout.desktop.main')
 @section(view()->shared('device') == 'mobile' ? 'mobile' : 'content')
+@php $game = is_array($game ?? null) ? (object) $game : ($game ?? (object)[]); @endphp
 <style>
     .maintenance-page {
         min-height: 60vh;
@@ -130,6 +131,7 @@
         <div class="alt-games-subtitle">Pilih game favorit kamu</div>
         <div class="alt-games-grid">
             @foreach ($altGames as $alt)
+            @php $alt = is_array($alt) ? (object) $alt : $alt; @endphp
             <a href="{{ Auth::check() ? '/gameplay/'.$alt->id.'/show' : '/login' }}" class="alt-game-card">
                 @if (!empty($alt->image))
                 <img class="alt-game-img" src="{{ $alt->image }}" alt="{{ $alt->game_name }}" loading="lazy">

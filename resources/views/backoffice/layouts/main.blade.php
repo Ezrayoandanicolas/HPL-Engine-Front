@@ -85,13 +85,13 @@ $setting = (object) $settingData;
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <strong>
-                <!-- --> &copy; 2026 <a href="#"></a>.
+                <!-- --> &copy; {{ date('Y') }} <a href="#"></a>.
             </strong>
             Semakin keras saya bekerja, maka semakin banyak keberuntungan yang saya miliki.
 
             <div class="float-right d-none d-sm-inline-block">
                 <a target="_blank" href="" class="href">
-                    <b style="color:black; ">Next Provide AMSGRUP</b>
+                    <b style="color:black; ">{{ $setting->web ?? 'AMSGROUP' }}</b>
                 </a>
             </div>
         </footer>

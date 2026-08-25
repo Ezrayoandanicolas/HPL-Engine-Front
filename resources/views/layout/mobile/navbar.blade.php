@@ -16,10 +16,10 @@
                       <div class="side-menu-balance-field">
                           <div class="balance">
                               IDR
-                              <span class="balance total_balance">{{ auth()->check() ? number_format((auth()->user()->saldo ?? 0) + (auth()->user()->saldo_slot ?? 0) + (auth()->user()->saldo_game ?? 0),0,',','.') : 0 }}</span>
+                              <span class="balance total_balance">{{ auth()->check() ? number_format(auth()->user()->saldo ?? 0,0,',','.') : 0 }}</span>
                               <div class="locked-balance locked_balance_container" hidden="">
                                   <i class="glyphicon glyphicon-lock"></i>
-                                  <span class="balance total_balance">{{ auth()->check() ? number_format((auth()->user()->saldo ?? 0) + (auth()->user()->saldo_slot ?? 0) + (auth()->user()->saldo_game ?? 0),0,',','.') : 0 }}</span>
+                                  <span class="balance total_balance">{{ auth()->check() ? number_format(auth()->user()->saldo ?? 0,0,',','.') : 0 }}</span>
                               </div>
                           </div>
                       </div>

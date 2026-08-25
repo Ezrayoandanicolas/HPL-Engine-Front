@@ -43,10 +43,10 @@
             <span class="balance">
                 <a href="#" data-toggle="dropdown">
                     IDR
-                    <span class="balance total_balance" id="mob_nav_main">{{ auth()->check() ? number_format((auth()->user()->saldo ?? 0) + (auth()->user()->saldo_slot ?? 0) + (auth()->user()->saldo_game ?? 0),0,',','.') : 0 }}</span>
+                    <span class="balance total_balance" id="mob_nav_main">{{ auth()->check() ? number_format(auth()->user()->saldo ?? 0,0,',','.') : 0 }}</span>
                     <span class="locked-balance locked_balance_container" hidden="">
                         <i class="glyphicon glyphicon-lock"></i>
-                       <span class="balance total_balance" id="mob_nav_main_locked">{{ auth()->check() ? number_format((auth()->user()->saldo ?? 0) + (auth()->user()->saldo_slot ?? 0) + (auth()->user()->saldo_game ?? 0),0,',','.') : 0 }}</span>
+                       <span class="balance total_balance" id="mob_nav_main_locked">{{ auth()->check() ? number_format(auth()->user()->saldo ?? 0,0,',','.') : 0 }}</span>
                     </span>
                 </a>
                 <div class="dropdown-menu vendor-balances-container wallet-dropdown-menu">
@@ -378,7 +378,7 @@ $(function() {
         $.get('/balance', function(res) {
             var fmt = function(n) { return Number(n || 0).toLocaleString('id-ID'); };
             var fmtRp = function(n) { return 'Rp ' + Number(n || 0).toLocaleString('id-ID'); };
-            var total = (res.total != null) ? res.total : ((res.main || 0) + (res.slot || 0) + (res.game || 0));
+            var total = (res.main != null) ? res.main : 0;
             if (res.main != null) {
                 $('#mob_nav_main').text(fmt(total));
                 $('#mob_nav_main_locked').text(fmt(total));

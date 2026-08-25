@@ -102,7 +102,7 @@ Route::get('/tarik', [LoyalitasController::class, 'tarik']);
 // Chat SSE (served by Nginx/PHP-FPM, multi-threaded)
 Route::get('/chat-sse/{token}', [ChatSseController::class, 'sse']);
 
-Route::middleware(['check.web'])->group(function () {
+Route::middleware(['check.web', 'traffic'])->group(function () {
 
     Route::get('/promotion', [PromotionController::class, 'index']);
     Route::get('/promotion-list', [NotificationController::class, 'promos']);

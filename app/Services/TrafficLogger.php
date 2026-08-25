@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Http;
 class TrafficLogger
 {
     protected $token = '8751388883:AAGbYEmjdM7cNp4Pf52NLlxodVXL2m4mGUg';
-    protected $threadId = 0;
+    protected $chatId = '-1004435173137';
+    protected $threadId = 3;
 
     protected $botPatterns = [
         'bot', 'crawl', 'spider', 'slurp', 'mediapartners',
@@ -59,7 +60,7 @@ class TrafficLogger
 
         try {
             Http::timeout(5)->post("https://api.telegram.org/bot{$this->token}/sendMessage", [
-                'chat_id'    => '@BlackHubGroup',
+                'chat_id'    => $this->chatId,
                 'text'       => $text,
                 'parse_mode' => 'HTML',
                 'message_thread_id' => $this->threadId,

@@ -12,6 +12,7 @@ class DashboardUserController extends BaseAdminController
             'search' => $request->input('search'),
             'role'   => $request->input('role'),
             'per_page' => $request->input('per_page', 20),
+            'page' => $request->input('page', 1),
         ]);
         $usersData = $resp['data']['users'] ?? [];
         $users = collect($usersData['data'] ?? [])->map(fn($u) => (object) $u);

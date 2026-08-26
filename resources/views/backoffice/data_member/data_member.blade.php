@@ -224,46 +224,44 @@
 </div>
 
 <script>
-var API_BASE = '{{ config("app.api_base_url", env("API_BASE_URL", "")) }}';
-var API_KEY = '{{ env("API_KEY", "") }}';
-
 function viewTransactions(userId, username) {
     $('#trxUsername').text(username);
     $('#trxModal').modal('show');
     $('#trxBody').html('<tr><td colspan="5" class="text-center text-muted">Memuat...</td></tr>');
 
-    fetch(API_BASE + '/admin/deposits?user_id=' + userId + '&per_page=50', {
-        headers: { 'X-API-Key': API_KEY }
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(dep) {
-        var deposits = (dep.data && dep.data.transactions) ? dep.data.transactions.data || [] : [];
+    var baseUrl = '{{ config("app.api_base_url") }}';
+    var depUrl = baseUrl + '/admin/deposits?user_id=' + userId + '&per_page=100&status_id=';
+    var witUrl = baseUrl + '/admin/withdraws?user_id=' + userId + '&per_page=100&status_id=';
 
-        return fetch(API_BASE + '/admin/withdraws?user_id=' + userId + '&per_page=50', {
-            headers: { 'X-API-Key': API_KEY }
-        }).then(function(r) { return r.json(); }).then(function(wit) {
-            var withdraws = (wit.data && wit.data.transactions) ? wit.data.transactions.data || [] : [];
-
-            var all = [];
-            deposits.forEach(function(d) { all.push({ date: d.created_at, type: 'Deposit', amount: d.amount, status: d.status_id, method: d.payment_method || 'Bank' }); });
-            withdraws.forEach(function(w) { all.push({ date: w.created_at, type: 'Withdraw', amount: w.amount, status: w.status_id, method: w.description || '-' }); });
-
-            all.sort(function(a,b) { return new Date(b.date) - new Date(a.date); });
-
-            if (all.length === 0) {
-                $('#trxBody').html('<tr><td colspan="5" class="text-center text-muted">Tidak ada transaksi</td></tr>');
-                return;
-            }
-
-            var html = '';
-            all.forEach(function(t) {
-                var statusText = t.status == 2 ? '<span class="badge badge-success">Berhasil</span>' : t.status == 3 ? '<span class="badge badge-danger">Ditolak</span>' : '<span class="badge badge-warning">Pending</span>';
-                html += '<tr><td>' + new Date(t.date).toLocaleDateString('id-ID') + '</td><td>' + t.type + '</td><td>Rp ' + Number(t.amount).toLocaleString('id-ID') + '</td><td>' + statusText + '</td><td>' + t.method + '</td></tr>';
+    Promise.all([
+        fetch(depUrl + '1').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(depUrl + '2').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(depUrl + '3').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(witUrl + '1').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(witUrl + '2').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(witUrl + '3').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+    ]).then(function(results) {
+        var all = [];
+        results.forEach(function(r) {
+            var txs = (r.data && r.data.transactions) ? r.data.transactions.data || [] : [];
+            txs.forEach(function(t) {
+                var type = t.type == 1 ? 'Deposit' : 'Withdraw';
+                all.push({ date: t.created_at, type: type, amount: t.amount, status: t.status_id, method: t.payment_method || t.description || '-' });
             });
-            $('#trxBody').html(html);
         });
-    })
-    .catch(function() {
+        all.sort(function(a,b) { return new Date(b.date) - new Date(a.date); });
+
+        if (all.length === 0) {
+            $('#trxBody').html('<tr><td colspan="5" class="text-center text-muted">Tidak ada transaksi</td></tr>');
+            return;
+        }
+        var html = '';
+        all.forEach(function(t) {
+            var statusText = t.status == 2 ? '<span class="badge badge-success">Berhasil</span>' : t.status == 3 ? '<span class="badge badge-danger">Ditolak</span>' : '<span class="badge badge-warning">Pending</span>';
+            html += '<tr><td>' + new Date(t.date).toLocaleDateString('id-ID') + '</td><td>' + t.type + '</td><td>Rp ' + Number(t.amount).toLocaleString('id-ID') + '</td><td>' + statusText + '</td><td>' + t.method + '</td></tr>';
+        });
+        $('#trxBody').html(html);
+    }).catch(function() {
         $('#trxBody').html('<tr><td colspan="5" class="text-center text-danger">Gagal memuat data</td></tr>');
     });
 }

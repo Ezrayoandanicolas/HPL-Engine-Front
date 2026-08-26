@@ -22,6 +22,8 @@ class DashboardUserController extends BaseAdminController
         $total = $usersData['total'] ?? $users->count();
         $perPage = $usersData['per_page'] ?? 20;
 
+        $stats = $resp['data']['stats'] ?? [];
+
         $bankResp = $this->adminGet('banks');
         $rekening = collect($bankResp['data']['banks'] ?? [])->map(fn($r) => (object) $r);
 
@@ -34,6 +36,7 @@ class DashboardUserController extends BaseAdminController
             'lastPage' => $lastPage,
             'total' => $total,
             'perPage' => $perPage,
+            'stats' => $stats,
         ]);
     }
 

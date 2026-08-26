@@ -2,12 +2,12 @@
 @section('content')
 <div class="container-fluid">
     @php
-        $totalMember = count($users);
-        $totalSaldo = collect($users)->sum('saldo');
-        $totalSlot = collect($users)->sum('saldo_slot');
-        $totalGame = collect($users)->sum('saldo_game');
-        $totalMemberRole = collect($users)->filter(fn($u) => ($u->role ?? '') == 'member')->count();
-        $totalAdmin = collect($users)->filter(fn($u) => ($u->role ?? '') == 'admin')->count();
+        $totalMember = $stats['total_member'] ?? $total ?? count($users);
+        $totalSaldo = $stats['total_saldo'] ?? 0;
+        $totalSlot = $stats['total_slot'] ?? 0;
+        $totalGame = $stats['total_game'] ?? 0;
+        $totalMemberRole = $stats['total_member_role'] ?? 0;
+        $totalAdmin = $stats['total_admin'] ?? 0;
     @endphp
     <div class="row mt-3">
         <div class="col-lg-2 col-6">

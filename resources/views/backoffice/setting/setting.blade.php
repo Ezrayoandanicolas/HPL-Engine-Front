@@ -287,6 +287,15 @@
                                     <small class="text-muted">Jika aktif, member tidak bisa mengakses website. Admin tetap bisa login.</small>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" class="custom-control-input" id="auto_reject" name="auto_reject" value="1" {{ ($setting['auto_reject'] ?? 0) ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="auto_reject">Auto Reject Deposit & Withdraw (>10 menit)</label>
+                                    </div>
+                                    <small class="text-muted">Jika aktif, deposit & withdraw yang pending lebih dari 10 menit akan otomatis ditolak.</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer bg-white d-flex justify-content-end">

@@ -230,10 +230,11 @@ function viewTransactions(userId, username) {
     $('#trxBody').html('<tr><td colspan="5" class="text-center text-muted">Memuat...</td></tr>');
 
     var baseUrl = '{{ config("app.api_base_url") }}';
+    var apiKey = '{{ env("API_KEY", "") }}';
 
     Promise.all([
-        fetch(baseUrl + '/admin/deposits?user_id=' + userId + '&per_page=200').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
-        fetch(baseUrl + '/admin/withdraws?user_id=' + userId + '&per_page=200').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(baseUrl + '/admin/deposits?user_id=' + userId + '&per_page=200', { headers: { 'X-API-Key': apiKey } }).then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(baseUrl + '/admin/withdraws?user_id=' + userId + '&per_page=200', { headers: { 'X-API-Key': apiKey } }).then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
     ]).then(function(results) {
         var all = [];
         results.forEach(function(r) {

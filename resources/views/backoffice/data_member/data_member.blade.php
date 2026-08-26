@@ -258,5 +258,42 @@
             </form>
         </div>
     </div>
+
+    @if($lastPage > 1)
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+        <div>
+            <span class="text-muted">Menampilkan {{ $users->count() }} dari {{ $total }} member</span>
+            <select id="per_page_select" class="form-control form-control-sm d-inline-block ml-2" style="width:auto" onchange="changePerPage(this.value)">
+                @foreach([10,20,50,100,500] as $n)
+                    <option value="{{ $n }}" {{ $perPage == $n ? 'selected' : '' }}>{{ $n }} / halaman</option>
+                @endforeach
+            </select>
+        </div>
+        <nav>
+            <ul class="pagination pagination-sm mb-0">
+                @if($currentPage > 1)
+                    <li class="page-item"><a class="page-link" href="?page={{ $currentPage-1 }}&per_page={{ $perPage }}&search={{ $searchTerm }}&role={{ $selectedRole }}">Prev</a></li>
+                @endif
+                @for($i = max(1, $currentPage-2); $i <= min($lastPage, $currentPage+2); $i++)
+                    <li class="page-item {{ $i == $currentPage ? 'active' : '' }}">
+                        <a class="page-link" href="?page={{ $i }}&per_page={{ $perPage }}&search={{ $searchTerm }}&role={{ $selectedRole }}">{{ $i }}</a>
+                    </li>
+                @endfor
+                @if($currentPage < $lastPage)
+                    <li class="page-item"><a class="page-link" href="?page={{ $currentPage+1 }}&per_page={{ $perPage }}&search={{ $searchTerm }}&role={{ $selectedRole }}">Next</a></li>
+                @endif
+            </ul>
+        </nav>
+    </div>
+    @endif
 </div>
+
+<script>
+function changePerPage(val) {
+    var url = new URL(window.location);
+    url.searchParams.set('per_page', val);
+    url.searchParams.set('page', 1);
+    window.location = url;
+}
+</script>
 @endsection

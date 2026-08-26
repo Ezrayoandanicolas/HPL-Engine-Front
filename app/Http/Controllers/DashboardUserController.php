@@ -11,10 +11,16 @@ class DashboardUserController extends BaseAdminController
         $resp = $this->adminGet('users', [
             'search' => $request->input('search'),
             'role'   => $request->input('role'),
+            'per_page' => $request->input('per_page', 20),
         ]);
-        $users = collect($resp['data']['users']['data'] ?? [])->map(fn($u) => (object) $u);
+        $usersData = $resp['data']['users'] ?? [];
+        $users = collect($usersData['data'] ?? [])->map(fn($u) => (object) $u);
         $searchTerm = $request->input('search');
         $selectedRole = $request->input('role');
+        $currentPage = $usersData['current_page'] ?? 1;
+        $lastPage = $usersData['last_page'] ?? 1;
+        $total = $usersData['total'] ?? $users->count();
+        $perPage = $usersData['per_page'] ?? 20;
 
         $bankResp = $this->adminGet('banks');
         $rekening = collect($bankResp['data']['banks'] ?? [])->map(fn($r) => (object) $r);
@@ -24,6 +30,10 @@ class DashboardUserController extends BaseAdminController
             'searchTerm' => $searchTerm,
             'selectedRole' => $selectedRole,
             'rekening' => $rekening,
+            'currentPage' => $currentPage,
+            'lastPage' => $lastPage,
+            'total' => $total,
+            'perPage' => $perPage,
         ]);
     }
 

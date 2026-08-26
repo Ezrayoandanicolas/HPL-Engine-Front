@@ -230,16 +230,10 @@ function viewTransactions(userId, username) {
     $('#trxBody').html('<tr><td colspan="5" class="text-center text-muted">Memuat...</td></tr>');
 
     var baseUrl = '{{ config("app.api_base_url") }}';
-    var depUrl = baseUrl + '/admin/deposits?user_id=' + userId + '&per_page=100&status_id=';
-    var witUrl = baseUrl + '/admin/withdraws?user_id=' + userId + '&per_page=100&status_id=';
 
     Promise.all([
-        fetch(depUrl + '1').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
-        fetch(depUrl + '2').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
-        fetch(depUrl + '3').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
-        fetch(witUrl + '1').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
-        fetch(witUrl + '2').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
-        fetch(witUrl + '3').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(baseUrl + '/admin/deposits?user_id=' + userId + '&per_page=200').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
+        fetch(baseUrl + '/admin/withdraws?user_id=' + userId + '&per_page=200').then(function(r){return r.json();}).catch(function(){return {data:{transactions:{data:[]}}};}),
     ]).then(function(results) {
         var all = [];
         results.forEach(function(r) {

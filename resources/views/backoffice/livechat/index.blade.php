@@ -151,9 +151,16 @@ function connectAdminSSE(id) {
     sse.addEventListener('message', function(e) {
         const m = JSON.parse(e.data);
         if (m.sender_type === 'user' && currentId === m.session_id) {
-            appendMessage(m, 'user');
-            playNotifSound();
-            flashTitle('Pesan baru dari ' + currentName);
+            if (m.id > lastMsgId) {
+                lastMsgId = m.id;
+                appendMessage(m, 'user');
+                playNotifSound();
+                flashTitle('Pesan baru dari ' + currentName);
+            }
+        } else if (m.sender_type === 'admin') {
+            if (m.id > lastMsgId) {
+                lastMsgId = m.id;
+            }
         }
     });
     sse.addEventListener('typing', function(e) {
@@ -262,10 +269,13 @@ document.getElementById('lc_tabs').addEventListener('click', function(e) {
         }, 3000);
     });
 
+let lastMsgId = 0;
+
 function selectSession(id) {
     const s = sessions.find(x => x.id === id);
     if (!s) return;
     currentId = id;
+    lastMsgId = 0;
     renderSessions();
     document.getElementById('lc_no_session').style.display = 'none';
     document.getElementById('lc_main_header').style.display = 'flex';
@@ -275,18 +285,22 @@ function selectSession(id) {
     document.getElementById('lc_header_status').textContent = s.email ? s.email + ' \u00b7 ' : '' + (s.messages_count || 0) + ' pesan';
     document.getElementById('lc_msgs').innerHTML = '';
     closeSSE();
-    connectAdminSSE(id);
-    loadMessages(id);
+    loadMessages(id).then(function() {
+        connectAdminSSE(id);
+    });
     document.getElementById('lc_reply_input').focus();
 }
 
 function loadMessages(id) {
-    apiFetch(apiUrl('admin/chat/messages/' + id)).then(r => {
+    return apiFetch(apiUrl('admin/chat/messages/' + id)).then(r => {
         if (!r.success) return;
         const msgs = r.data.messages || [];
         const container = document.getElementById('lc_msgs');
         container.innerHTML = '';
-        msgs.forEach(m => appendMessage(m, m.sender_type));
+        msgs.forEach(m => {
+            appendMessage(m, m.sender_type);
+            if (m.id > lastMsgId) lastMsgId = m.id;
+        });
         if (autoScroll) scrollBottom();
     });
 }

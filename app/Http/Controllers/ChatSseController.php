@@ -96,6 +96,7 @@ class ChatSseController extends Controller
         return $this->sseResponse(function () use ($api, $id) {
             $lastId = 0;
             $lastTyping = '';
+            $firstRun = true;
 
             while (true) {
                 if (connection_aborted()) break;
@@ -107,10 +108,13 @@ class ChatSseController extends Controller
 
                     foreach ($messages as $msg) {
                         if ((int) $msg['id'] > $lastId) {
-                            $this->emitMessage($msg);
                             $lastId = (int) $msg['id'];
+                            if (!$firstRun) {
+                                $this->emitMessage($msg);
+                            }
                         }
                     }
+                    $firstRun = false;
 
                     $typing = $api->get("admin/chat/typing/status/{$id}");
                     $tData = $typing['data'] ?? ['typing' => false];

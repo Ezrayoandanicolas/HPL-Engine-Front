@@ -175,10 +175,68 @@ function lcwToggle() {
     var d = document.getElementById('lcw-dialog');
     var isOpen = d.classList.contains('lcw-open');
     if (isOpen) { d.classList.remove('lcw-open'); setTimeout(function(){ d.style.display='none'; },300); }
-    else { d.style.display='flex'; lcwUnread=0; lcwUpdateBadge(); requestAnimationFrame(function(){ d.classList.add('lcw-open'); }); document.getElementById('lcw-btn').classList.remove('lcw-pulse'); }
+    else {
+        d.style.display='flex'; lcwUnread=0; lcwUpdateBadge();
+        requestAnimationFrame(function(){ d.classList.add('lcw-open'); });
+        document.getElementById('lcw-btn').classList.remove('lcw-pulse');
+        var t = localStorage.getItem('lcw_token');
+        if (t) { lcwCheckSession(t); } else { lcwShowForm(); }
+    }
     document.getElementById('lcw-ico-chat').style.display = isOpen ? '' : 'none';
     document.getElementById('lcw-ico-close').style.display = isOpen ? 'none' : '';
-    if (!isOpen) { var t = localStorage.getItem('lcw_token'); if(t) lcwOpenConv(t); }
+}
+
+function lcwShowForm() {
+    lcwSessionActive = false;
+    if (lcwSSE) { lcwSSE.close(); lcwSSE = null; }
+    ['lcw-conv','lcw-rating','lcw-offline'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+    var notice = document.getElementById('lcw-archived-notice');
+    if (notice) notice.remove();
+    document.getElementById('lcw-form').style.display = 'flex';
+    document.getElementById('lcw-bar').style.display = 'flex';
+    document.getElementById('lcw-name').value = localStorage.getItem('lcw_name') || '';
+    document.getElementById('lcw-email').value = '';
+    document.getElementById('lcw-msgs').innerHTML = '';
+}
+
+function lcwCheckSession(token) {
+    fetch(lcwApi + '/chat/messages/' + encodeURIComponent(token), { headers:{'Accept':'application/json'} })
+    .then(function(r) {
+        if (!r.ok) { localStorage.removeItem('lcw_token'); lcwShowForm(); return null; }
+        return r.json();
+    }).then(function(resp) {
+        if (!resp) return;
+        if (resp.success) {
+            var status = resp.data.session ? resp.data.session.status : 'open';
+            if (status === 'closed') {
+                localStorage.removeItem('lcw_token');
+                lcwShowArchivedForOld(resp.data.messages || []);
+            } else {
+                lcwOpenConv(token);
+            }
+        } else {
+            localStorage.removeItem('lcw_token');
+            lcwShowForm();
+        }
+    }).catch(function() {
+        localStorage.removeItem('lcw_token');
+        lcwShowForm();
+    });
+}
+
+function lcwShowArchivedForOld(msgs) {
+    document.getElementById('lcw-form').style.display = 'none';
+    document.getElementById('lcw-conv').style.display = 'flex';
+    document.getElementById('lcw-bar').style.display = 'none';
+    var c = document.getElementById('lcw-msgs');
+    c.innerHTML = '';
+    msgs.forEach(function(m){ lcwAppend(m.message,m.sender_type,m.created_at,m.attachment,m.attachment_type); });
+    lcwScroll();
+    var notice = document.createElement('div');
+    notice.id = 'lcw-archived-notice';
+    notice.style.cssText = 'padding:12px 16px;text-align:center;background:var(--lcw-hover,#f1f5f9);border-top:1px solid var(--lcw-border,#e2e8f0);flex-shrink:0;';
+    notice.innerHTML = '<div style="font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-bottom:10px">Percakapan ini telah ditutup</div><button onclick="lcwStartNew()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer">Mulai Chat Baru</button>';
+    document.getElementById('lcw-conv').appendChild(notice);
 }
 
 function lcwStart() {
@@ -421,7 +479,8 @@ function lcwRate(star) {
 
 function lcwStartNew() {
     localStorage.removeItem('lcw_token'); localStorage.removeItem('lcw_name');
-    if (lcwSSE) lcwSSE.close(); lcwSessionActive = false;
+    if (lcwSSE) { lcwSSE.close(); lcwSSE = null; }
+    lcwSessionActive = false; lcwLastMsgId = 0;
     ['lcw-conv','lcw-rating','lcw-offline'].forEach(function(id){ document.getElementById(id).style.display='none'; });
     document.getElementById('lcw-form').style.display = 'flex';
     document.getElementById('lcw-bar').style.display = 'flex';

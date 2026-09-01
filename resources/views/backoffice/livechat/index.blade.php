@@ -180,7 +180,10 @@ function connectAdminSSE(id) {
 }
 
 function loadSessions(filter) {
-    filter = filter || 'open';
+    if (!filter) {
+        const activeTab = document.querySelector('#lc_tabs .active');
+        filter = activeTab ? activeTab.dataset.filter : 'open';
+    }
     let url = apiUrl('admin/chat/sessions');
     if (filter) url += '?status=' + filter;
     apiFetch(url).then(r => {
@@ -252,7 +255,7 @@ document.getElementById('lc_tabs').addEventListener('click', function(e) {
     if (!btn) return;
     this.querySelectorAll('button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderSessions();
+    loadSessions(btn.dataset.filter);
 });
 
     document.getElementById('lc_reply_input').addEventListener('keydown', function(e) {
@@ -280,13 +283,13 @@ function selectSession(id) {
     document.getElementById('lc_no_session').style.display = 'none';
     document.getElementById('lc_main_header').style.display = 'flex';
     document.getElementById('lc_msgs').style.display = 'flex';
-    document.getElementById('lc_input_area').style.display = 'flex';
+    document.getElementById('lc_input_area').style.display = s.status === 'open' ? 'flex' : 'none';
     document.getElementById('lc_header_name').textContent = s.name;
-    document.getElementById('lc_header_status').textContent = s.email ? s.email + ' \u00b7 ' : '' + (s.messages_count || 0) + ' pesan';
+    document.getElementById('lc_header_status').textContent = (s.email ? s.email + ' \u00b7 ' : '') + (s.messages_count || 0) + ' pesan' + (s.status === 'closed' ? ' \u00b7 Ditutup' : '');
     document.getElementById('lc_msgs').innerHTML = '';
     closeSSE();
     loadMessages(id).then(function() {
-        connectAdminSSE(id);
+        if (s.status === 'open') connectAdminSSE(id);
     });
     document.getElementById('lc_reply_input').focus();
 }

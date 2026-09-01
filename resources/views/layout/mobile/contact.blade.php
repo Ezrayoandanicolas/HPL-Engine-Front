@@ -71,7 +71,7 @@
                 <div class="col-sm-12">
                     <div class="contact-us-container">
                         <a href="javascript:void(0)" class="js_live_chat_link live-chat-link"
-                            data-url="{{ $setting->livechat }}" data-type="live-chat"
+                            onclick="lcwToggle()" data-type="live-chat"
                             style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/communications/live-chat.svg?v=20240708-4);">
                             <h3>Dukungan LiveChat 24 Jam</h3>
                             <h6>

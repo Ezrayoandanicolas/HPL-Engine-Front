@@ -236,24 +236,49 @@ function lcwOpenConv(token) {
     lcwSessionActive = true;
     document.getElementById('lcw-conv').style.display = 'flex';
     document.getElementById('lcw-rating').style.display = 'none';
-    lcwLoadMsgs(token); lcwConnectSSE(token);
+    lcwLoadMsgs(token);
 }
 
 function lcwLoadMsgs(token) {
     fetch(lcwApi + '/chat/messages/' + encodeURIComponent(token), { headers:{'Accept':'application/json'} })
-    .then(function(r){ return r.json(); }).then(function(resp) {
+    .then(function(r){
+        if (!r.ok) { lcwShowArchived(); return null; }
+        return r.json();
+    }).then(function(resp) {
+        if (!resp) return;
         if (resp.success) {
             var c = document.getElementById('lcw-msgs');
             c.innerHTML = '';
-            (resp.data || []).forEach(function(m){ lcwAppend(m.message,m.sender_type,m.created_at,m.attachment,m.attachment_type); if(m.id>lcwLastMsgId) lcwLastMsgId=m.id; });
+            var msgs = resp.data.messages || resp.data || [];
+            (Array.isArray(msgs) ? msgs : []).forEach(function(m){ lcwAppend(m.message,m.sender_type,m.created_at,m.attachment,m.attachment_type); if(m.id>lcwLastMsgId) lcwLastMsgId=m.id; });
             lcwScroll();
+            var sessionStatus = resp.data.session ? resp.data.session.status : 'open';
+            if (sessionStatus === 'closed') {
+                lcwShowArchived();
+            } else {
+                lcwConnectSSE(token);
+            }
         } else {
-            localStorage.removeItem('lcw_token');
-            document.getElementById('lcw-conv').style.display = 'none';
-            document.getElementById('lcw-form').style.display = 'flex';
-            if (lcwSSE) lcwSSE.close();
+            lcwShowArchived();
         }
+    }).catch(function(){
+        lcwShowArchived();
     });
+}
+
+function lcwShowArchived() {
+    document.getElementById('lcw-bar').style.display = 'none';
+    document.getElementById('lcw-typing').style.display = 'none';
+    var notice = document.getElementById('lcw-archived-notice');
+    if (!notice) {
+        var n = document.createElement('div');
+        n.id = 'lcw-archived-notice';
+        n.style.cssText = 'padding:12px 16px;text-align:center;background:var(--lcw-hover,#f1f5f9);border-top:1px solid var(--lcw-border,#e2e8f0);flex-shrink:0;';
+        n.innerHTML = '<div style="font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-bottom:10px">Percakapan ini telah ditutup</div><button onclick="lcwStartNew()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer">Mulai Chat Baru</button>';
+        document.getElementById('lcw-conv').appendChild(n);
+    }
+    notice = document.getElementById('lcw-archived-notice');
+    notice.style.display = 'block';
 }
 
 function lcwConnectSSE(token) {
@@ -344,12 +369,12 @@ function lcwSend() {
     btn.disabled = true;
     fetch(lcwApi + '/chat/send', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'}, body:'session_token='+encodeURIComponent(token)+'&message='+encodeURIComponent(msg) })
     .then(function(r) {
-        if (r.status === 410) { lcwStartFresh(token, msg); btn.disabled = false; return null; }
+        if (r.status === 410) { btn.disabled = false; input.value = ''; lcwShowArchived(); return null; }
         return r.json();
     }).then(function(resp) {
         btn.disabled = false;
         if (resp && resp.success) { input.value = ''; lcwAppend(msg, 'user', new Date().toISOString(), null, null); }
-        else if (resp && resp.message === 'Session not found or closed') { lcwStartFresh(token, msg); }
+        else if (resp && resp.archived) { lcwShowArchived(); }
     }).catch(function(e){ console.error('Send error:', e); btn.disabled = false; });
 }
 
@@ -399,6 +424,9 @@ function lcwStartNew() {
     if (lcwSSE) lcwSSE.close(); lcwSessionActive = false;
     ['lcw-conv','lcw-rating','lcw-offline'].forEach(function(id){ document.getElementById(id).style.display='none'; });
     document.getElementById('lcw-form').style.display = 'flex';
+    document.getElementById('lcw-bar').style.display = 'flex';
+    var notice = document.getElementById('lcw-archived-notice');
+    if (notice) notice.remove();
     document.getElementById('lcw-name').value = ''; document.getElementById('lcw-email').value = '';
     document.getElementById('lcw-msgs').innerHTML = '';
 }

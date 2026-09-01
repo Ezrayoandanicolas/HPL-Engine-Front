@@ -817,6 +817,7 @@ window.addEventListener('DOMContentLoaded', function() {
         }
     </style>
 
+    @include('layout.desktop.chat-widget')
 
 </body>
 

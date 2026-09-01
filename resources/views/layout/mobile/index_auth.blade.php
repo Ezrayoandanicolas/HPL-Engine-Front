@@ -1552,7 +1552,7 @@
         <div class="col-md-12">
             <ul class="social-media-list">
                 <li>
-                    <a href="{{ $setting->livechat }}" target="_blank" rel="nofollow">
+                    <a href="javascript:void(0)" onclick="lcwToggle()" rel="nofollow">
                         <img src="https://api2-aj8.imgzm.com/images/aj8/Whatsapp_983f81b4-f547-4b83-b424-ccd0a64bcf00_1632410383380.png"
                             alt="Social Media" width="32" height="32" loading="lazy" />
                     </a>

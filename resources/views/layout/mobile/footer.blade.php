@@ -269,10 +269,10 @@
                   width="20">
               Deposit
           </a>
-          <a href="/contact" data-active="false" class="live-chat-link">
+          <a href="javascript:void(0)" onclick="lcwToggle()" data-active="false" class="live-chat-link">
               <img alt="Contact Us" height="20" loading="lazy"
                   src="//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/layout/footer/live-chat.svg?v=20240708-4"
-                  style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/layout/footer/live-chat-active.svg?v=20240708-4);"
+                  style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/layout/footer/live-chat-active.svg?v=20240708-4);"
                   width="20" />
               Hubungi Kami
           </a>
@@ -307,10 +307,10 @@
                   width="20" />
               Masuk
           </a>
-          <a href="/contact" data-active="false" class="live-chat-link">
+          <a href="javascript:void(0)" onclick="lcwToggle()" data-active="false" class="live-chat-link">
               <img alt="Contact Us" height="20" loading="lazy"
                   src="//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/layout/footer/live-chat.svg?v=20240708-4"
-                  style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/layout/footer/live-chat-active.svg?v=20240708-4);"
+                  style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/layout/footer/live-chat-active.svg?v=20240708-4);"
                   width="20" />
               Hubungi Kami
           </a>

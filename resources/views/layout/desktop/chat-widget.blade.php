@@ -159,6 +159,7 @@ var lcwApi = '{{ config('app.api_base_url') }}';
 var lcwSse = window.location.origin + '/chat-sse';
 var lcwUnread = 0, lcwLastMsgId = 0, lcwSessionActive = false;
 var lcwSSE = null, lcwTypingTimer = null, lcwTabHidden = false, lcwSoundOn = localStorage.getItem('lcw_sound') !== 'off';
+var lcwSseRetryDelay = 2000;
 var lcwEmojis = ['😀','😃','😄','😁','😅','😂','🤣','😊','😇','🙂','😉','😌','😍','🥰','😘','😗','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🫡','🤐','😐','😑','😶','😏','😒','🙄','😬','😮','😯','😲','😳','🥺','😢','😭','😤','😡','🤬','😈','👿','💀','☠️','💩','🤡','👋','✋','🖐️','👌','🤌','🤏','✌️','🤞','👍','👎','👊','✊','🤛','🤜','👏','🙌','🤲','🤝','🙏','💪','🦵','🦶','👂','👃','🧠','🫀','👀','👅','👄','💋','❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❤️‍🔥','💖','💗','💝','💘','💟','✨','🌟','⭐','🔥','💯','🎉','🎊','🎈','🎁','🎀','🪄','💎','👑','🏆','🥇','🥈','🥉'];
 
 // Dark mode detection
@@ -343,6 +344,7 @@ function lcwConnectSSE(token) {
     if (lcwSSE) lcwSSE.close();
     lcwSSE = new EventSource(lcwSse + '/' + encodeURIComponent(token));
     lcwSSE.addEventListener('message', function(e) {
+        lcwSseRetryDelay = 2000;
         var m = JSON.parse(e.data);
         if (m.sender_type === 'admin') {
             lcwAppend(m.message, 'admin', m.created_at, m.attachment, m.attachment_type);
@@ -361,7 +363,14 @@ function lcwConnectSSE(token) {
     lcwSSE.addEventListener('typing', function(e) {
         document.getElementById('lcw-typing').style.display = JSON.parse(e.data).typing ? 'flex' : 'none';
     });
-    lcwSSE.onerror = function() { setTimeout(function(){ var t = localStorage.getItem('lcw_token'); if(t) lcwConnectSSE(t); },3000); };
+    lcwSSE.onerror = function() {
+        lcwSSE.close();
+        setTimeout(function(){
+            var t = localStorage.getItem('lcw_token');
+            if (t) lcwConnectSSE(t);
+        }, lcwSseRetryDelay);
+        lcwSseRetryDelay = Math.min(lcwSseRetryDelay * 1.5, 30000);
+    };
 }
 
 function lcwAppend(text, type, time, attachment, attType) {

@@ -126,7 +126,7 @@ const API_BASE = '{{ $apiBaseUrl }}';
 const API_KEY = '{{ $apiKey }}';
 const SSE_BASE = window.location.origin;
 
-let sessions = [], currentId = null, sse = null, autoScroll = true, incomingSound = null;
+let sessions = [], currentId = null, sse = null, autoScroll = true, incomingSound = null, sseRetryDelay = 2000;
 
 function toggleAutoScroll() {
     autoScroll = !autoScroll;
@@ -149,6 +149,7 @@ function connectAdminSSE(id) {
     const url = SSE_BASE + '/admin-chat-sse/' + id;
     sse = new EventSource(url);
     sse.addEventListener('message', function(e) {
+        sseRetryDelay = 2000;
         const m = JSON.parse(e.data);
         if (m.sender_type === 'user' && currentId === m.session_id) {
             if (m.id > lastMsgId) {
@@ -176,7 +177,11 @@ function connectAdminSSE(id) {
             el.style.display = 'none';
         }
     });
-    sse.onerror = function() { setTimeout(function() { if (currentId) connectAdminSSE(currentId); }, 3000); };
+    sse.onerror = function() {
+        sse.close();
+        setTimeout(function() { if (currentId) connectAdminSSE(currentId); }, sseRetryDelay);
+        sseRetryDelay = Math.min(sseRetryDelay * 1.5, 30000);
+    };
 }
 
 function loadSessions(filter) {
@@ -470,16 +475,6 @@ function escHtml(s) {
 
 loadSessions('open');
 setInterval(function() { loadSessions(); }, 10000);
-
-// Session list SSE
-(function() {
-    const sseUrl = SSE_BASE + '/admin-chat-sessions-sse';
-    const es = new EventSource(sseUrl);
-    es.addEventListener('sessions', function(e) {
-        loadSessions();
-    });
-    es.onerror = function() {};
-})();
 
 // File input for admin
 document.getElementById('lc_file_input').addEventListener('change', function() {

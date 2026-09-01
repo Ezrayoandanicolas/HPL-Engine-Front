@@ -147,6 +147,8 @@ $setting = (object) $settingData;
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         var notifiedIds = [];
+        var ADMIN_POLL_URL = '{{ config("app.api_base_url") }}/admin/poll';
+        var ADMIN_POLL_KEY = '{{ env("API_KEY", "") }}';
 
         var depositToast = Swal.mixin({
             toast: true,
@@ -188,79 +190,46 @@ $setting = (object) $settingData;
             }
         });
 
-        function checkDeposits() {
-            $.ajax({
-                url: '/deposits/today',
-                method: 'GET',
-                success: function(data) {
-                    if (data.length > 0) {
-                        document.getElementById('notification-deposit').play().catch(function(){});
-
-                        data.forEach(function(d) {
-                            if (notifiedIds.indexOf(d.id) !== -1) return;
-                            notifiedIds.push(d.id);
-                            var u = d.user || {};
-                            var amount = new Intl.NumberFormat('id-ID').format(d.amount || 0);
-                            depositToast.fire({
-                                title: '<span class="toast-icon">&#x1F4B0;</span> Deposit Baru',
-                                html: '<strong>Rp ' + amount + '</strong><br><small style="color:#9ca3af">' + (u.username || '-') + ' &middot; ' + moment(d.created_at).fromNow() + '</small>'
-                            });
+        function adminPoll() {
+            fetch(ADMIN_POLL_URL, { headers: { 'Accept': 'application/json', 'X-API-Key': ADMIN_POLL_KEY } })
+            .then(function(r) { return r.json(); })
+            .then(function(res) {
+                // Deposits
+                if (res.deposits && res.deposits.length > 0) {
+                    document.getElementById('notification-deposit').play().catch(function(){});
+                    res.deposits.forEach(function(d) {
+                        if (notifiedIds.indexOf(d.id) !== -1) return;
+                        notifiedIds.push(d.id);
+                        var u = d.user || {};
+                        var amount = new Intl.NumberFormat('id-ID').format(d.amount || 0);
+                        depositToast.fire({
+                            title: '<span class="toast-icon">&#x1F4B0;</span> Deposit Baru',
+                            html: '<strong>Rp ' + amount + '</strong><br><small style="color:#9ca3af">' + (u.username || '-') + ' &middot; ' + moment(d.created_at).fromNow() + '</small>'
                         });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Gagal mengambil data:', error);
+                    });
                 }
-            });
-        }
-
-        setInterval(checkDeposits, 15000);
-
-        function checkWithdraws() {
-            $.ajax({
-                url: '/withdraw/today',
-                method: 'GET',
-                success: function(data) {
-                    if (data.length > 0) {
-                        document.getElementById('notification-withdraw').play().catch(function(){});
-                        data.forEach(function(w) {
-                            if (notifiedIds.indexOf(w.id) !== -1) return;
-                            notifiedIds.push(w.id);
-                            var u = w.user || {};
-                            var amount = new Intl.NumberFormat('id-ID').format(w.amount || 0);
-                            withdrawToast.fire({
-                                title: '<span class="toast-icon">&#x1F4B8;</span> Withdraw Baru',
-                                html: '<strong>Rp ' + amount + '</strong><br><small style="color:#9ca3af">' + (u.username || '-') + ' &middot; ' + moment(w.created_at).fromNow() + '</small>'
-                            });
+                // Withdraws
+                if (res.withdraws && res.withdraws.length > 0) {
+                    document.getElementById('notification-withdraw').play().catch(function(){});
+                    res.withdraws.forEach(function(w) {
+                        if (notifiedIds.indexOf(w.id) !== -1) return;
+                        notifiedIds.push(w.id);
+                        var u = w.user || {};
+                        var amount = new Intl.NumberFormat('id-ID').format(w.amount || 0);
+                        withdrawToast.fire({
+                            title: '<span class="toast-icon">&#x1F4B8;</span> Withdraw Baru',
+                            html: '<strong>Rp ' + amount + '</strong><br><small style="color:#9ca3af">' + (u.username || '-') + ' &middot; ' + moment(w.created_at).fromNow() + '</small>'
                         });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Gagal mengambil data:', error);
+                    });
                 }
-            });
+                // Chat badge
+                if (typeof refreshLivechatBadge === 'function') {
+                    refreshLivechatBadge(res.chat_count || 0);
+                }
+            }).catch(function() {});
         }
-
-        setInterval(checkWithdraws, 15000);
-
-        // Notifications
-        function checkNotifications() {
-            $.get('/Admin/Dashboard/notifications/unread', function(res) {
-                var items = res.data || [];
-                $('#notifCount').text(items.length);
-                $('#notifHeader').text(items.length + ' Notifications');
-                var html = '';
-                items.forEach(function(n) {
-                    var icon = n.type == 'deposit' ? 'fa-arrow-down text-success' : 'fa-arrow-up text-warning';
-                    var link = n.type == 'withdraw' ? '/Admin/Dashboard/Withdraw' : '/Admin/Dashboard/Tranksaksi';
-                    html += '<div class="dropdown-divider"></div><a href="' + link + '" class="dropdown-item"><i class="fas ' + icon + ' mr-2"></i> ' + n.message + ' <span class="float-right text-muted text-sm">' + n.time + '</span></a>';
-                });
-                if (!items.length) html = '<div class="dropdown-divider"></div><a href="#" class="dropdown-item text-muted">Tidak ada notifikasi</a>';
-                $('#notifList').html(html);
-            });
-        }
-        setInterval(checkNotifications, 30000);
-        checkNotifications();
+        adminPoll();
+        setInterval(adminPoll, 15000);
     </script>
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">

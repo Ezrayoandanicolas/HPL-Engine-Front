@@ -1003,6 +1003,14 @@ $(function() {
         });
     }
     refreshBalance();
-    setInterval(refreshBalance, 5000);
+    var balanceTimer = setInterval(refreshBalance, 15000);
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            clearInterval(balanceTimer);
+        } else {
+            refreshBalance();
+            balanceTimer = setInterval(refreshBalance, 15000);
+        }
+    });
 });
 </script>

@@ -390,7 +390,15 @@ $(function() {
         });
     }
     refreshMobileBalance();
-    setInterval(refreshMobileBalance, 5000);
+    var mobBalanceTimer = setInterval(refreshMobileBalance, 15000);
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            clearInterval(mobBalanceTimer);
+        } else {
+            refreshMobileBalance();
+            mobBalanceTimer = setInterval(refreshMobileBalance, 15000);
+        }
+    });
 
     $('.refresh_balance').on('click', function(e) {
         e.preventDefault();

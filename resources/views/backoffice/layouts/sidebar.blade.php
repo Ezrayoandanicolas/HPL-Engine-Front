@@ -448,19 +448,14 @@
 
 @push('scripts')
 <script>
-function refreshLivechatBadge() {
-    $.get('/Admin/Dashboard/Livechat/unread-count', function(res) {
-        if (res.count !== undefined) {
-            var badge = $('#livechatBadge');
-            if (res.count > 0) {
-                badge.text(res.count).show();
-            } else {
-                badge.text('0').hide();
-            }
-        }
-    });
+function refreshLivechatBadge(count) {
+    var badge = $('#livechatBadge');
+    if (count === undefined) return;
+    if (count > 0) {
+        badge.text(count).show();
+    } else {
+        badge.text('0').hide();
+    }
 }
-setInterval(refreshLivechatBadge, 10000);
-$(function() { refreshLivechatBadge(); });
 </script>
 @endpush

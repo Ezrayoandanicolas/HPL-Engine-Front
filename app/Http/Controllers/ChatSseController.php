@@ -60,7 +60,8 @@ class ChatSseController extends Controller
 
                 try {
                     $resp = $api->get("chat/messages/{$token}");
-                    $messages = $resp['data'] ?? [];
+                    $msgData = $resp['data'] ?? [];
+                    $messages = $msgData['messages'] ?? $msgData ?? [];
 
                     foreach ($messages as $msg) {
                         if ((int) $msg['id'] > $lastId) {

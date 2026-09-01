@@ -493,5 +493,7 @@ document.getElementById('lc_search_input').addEventListener('input', function() 
         });
     }, 200);
 });
+
+window.addEventListener('beforeunload', function() { closeSSE(); });
 </script>
 @endsection

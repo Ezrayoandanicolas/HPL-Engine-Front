@@ -175,8 +175,11 @@ var lcwEmojis = ['😀','😃','😄','😁','😅','😂','🤣','😊','😇',
 function lcwToggle() {
     var d = document.getElementById('lcw-dialog');
     var isOpen = d.classList.contains('lcw-open');
-    if (isOpen) { d.classList.remove('lcw-open'); setTimeout(function(){ d.style.display='none'; },300); }
-    else {
+    if (isOpen) {
+        d.classList.remove('lcw-open');
+        setTimeout(function(){ d.style.display='none'; },300);
+        if (lcwSSE) { lcwSSE.close(); lcwSSE = null; }
+    } else {
         d.style.display='flex'; lcwUnread=0; lcwUpdateBadge();
         requestAnimationFrame(function(){ d.classList.add('lcw-open'); });
         document.getElementById('lcw-btn').classList.remove('lcw-pulse');

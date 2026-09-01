@@ -54,9 +54,11 @@ class ChatSseController extends Controller
         return $this->sseResponse(function () use ($api, $token) {
             $lastId = 0;
             $lastTyping = '';
+            $startTime = time();
 
             while (true) {
                 if (connection_aborted()) break;
+                if (time() - $startTime > 300) break;
 
                 try {
                     $resp = $api->get("chat/messages/{$token}");
@@ -97,9 +99,11 @@ class ChatSseController extends Controller
             $lastId = 0;
             $lastTyping = '';
             $firstRun = true;
+            $startTime = time();
 
             while (true) {
                 if (connection_aborted()) break;
+                if (time() - $startTime > 300) break;
 
                 try {
                     $resp = $api->get("admin/chat/messages/{$id}");

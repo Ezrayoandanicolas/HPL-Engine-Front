@@ -148,7 +148,7 @@
 #lcw-rating-note { font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-top:12px; }
 #lcw-new-chat-btn { margin-top:16px;padding:11px 28px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.88rem;cursor:pointer;transition:transform 0.15s; }
 #lcw-new-chat-btn:hover { transform:scale(1.03); }
-@media(max-width:480px){ #lcw-dialog{width:calc(100vw-24px);right:12px;height:65vh;bottom:84px;border-radius:14px} #lcw-btn{bottom:16px;right:16px;width:52px;height:52px} }
+@media(max-width:480px){ #lcw-dialog{width:calc(100vw-24px);right:12px;height:65vh;bottom:84px;border-radius:14px} #lcw-btn{bottom:72px;right:16px;width:52px;height:52px} }
 
 /* Dark mode */
 .lcw-dark #lcw-dialog { --lcw-bg:#1e293b; --lcw-body-bg:#0f172a; --lcw-text:#e2e8f0; --lcw-muted:#94a3b8; --lcw-border:#334155; --lcw-input-bg:#1e293b; --lcw-bar-bg:#1e293b; --lcw-admin-bg:#1e293b; --lcw-msgs-bg:transparent; --lcw-hover:#334155; }

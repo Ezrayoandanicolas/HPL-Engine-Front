@@ -56,6 +56,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="deposit-amount-range">
+                                    <span>Min: {{ number_format((($setting->min_withdraw ?? 50000) / 1000), 2) }} | Max: {{ number_format((($setting->max_withdraw ?? 5000000) / 1000), 2) }}</span>
+                                </div>
                             </div>
                             <div class="deposit-form-group">
                                 <div class="form-group">

@@ -76,7 +76,7 @@
                                             id="amount_display_mobile" style="font-size: 2.5rem">0</span></div>
                                 </div>
                                 <div class="deposit-amount-range">
-                                    <span id="deposit_amount_range_label">Min: 25.00 | Max: 20,000.00</span>
+                                    <span id="deposit_amount_range_label">Min: {{ number_format((($setting->min_withdraw ?? 50000) / 1000), 2) }} | Max: {{ number_format((($setting->max_withdraw ?? 5000000) / 1000), 2) }}</span>
                                 </div>
                             </div>
                         </div>

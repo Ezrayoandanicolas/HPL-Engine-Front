@@ -200,7 +200,7 @@ class DashboardCallController extends BaseAdminController
     private function getUsers(): array
     {
         try {
-            $resp = $this->api->get('admin/users');
+            $resp = $this->api->get('admin/users', ['per_page' => 9999]);
             return $resp['data']['users']['data'] ?? [];
         } catch (\Exception $e) {
             return [];

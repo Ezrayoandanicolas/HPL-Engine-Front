@@ -212,34 +212,27 @@
 
                         {{-- TAB 4: GAME LOG --}}
                         <div class="tab-pane fade" id="gamelog" role="tabpanel">
-                            <div class="row mb-3">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Tanggal Mulai</label>
-                                        <input type="date" class="form-control" id="logDateStart" value="{{ date('Y-m-d') }}">
-                                    </div>
+                            <div class="row mb-3 align-items-end">
+                                <div class="col-md-2">
+                                    <label>Tanggal Mulai</label>
+                                    <input type="date" class="form-control form-control-sm" id="logDateStart" value="{{ date('Y-m-d') }}">
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Tanggal Akhir</label>
+                                    <input type="date" class="form-control form-control-sm" id="logDateEnd" value="{{ date('Y-m-d') }}">
                                 </div>
                                 <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>Tanggal Akhir</label>
-                                        <input type="date" class="form-control" id="logDateEnd" value="{{ date('Y-m-d') }}">
-                                    </div>
+                                    <label>User</label>
+                                    <select class="form-control form-control-sm" id="logUser">
+                                        <option value="">Semua User</option>
+                                        @foreach($users as $u)
+                                        @php $uObj = is_object($u) ? $u : (object) $u; @endphp
+                                        <option value="{{ $uObj->username }}">{{ $uObj->username }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label>User</label>
-                                        <select class="form-control" id="logUser">
-                                            <option value="">-- Semua User --</option>
-                                            @foreach($users as $u)
-                                            @php $uObj = is_object($u) ? $u : (object) $u; @endphp
-                                            <option value="{{ $uObj->username }}">{{ $uObj->username }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label>&nbsp;</label>
-                                    <button class="btn btn-success form-control" onclick="searchGameLog()"><i class="fa fa-search"></i> Cari</button>
+                                <div class="col-md-auto">
+                                    <button class="btn btn-success btn-sm" onclick="searchGameLog()"><i class="fa fa-search"></i> Cari</button>
                                 </div>
                             </div>
                             <div id="gameLogResult">

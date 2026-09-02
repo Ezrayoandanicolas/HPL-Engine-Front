@@ -1,6 +1,7 @@
 @extends('backoffice.layouts.main')
 
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
 .modal-body { max-height: 80vh; overflow-y: auto; }
 .call-tab { cursor: pointer; }
@@ -228,7 +229,7 @@
                                     <div class="form-group">
                                         <label>User</label>
                                         <select class="form-control" id="logUser">
-                                            <option value="">-- Pilih User --</option>
+                                            <option value="">-- Semua User --</option>
                                             @foreach($users as $u)
                                             @php $uObj = is_object($u) ? $u : (object) $u; @endphp
                                             <option value="{{ $uObj->username }}">{{ $uObj->username }}</option>
@@ -616,5 +617,11 @@ function viewGameHistory(user, provider, gameCode) {
         }
     }).fail(function(jqXHR) { alert('Gagal: ' + errMsg(jqXHR)); });
 }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(function() {
+    $('#logUser').select2({ width: '100%', placeholder: '-- Cari User --', allowClear: true });
+});
 </script>
 @endsection

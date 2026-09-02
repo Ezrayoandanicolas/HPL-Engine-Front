@@ -1,5 +1,6 @@
 @extends('backoffice.layouts.main')
 @section('content')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <div class="container-fluid">
     <div class="card mt-3">
         <div class="card-header">
@@ -82,5 +83,9 @@ $(function() {
     });
     $('#btn_search').click();
 });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(function() { $('#extplayer').select2({ width: '100%', placeholder: 'Cari User...', allowClear: true }); });
 </script>
 @endsection

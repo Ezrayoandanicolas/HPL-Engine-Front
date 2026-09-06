@@ -53,28 +53,32 @@ function loadTransactions(page) {
         }
 
         var total = res.data.total || txns.length;
-        var html = '<div class="table-responsive"><table class="table table-bordered table-hover table-sm">';
-        html += '<thead class="thead-dark"><tr>';
-        html += '<th>#</th><th>ID</th><th>Amount</th><th>Status</th><th>Message</th><th>Payment</th><th>Waktu</th>';
+        var html = '<div class="table-responsive"><table class="table table-bordered table-hover" style="font-size:13px;">';
+        html += '<thead style="background:#2d3748;color:#fff;"><tr>';
+        html += '<th style="width:40px">#</th><th>Dari</th><th>Nominal</th><th>Status</th><th>Pesan</th><th>Metode</th><th>Waktu</th>';
         html += '</tr></thead><tbody>';
 
         txns.forEach(function(t, i) {
             var status = (t.status || '').toLowerCase();
             var badge = 'secondary';
-            if (status === 'paid' || status === 'completed') badge = 'success';
+            if (status === 'success' || status === 'paid' || status === 'completed') badge = 'success';
             else if (status === 'pending') badge = 'warning';
             else if (status === 'expired' || status === 'failed') badge = 'danger';
 
             var amount = Number(t.amount_raw || t.amount || 0).toLocaleString('id-ID');
+            var cut = Number(t.cut || 0);
+            var net = Number(t.amount_raw || t.amount || 0) + cut;
             var date = t.created_at ? new Date(t.created_at).toLocaleString('id-ID') : '-';
+            var donor = t.donor_name || t.donator_name || '-';
+            var email = t.donor_email || t.donator_email || '';
 
             html += '<tr>';
-            html += '<td>' + ((page - 1) * 50 + i + 1) + '</td>';
-            html += '<td><small>' + (t.id || '-') + '</small></td>';
-            html += '<td class="font-weight-bold">Rp ' + amount + '</td>';
-            html += '<td><span class="badge badge-' + badge + '">' + (t.status || '-') + '</span></td>';
-            html += '<td>' + (t.message || '-') + '</td>';
-            html += '<td>' + (t.payment_type || '-') + '</td>';
+            html += '<td class="text-center">' + ((page - 1) * 50 + i + 1) + '</td>';
+            html += '<td><strong>' + donor + '</strong><br><small class="text-muted">' + email + '</small></td>';
+            html += '<td class="font-weight-bold text-success">Rp ' + amount + '</td>';
+            html += '<td><span class="badge badge-' + badge + '" style="font-size:11px;">' + (t.status || '-') + '</span></td>';
+            html += '<td><small>' + (t.message || '-') + '</small></td>';
+            html += '<td><small>' + (t.payment_type || '-') + '</small></td>';
             html += '<td><small>' + date + '</small></td>';
             html += '</tr>';
         });

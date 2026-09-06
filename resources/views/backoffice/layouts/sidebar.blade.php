@@ -322,6 +322,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="/Admin/Dashboard/Saweria" class="nav-link">
+                            <i class="nav-icon fas fa-money-bill-wave"></i>
+                            <p>Riwayat Saweria</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="/Admin/Dashboard/GameProvider" class="nav-link">
                             <i class="nav-icon fas fa-exchange-alt"></i>
                             <p>Game Provider</p>

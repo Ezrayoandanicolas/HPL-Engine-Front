@@ -402,6 +402,9 @@ Route::middleware(['check.web', 'traffic'])->group(function () {
     Route::post('/Admin/Dashboard/Message', [DashboardMessageController::class, 'store'])->middleware('admin');
     Route::delete('/Admin/Dashboard/Message/{id}', [DashboardMessageController::class, 'destroy'])->middleware('admin');
     Route::get('/Admin/Dashboard/GgrBalance', [DashboardGgrController::class, 'balance'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Saweria', [DashboardSaweriaController::class, 'index'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Saweria/transactions', [DashboardSaweriaController::class, 'transactions'])->middleware('admin');
+    Route::get('/Admin/Dashboard/Saweria/balance', [DashboardSaweriaController::class, 'balance'])->middleware('admin');
     Route::get('/Admin/Dashboard/Activity', [DashboardActivityController::class, 'index'])->middleware('admin');
     
 });

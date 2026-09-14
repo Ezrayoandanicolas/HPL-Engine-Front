@@ -7134,8 +7134,9 @@
                 t.options.autoplay && ((t.paused = !1), t.autoPlay());
         }),
         (e.prototype.initADA = function () {
-            var e = this,
-                t = Math.ceil(e.slideCount / e.options.slidesToShow),
+            var e = this;
+            if (!e.$slides || !e.$slides.length) return;
+            var t = Math.ceil(e.slideCount / e.options.slidesToShow),
                 o = e.getNavigableIndexes().filter(function (i) {
                     return i >= 0 && i < e.slideCount;
                 });

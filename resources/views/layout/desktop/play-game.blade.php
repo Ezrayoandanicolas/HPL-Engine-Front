@@ -1,6 +1,7 @@
 @extends('layout.desktop.main')
 @section('content')
      <link rel="stylesheet" href="../../../assets/css/desktop/gamelist.css">
+     <link rel="stylesheet" href="../../../assets/css/desktop/gamelist-green.css">
     
     <style>
         /* === TAMBAHAN CSS JACKPOT BIAR SAMA PERSIS === */
@@ -8,18 +9,18 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #000;
-            border: 7px solid #b77636;
+            background: #ffffff;
+            border: 7px solid #22c55e;
             border-radius: 50px;
             padding: 20px 30px;
             margin: 20px auto;
-            box-shadow: 0 0 15px rgba(183, 118, 54, 0.3);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
         }
 
         .jackpot-currency {
             font-size: 30px;
             font-weight: bold;
-            color: #b77636;
+            color: #16a34a;
             margin-right: 15px;
             font-family: sans-serif;
         }
@@ -34,7 +35,7 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 32px;
             font-weight: bold;
-            color: #fff;
+            color: #1f2937;
             display: inline-block;
             min-width: 18px;
             text-align: center;
@@ -42,7 +43,7 @@
 
         .jackpot-comma {
             margin: 0 5px;
-            color: #fff;
+            color: #1f2937;
         }
 
         /* === CSS BAWAAN === */
@@ -76,7 +77,7 @@
         }
 
         .fa-magnifying-glass {
-            color: #aaa;
+            color: #6b7280;
             padding: 5px;
         }
     </style>

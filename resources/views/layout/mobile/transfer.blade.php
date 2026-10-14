@@ -3,10 +3,10 @@
 @section('mobile')
 <style>
 .wallet-card{
-    background:#1b1b1b;
-    border:1px solid #353535;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
     border-radius:12px;
-    color:#fff;
+    color:#1f2937;
     margin-bottom:15px;
 }
 
@@ -19,45 +19,45 @@
 }
 
 .wallet-title{
-    color:#fff;
+    color:#1f2937;
     font-weight:600;
 }
 
 .wallet-main{
-    color:#3ddc84;
+    color:#16a34a;
 }
 
 .wallet-slot{
-    color:#ffc107;
+    color:#16a34a;
 }
 
 .wallet-game{
-    color:#00d4ff;
+    color:#22c55e;
 }
 
 .transfer-card{
-    background:#1b1b1b;
-    border:1px solid #353535;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
     border-radius:12px;
-    color:#fff;
+    color:#1f2937;
 }
 
 .transfer-card label{
-    color:#fff;
+    color:#1f2937;
     font-weight:600;
     margin-bottom:6px;
 }
 
 .transfer-card .form-control{
-    background:#2a2a2a;
-    border:1px solid #444;
-    color:#fff;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    color:#1f2937;
 }
 
 .transfer-card .form-control:focus{
-    background:#2a2a2a;
-    color:#fff;
-    border-color:#ffc107;
+    background:#ffffff;
+    color:#1f2937;
+    border-color:#22c55e;
     box-shadow:none;
 }
 
@@ -66,7 +66,7 @@
 }
 
 .btn-transfer{
-    background:linear-gradient(90deg,#ffb300,#ff6f00);
+    background:linear-gradient(90deg,#22c55e,#16a34a);
     border:none;
     color:#fff;
     font-weight:bold;
@@ -75,33 +75,33 @@
 }
 
 .btn-transfer:hover{
-    background:linear-gradient(90deg,#ff9800,#ff5722);
+    background:linear-gradient(90deg,#16a34a,#15803d);
     color:#fff;
 }
 
 .alert-info-custom{
-    background:#0d3b66;
-    color:#fff;
+    background:#dcfce7;
+    color:#166534;
     border:none;
     border-radius:10px;
 }
 
 .alert-warning-custom{
-    background:#6d4c00;
-    color:#fff;
+    background:#fef9c3;
+    color:#854d0e;
     border:none;
     border-radius:10px;
 }
 
 .page-title{
-    color:#fff;
+    color:#1f2937;
     font-weight:bold;
     text-align:center;
     margin-bottom:20px;
 }
 
 .text-note{
-    color:#cfcfcf;
+    color:#6b7280;
     font-size:13px;
 }
 </style>

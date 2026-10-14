@@ -17,7 +17,7 @@
         </div>
         <div id="lcw-body">
             <div id="lcw-form">
-                <div id="lcw-form-illustration"><svg viewBox="0 0 80 80" fill="none" width="80" height="80"><circle cx="40" cy="40" r="38" stroke="#e0e7ff" stroke-width="2" fill="#f0f4ff"/><path d="M28 32h24M28 40h16M28 48h20" stroke="#4f46e5" stroke-width="2.5" stroke-linecap="round"/><circle cx="54" cy="54" r="10" fill="#4f46e5"/><path d="M51 54h6M54 51v6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+                <div id="lcw-form-illustration"><svg viewBox="0 0 80 80" fill="none" width="80" height="80"><circle cx="40" cy="40" r="38" stroke="#e0e7ff" stroke-width="2" fill="#f0f4ff"/><path d="M28 32h24M28 40h16M28 48h20" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/><circle cx="54" cy="54" r="10" fill="#22c55e"/><path d="M51 54h6M54 51v6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
                 <div id="lcw-form-title">Ada yang bisa kami bantu?</div>
                 <div id="lcw-form-desc">Isi nama Anda untuk memulai chat dengan tim CS kami.</div>
                 <div id="lcw-form-group">
@@ -63,16 +63,16 @@
 #lcw-btn {
     position: fixed; bottom: 24px; right: 24px; z-index: 99999;
     width: 58px; height: 58px; border-radius: 50%;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed); border: none; cursor: pointer;
+    background: linear-gradient(135deg, #22c55e, #16a34a); border: none; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 24px rgba(79,70,229,0.45);
+    box-shadow: 0 6px 24px rgba(34,197,94,0.45);
     transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
 }
-#lcw-btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(79,70,229,0.55); }
+#lcw-btn:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(34,197,94,0.55); }
 #lcw-btn:active { transform: scale(0.95); }
 #lcw-btn.lcw-pulse { animation: lcwPulse 1.5s ease-in-out infinite; }
-@keyframes lcwPulse { 0%{box-shadow:0 6px 24px rgba(79,70,229,0.45)}50%{box-shadow:0 6px 32px rgba(79,70,229,0.7),0 0 0 8px rgba(79,70,229,0.15)}100%{box-shadow:0 6px 24px rgba(79,70,229,0.45)} }
-#lcw-badge { position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#ef4444;color:#fff;font-size:.65rem;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 6px;border:2px solid #4f46e5; }
+@keyframes lcwPulse { 0%{box-shadow:0 6px 24px rgba(34,197,94,0.45)}50%{box-shadow:0 6px 32px rgba(34,197,94,0.7),0 0 0 8px rgba(34,197,94,0.15)}100%{box-shadow:0 6px 24px rgba(34,197,94,0.45)} }
+#lcw-badge { position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#ef4444;color:#fff;font-size:.65rem;font-weight:700;display:none;align-items:center;justify-content:center;padding:0 6px;border:2px solid #22c55e; }
 #lcw-dialog {
     position:fixed;bottom:96px;right:24px;z-index:99999;width:380px;height:560px;
     background:var(--lcw-bg,#fff);border-radius:18px;display:none;flex-direction:column;overflow:hidden;
@@ -81,7 +81,7 @@
     transition:opacity 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
 }
 #lcw-dialog.lcw-open { opacity:1;transform:translateY(0) scale(1); }
-#lcw-head { padding:20px 20px 16px; background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0; }
+#lcw-head { padding:20px 20px 16px; background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;display:flex;justify-content:space-between;align-items:center;flex-shrink:0; }
 #lcw-head-left { display:flex;align-items:center;gap:12px; }
 #lcw-head-right { display:flex;align-items:center;gap:6px; }
 #lcw-head-avatar { width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px); }
@@ -92,15 +92,15 @@
 #lcw-head-right button:hover { background:rgba(255,255,255,0.25); }
 #lcw-body { flex:1;display:flex;flex-direction:column;background:var(--lcw-body-bg,#f8fafc);overflow:hidden;position:relative; }
 #lcw-form { flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 28px;text-align:center; }
-#lcw-form-illustration { margin-bottom:12px;filter:drop-shadow(0 4px 12px rgba(79,70,229,0.12)); }
+#lcw-form-illustration { margin-bottom:12px;filter:drop-shadow(0 4px 12px rgba(34,197,94,0.12)); }
 #lcw-form-title { font-size:1.1rem;font-weight:700;color:var(--lcw-text,#0f172a);margin-bottom:6px; }
 #lcw-form-desc { font-size:0.85rem;color:var(--lcw-muted,#64748b);line-height:1.5;margin-bottom:24px;max-width:280px; }
 #lcw-form-group { width:100%;max-width:300px; }
 .lcw-inp { width:100%;padding:13px 16px;margin-bottom:10px;border-radius:12px;border:1.5px solid var(--lcw-border,#e2e8f0);background:var(--lcw-input-bg,#fff);color:var(--lcw-text,#0f172a);outline:none;font-size:0.9rem;font-family:inherit;transition:border-color 0.2s,box-shadow 0.2s; }
-.lcw-inp:focus { border-color:#4f46e5;box-shadow:0 0 0 4px rgba(79,70,229,0.1); }
+.lcw-inp:focus { border-color:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,0.1); }
 .lcw-inp::placeholder { color:#94a3b8; }
-#lcw-start-btn,#lcw-offline-btn { width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.9rem;font-family:inherit;cursor:pointer;transition:transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(79,70,229,0.3); }
-#lcw-start-btn:hover,#lcw-offline-btn:hover { transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,70,229,0.4); }
+#lcw-start-btn,#lcw-offline-btn { width:100%;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:600;font-size:0.9rem;font-family:inherit;cursor:pointer;transition:transform 0.15s,box-shadow 0.2s;box-shadow:0 4px 14px rgba(34,197,94,0.3); }
+#lcw-start-btn:hover,#lcw-offline-btn:hover { transform:translateY(-1px);box-shadow:0 6px 20px rgba(34,197,94,0.4); }
 #lcw-start-btn:active,#lcw-offline-btn:active { transform:scale(0.97); }
 #lcw-start-btn:disabled,#lcw-offline-btn:disabled { opacity:0.6;cursor:not-allowed;transform:none; }
 #lcw-form-err,#lcw-offline-err { color:#ef4444;font-size:0.8rem;margin-top:10px;min-height:20px; }
@@ -112,12 +112,12 @@
 .lcw-bubble { max-width:82%;padding:10px 14px;border-radius:16px;line-height:1.5;font-size:0.88rem;word-wrap:break-word;position:relative;animation:lcwFadeIn 0.25s ease-out; }
 .lcw-bubble a { color:inherit;text-decoration:underline; }
 @keyframes lcwFadeIn { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
-.lcw-bubble.user { align-self:flex-end;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-bottom-right-radius:4px; }
+.lcw-bubble.user { align-self:flex-end;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border-bottom-right-radius:4px; }
 .lcw-bubble.admin { align-self:flex-start;background:var(--lcw-admin-bg,#fff);color:var(--lcw-text,#0f172a);border:1px solid var(--lcw-border,#e2e8f0);border-bottom-left-radius:4px; }
 .lcw-bubble .lcw-ts { font-size:0.6rem;margin-top:5px;display:block;letter-spacing:0.02em; }
 .lcw-bubble.user .lcw-ts { text-align:right;opacity:0.65; }
 .lcw-bubble.admin .lcw-ts { color:var(--lcw-muted,#94a3b8); }
-.lcw-bubble .lcw-name-label { font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;display:block;color:#4f46e5; }
+.lcw-bubble .lcw-name-label { font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:2px;display:block;color:#22c55e; }
 .lcw-bubble .lcw-attachment { display:block;margin-top:6px; }
 .lcw-bubble .lcw-attachment img { max-width:100%;border-radius:8px;cursor:pointer; }
 #lcw-typing { padding:6px 16px;display:flex;align-items:center;gap:4px;background:var(--lcw-body-bg,#f8fafc); }
@@ -127,12 +127,12 @@
 @keyframes lcwTyping { 0%,60%,100%{transform:translateY(0);opacity:0.4}30%{transform:translateY(-6px);opacity:1} }
 #lcw-bar { display:flex;gap:6px;padding:10px 12px 12px;border-top:1px solid var(--lcw-border,#e2e8f0);background:var(--lcw-bar-bg,#fff);align-items:center; }
 #lcw-bar input { flex:1;padding:10px 14px;border-radius:24px;border:1.5px solid var(--lcw-border,#e2e8f0);background:var(--lcw-input-bg,#f1f5f9);color:var(--lcw-text,#0f172a);outline:none;font-size:0.88rem;font-family:inherit;transition:border-color 0.2s,background 0.2s; }
-#lcw-bar input:focus { border-color:#4f46e5;background:var(--lcw-input-bg,#fff); }
+#lcw-bar input:focus { border-color:#22c55e;background:var(--lcw-input-bg,#fff); }
 #lcw-bar input::placeholder { color:#94a3b8; }
 #lcw-bar button { width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:transparent;color:var(--lcw-muted,#64748b);transition:background 0.2s; }
 #lcw-bar button:hover { background:var(--lcw-hover,#f1f5f9); }
-#lcw-send-btn { background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;color:#fff!important;box-shadow:0 3px 10px rgba(79,70,229,0.3);transition:transform 0.15s,box-shadow 0.2s!important; }
-#lcw-send-btn:hover { transform:scale(1.05);box-shadow:0 5px 16px rgba(79,70,229,0.4)!important; }
+#lcw-send-btn { background:linear-gradient(135deg,#22c55e,#16a34a)!important;color:#fff!important;box-shadow:0 3px 10px rgba(34,197,94,0.3);transition:transform 0.15s,box-shadow 0.2s!important; }
+#lcw-send-btn:hover { transform:scale(1.05);box-shadow:0 5px 16px rgba(34,197,94,0.4)!important; }
 #lcw-send-btn:active,#lcw-send-btn:disabled { transform:scale(0.92);opacity:0.4;cursor:not-allowed; }
 #lcw-emoji-picker { position:absolute;bottom:62px;left:12px;z-index:10;width:260px;height:200px;overflow-y:auto;background:var(--lcw-bg,#fff);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);padding:8px;display:grid;grid-template-columns:repeat(7,1fr);gap:2px;border:1px solid var(--lcw-border,#e2e8f0); }
 #lcw-emoji-picker span { text-align:center;padding:4px;cursor:pointer;border-radius:6px;font-size:1.2rem;transition:background 0.15s; }
@@ -146,7 +146,7 @@
 #lcw-rating-stars span { font-size:2.2rem;cursor:pointer;color:#d1d5db;transition:color 0.2s,transform 0.15s;display:inline-block; }
 #lcw-rating-stars span:hover,#lcw-rating-stars span.lcw-star-active { color:#f59e0b;transform:scale(1.15); }
 #lcw-rating-note { font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-top:12px; }
-#lcw-new-chat-btn { margin-top:16px;padding:11px 28px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.88rem;cursor:pointer;transition:transform 0.15s; }
+#lcw-new-chat-btn { margin-top:16px;padding:11px 28px;border:none;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:600;font-size:0.88rem;cursor:pointer;transition:transform 0.15s; }
 #lcw-new-chat-btn:hover { transform:scale(1.03); }
 @media(max-width:480px){ #lcw-dialog{width:calc(100vw-24px);right:12px;height:65vh;bottom:84px;border-radius:14px} #lcw-btn{bottom:72px;right:16px;width:52px;height:52px} }
 
@@ -239,7 +239,7 @@ function lcwShowArchivedForOld(msgs) {
     var notice = document.createElement('div');
     notice.id = 'lcw-archived-notice';
     notice.style.cssText = 'padding:12px 16px;text-align:center;background:var(--lcw-hover,#f1f5f9);border-top:1px solid var(--lcw-border,#e2e8f0);flex-shrink:0;';
-    notice.innerHTML = '<div style="font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-bottom:10px">Percakapan ini telah ditutup</div><button onclick="lcwStartNew()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer">Mulai Chat Baru</button>';
+    notice.innerHTML = '<div style="font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-bottom:10px">Percakapan ini telah ditutup</div><button onclick="lcwStartNew()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer">Mulai Chat Baru</button>';
     document.getElementById('lcw-conv').appendChild(notice);
 }
 
@@ -336,7 +336,7 @@ function lcwShowArchived() {
         var n = document.createElement('div');
         n.id = 'lcw-archived-notice';
         n.style.cssText = 'padding:12px 16px;text-align:center;background:var(--lcw-hover,#f1f5f9);border-top:1px solid var(--lcw-border,#e2e8f0);flex-shrink:0;';
-        n.innerHTML = '<div style="font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-bottom:10px">Percakapan ini telah ditutup</div><button onclick="lcwStartNew()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer">Mulai Chat Baru</button>';
+        n.innerHTML = '<div style="font-size:0.82rem;color:var(--lcw-muted,#64748b);margin-bottom:10px">Percakapan ini telah ditutup</div><button onclick="lcwStartNew()" style="padding:10px 24px;border:none;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:600;font-size:0.85rem;cursor:pointer">Mulai Chat Baru</button>';
         document.getElementById('lcw-conv').appendChild(n);
     }
     notice = document.getElementById('lcw-archived-notice');

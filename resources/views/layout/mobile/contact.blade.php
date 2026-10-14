@@ -16,7 +16,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            background-color: #808080;
+            background-color: #22c55e;
             border-radius: 15px
         }
 
@@ -28,7 +28,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            background-color: #808080;
+            background-color: #22c55e;
             border-radius: 15px
         }
 

@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/refferal.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/refferal-green.css">
     <div class="standard-form-container">
         <div class="container">
             <div class="row referral-verification-container">

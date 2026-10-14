@@ -7,7 +7,7 @@
             padding: 10px 20px;
             margin-right: 10px;
             margin-top: 20px;
-            background-color: #007bff;
+            background-color: #22c55e;
             color: #fff;
             text-align: center;
             text-decoration: none;
@@ -17,7 +17,7 @@
         }
 
         .nav-link:hover {
-            background-color: #0056b3;
+            background-color: #16a34a;
             /* Warna latar belakang saat hover */
         }
 

@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/withdraw.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/withdraw-green.css">
     <div class="standard-form-container deposit-container">
         <div class="container">
             <div class="row">

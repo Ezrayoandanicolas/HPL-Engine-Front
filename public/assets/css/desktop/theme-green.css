@@ -1,0 +1,1312 @@
+.bonus-slider-modal .modal-body {
+    background-color: #f0fdf4;
+}
+.bonus-slider-modal .modal-footer {
+    background-color: #f0fdf4;
+}
+.bonus-slider-modal .activation-button {
+    background-color: #22c55e;
+    color: #fff;
+}
+.bonus-slider-modal .activation-button:hover {
+    background-color: #16a34a;
+    color: #fff;
+}
+.bonus-slider-modal .close-button {
+    background-color: #dcfce7;
+}
+.bonus-slider-modal .close-button:hover {
+    background-color: #dcfce7;
+}
+.bonus-slider-modal .bonus-form {
+    background-color: #f0fdf4;
+    color: #4b5563;
+    border-top-color: #bbf7d0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+.bonus-controls-field .bonus-control-button {
+    background-color: #e4e4e4;
+    color: #525252;
+}
+.bonus-controls-field .bonus-amount {
+    background-color: #f0fdf4;
+    color: #22c55e;
+}
+.bonus-range .bubble {
+    color: #1f2937;
+    border-color: #22c55e;
+    background: #f0fdf4;
+}
+.bonus-range .bubble::before {
+    border-color: rgba(0, 0, 0, 0.00);
+    border-top-color: #22c55e;
+}
+.bonus-range .bubble::after {
+    border-color: rgba(0, 0, 0, 0.00);
+    border-top-color: #bbf7d0;
+}
+.claim-item {
+    background-color: #f0fdf4;
+    color: #1f2937;
+    -webkit-box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.15);
+    border: 1px solid #bbf7d0;
+}
+.claim-item .claim-title .expiration-note {
+    color: #f00;
+}
+.bonus-progress {
+    background-color: #d5d5d5;
+    background: linear-gradient(
+        to bottom,
+        #d5d5d5 0%,
+        #f5f5f5 47%,
+        #d5d5d5 100%
+    );
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+}
+.bonus-progress .progress,
+.bonus-progress .progress-bar {
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.bonus-progress .progress {
+    background: #bbf7d0;
+}
+.bonus-progress .progress-percentage {
+    color: #5e5e5e;
+}
+.bonus-progress .progress-percentage i {
+    color: #22c55e;
+}
+.claim-info-modal h4 {
+    color: #1f2937;
+}
+.claim-item .claim-button,
+.claim-item .activation-button,
+.claim-item .cancellation-button,
+.claim-item .expiration-button,
+.claim-item .info-button {
+    background-color: #22c55e;
+    color: #fff;
+}
+.claim-item .claim-button {
+    border-color: #22c55e;
+    color: #ffffff;
+    background: #22c55e;
+    background: -moz-linear-gradient(top, #22c55e 0%, #16a34a 100%);
+    background: -webkit-linear-gradient(top, #22c55e 0%, #16a34a 100%);
+    background: linear-gradient(to bottom, #22c55e 0%, #16a34a 100%);
+}
+.claim-item .claim-button:hover,
+.claim-item .activation-button:hover,
+.claim-item .cancellation-button:hover,
+.claim-item .expiration-button:hover {
+    background-color: #16a34a;
+}
+.claim-item .info-button {
+    background-color: #bbf7d0;
+}
+.claim-item .info-button:hover {
+    background-color: #bbf7d0;
+}
+.claim-item .claim-details strong {
+    color: #16a34a;
+}
+.contact-us-list li h6 {
+    color: #6b7280;
+    color: #1f2937;
+}
+.contact-us-list li a {
+    color: #22c55e;
+}
+.contact-us-list li a:hover {
+    color: #1f2937;
+}
+.announcement-outer-container {
+    background-color: #16a34a;
+    color: #fff;
+}
+.announcement-container > [data-section="announcements"] {
+    background-color: #16a34a;
+}
+.home-progressive-jackpot {
+    color: #1f2937;
+}
+.home-progressive-jackpot .jackpot-currency {
+    color: #22c55e;
+}
+.home-inner-container {
+    background-color: #dcfce7;
+}
+.popular-game-title-container {
+    color: #fff;
+}
+.popular-game-title-container > i {
+    border-bottom-color: #15803d;
+    border-top-color: #15803d;
+}
+.popular-game-title-container a {
+    background-color: #16a34a;
+    color: #fff;
+}
+.info-center-container h2 {
+    color: #22c55e;
+}
+.info-center-container h3 {
+    border-left-color: #22c55e;
+}
+.info-center-container a {
+    color: #1f2937;
+}
+.info-center-container .panel-group .panel-heading {
+    background-color: #16a34a;
+}
+.info-center-container .panel-group .panel-heading .glyphicon-question-sign {
+    color: #a5a5a5;
+}
+.info-center-container .panel-group .panel-title a {
+    color: #1f2937;
+}
+.info-center-container
+    .panel-default
+    > .panel-heading
+    + .panel-collapse
+    .panel-body {
+    background-color: #16a34a;
+}
+.about-us-container h5[data-title="safe-and-secure-gaming-environment"] {
+    color: #22c55e;
+}
+.about-us-container h5[data-title="customer-experience"] {
+    color: #16a34a;
+}
+.about-us-container h5[data-title="fast-and-secure-payments"] {
+    color: #4ade80;
+}
+.about-us-container h5[data-title="sky-is-not-the-limit"] {
+    color: #22c55e;
+}
+.about-us-container .inner-box {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+.about-us-container .game-panel li > p {
+    color: #1f2937;
+}
+.message-detail-title {
+    color: #1f2937;
+    border-bottom-color: #d5d5d5;
+}
+.replied-message {
+    color: #374151;
+    border-bottom-color: #22c55e;
+}
+.replied-message[data-creator="true"] .replied-message-content {
+    background-color: #f0fdf4;
+}
+.message-table {
+    color: #4b5563;
+}
+.message-table-header .buttons-container a {
+    color: #4b5563;
+}
+.message-table-header .buttons-container a:hover {
+    background-color: #22c55e;
+    color: #fff;
+}
+.message-table-body .checkbox-column,
+.message-table-body .message-column {
+    border-top-color: #22c55e;
+}
+.confirmation-message-modal .modal-header {
+    background-color: #16a34a;
+    border-bottom-color: #bababa;
+}
+.confirmation-message-modal h4.modal-title {
+    color: #1f2937;
+}
+.confirmation-message-modal .modal-body {
+    background-color: #dbdbec;
+}
+.confirmation-message-modal .confirm-btn.blank {
+    background: #dcdbed;
+    color: #808080;
+}
+.confirmation-message-modal .confirm-btn {
+    background: #bbf7d0;
+    color: #1f2937;
+    border-color: #bbf7d0;
+}
+.confirmation-message-modal .confirm-btn:hover {
+    background: #dcdbed;
+    color: #808080;
+}
+.confirmation-message-modal .confirm-btn.blank:hover {
+    background: #bbf7d0;
+    color: #1f2937;
+}
+.mobile-app-container .logo-container {
+    background-color: #dcfce7;
+}
+.mobile-app-container .title-container {
+    color: #ffffff;
+}
+.mobile-app-container .link-container a:hover {
+    background-color: #f0fdf4;
+}
+.mobile-app-container .nav-tabs {
+    border-bottom-color: #22c55e;
+}
+.mobile-app-container > .nav-tabs a {
+    color: #4b5563;
+}
+.mobile-app-container .nav-tabs > li.active > a,
+.mobile-app-container .nav-tabs > li.active > a:hover,
+.mobile-app-container .nav-tabs > li.active > a:focus {
+    background-color: #f0fdf4;
+    color: #22c55e;
+    border-color: #22c55e;
+    border-bottom-color: transparent;
+}
+.mobile-app-container .nav > li > a:hover,
+.mobile-app-container .nav > li > a:focus {
+    background-color: transparent;
+    color: #22c55e;
+    border-color: #22c55e;
+}
+.mobile-app-container .tab-pane .note {
+    color: #f00;
+}
+.mobile-app-container .tab-pane .important {
+    color: #16a34a;
+}
+.mobile-app-container a {
+    color: #16a34a;
+}
+.mobile-app-container .tab-pane div[role="tabpanel"] a {
+    text-decoration: underline;
+}
+.profile-container .section-heading {
+    color: #1f2937;
+}
+.profile-container .mobile-info-button {
+    border-color: #22c55e;
+    color: #1f2937;
+}
+.profile-container .mobile-info-button:hover {
+    background-color: #22c55e;
+    color: #fff;
+}
+.promotion-side-menu,
+.promotion-list {
+    background-color: #16a34a;
+    border-color: #15803d;
+}
+.promotion-side-menu > h5 {
+    color: #ffffff;
+}
+.promotion-side-menu > a {
+    border-bottom-color: #15803d;
+    color: #fff;
+}
+.promotion-side-menu > a[data-active="true"],
+.promotion-side-menu > a:hover {
+    background-color: #16a34a;
+    border-left-color: #16a34a;
+}
+.promotion-item {
+    background-color: #dcfce7;
+}
+.promotion-item .promotion-footer {
+    color: #1f2937;
+}
+.promotion-item .click-for-more-info-button {
+    background-color: #22c55e;
+    background-image: linear-gradient(to bottom right, #22c55e, #16a34a);
+    color: #fff;
+}
+.promotion-item .click-for-more-info-button:hover {
+    background-color: #16a34a;
+    background-image: linear-gradient(to bottom right, #16a34a, #22c55e);
+}
+.promotion-item .modal-header {
+    background: #16a34a;
+    border-bottom: 2px solid #16a34a;
+}
+.promotion-item .modal-body {
+    background-color: #f0fdf4;
+    color: #6b7280;
+}
+.register-done-container {
+    color: #4b5563;
+}
+.register-done-container > h2 {
+    color: #1f2937;
+}
+.register-done-container > h2 span {
+    color: #22c55e;
+}
+.register-done-container > img {
+    background-color: transparent;
+}
+.register-done-container .btn-deposit {
+    background: #22c55e;
+    background: linear-gradient(bottom right, #22c55e 0%, #16a34a 100%);
+}
+.register-done-container .btn-deposit:hover {
+    background: #16a34a;
+    background: linear-gradient(to top, #22c55e 0%, #16a34a 100%);
+}
+.register-done-container .standard-button-group .btn {
+    border-color: #22c55e;
+    color: #1f2937;
+}
+.register-done-container .standard-button-group .btn:hover {
+    border-color: transparent;
+    background-color: #bbf7d0;
+    background: linear-gradient(to bottom, #bbf7d0 0%, #bbf7d0 100%);
+}
+.register-done-container .register-verification-done {
+    border-color: #4ade80;
+    background: rgba(34, 197, 94, 0.15);
+    color: #fff;
+}
+.register-done-container .register-verification-done .info {
+    color: #4ade80;
+    border-color: #4ade80;
+}
+.register-done-container .register-verification-done a {
+    color: #4ade80;
+}
+.provider-slide {
+    background-color: #f0fdf4;
+}
+.provider-slide > i {
+    background-color: rgba(0, 0, 0, 0.10);
+    color: #1f2937;
+}
+.provider-slide > i:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+.game-description-container .game-title {
+    color: #1f2937;
+}
+.game-description-container .game-description {
+    color: #1f2937;
+}
+.progressive-jackpot .jackpot-container {
+    color: #302e2e;
+}
+.deposit-container .standard-form-note a {
+    color: #16a34a;
+}
+.deposit-container .formatted-balance {
+    color: #16a34a;
+}
+.deposit-container .real-deposit-amount {
+    color: #22c55e;
+}
+.free-play {
+    border: 1px solid #a7f3d0;
+    background: transparent;
+}
+.free-play:hover {
+    background: #ffffff;
+    color: #000;
+}
+.play-now {
+    color: #fff;
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.play-now:hover {
+    color: #fff;
+    background: #16a34a;
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.games-list-container {
+    background-color: transparent;
+}
+.games-list-container .filter-section {
+    background-color: #f0fdf4;
+    background: #f0fdf4;
+}
+.games-list-container .filter-section input[type="text"] {
+    border-color: transparent;
+    background: transparent;
+    color: #1f2937;
+}
+.games-list-container .filter-section:after {
+    background-color: transparent;
+    color: #6b7280;
+    border-left: 1px solid #bbf7d0;
+    max-height: 30px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.games-list-container .category-filter {
+    padding: 5px 5px;
+}
+.games-list-container .category-filter-link {
+    color: #1f2937;
+    border-radius: unset;
+}
+.games-list-container .category-filter-link.active,
+.games-list-container .category-filter-link:hover {
+    background-color: #f0fdf4;
+    color: #22c55e;
+}
+.game-list-title {
+    background-image: linear-gradient(
+        transparent calc(50% - 1px),
+        #ffffff 2px,
+        transparent calc(50% + 1px)
+    );
+}
+.game-list-title > div {
+    background-color: inherit;
+    color: #374151;
+}
+.game-list-title {
+    background-color: #f0fdf4;
+}
+.provider-outer-container,
+.game-list,
+.games-list-container .game-info,
+.popular-game-title-container + .game-list-container {
+    background-color: transparent;
+    border-color: transparent;
+}
+.games-list-container .game-list {
+    margin-top: 5px;
+}
+.game-list .game-item {
+    background-color: #f0fdf4;
+    background-image: none;
+}
+.game-list .game-name {
+    color: #1f2937;
+}
+.game-list .provider-name {
+    color: #22c55e;
+}
+.game-list .link-container {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+.game-list .wrapper-container:hover {
+    background: #f0fdf4;
+}
+.large-game-list-container .section-heading h4 {
+    color: #22c55e;
+    border-bottom-color: #22c55e;
+}
+.large-game-list li {
+    border-color: #bbf7d0;
+}
+.large-game-list .game-title {
+    color: #1f2937;
+}
+.large-game-list .game-title::after {
+    background-color: #22c55e;
+}
+.large-game-list-container .large-game-list .play-now {
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.large-game-list-container .large-game-list .play-now:hover {
+    background: #16a34a;
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.large-game-list .link-container {
+    background-color: #dcfce7;
+}
+.large-game-list .bottom-link-container {
+    background-color: #dcfce7;
+}
+.arcade-game-list,
+.crash-game-game-list {
+    background-color: rgba(34, 197, 94, 0.15);
+}
+.game-dispatch .game-info {
+    border-color: #16a34a;
+    color: #16a34a;
+}
+.game-dispatch .game-info:hover,
+.game-dispatch .game-info:focus {
+    color: #22c55e;
+    border-color: #22c55e;
+}
+body {
+    background-color: #dcfce7;
+}
+.topbar-container {
+    border-bottom-color: #15803d;
+    background-color: #16a34a;
+}
+.topbar-sub-section .topbar-item {
+    color: #d5d5d5;
+}
+.topbar-sub-section .topbar-item + .topbar-item {
+    border-left-color: #ccc;
+}
+.topbar-sub-section .topbar-item a,
+.topbar-sub-section .topbar-item .live-chat {
+    color: #fff;
+}
+.topbar-sub-section .topbar-item a:hover,
+.topbar-sub-section .topbar-item .live-chat:hover {
+    color: #ffffff;
+}
+.topbar-sub-section .language-selector-container {
+    color: #1f2937;
+}
+.topbar-sub-section .language-selector-trigger:after {
+    border-color: transparent;
+    border-top-color: #a7f3d0;
+}
+.topbar-sub-section .language-selector-trigger[data-active="true"]:after {
+    border-bottom-color: #a7f3d0;
+}
+.topbar-sub-section .language-selector {
+    background-color: #dcfce7;
+}
+.topbar-sub-section .language-selector li {
+    background-color: #f0fdf4;
+}
+.topbar-sub-section .language-selector li:hover {
+    background-color: #22c55e;
+}
+.site-header {
+    background: #16a34a;
+    box-shadow: none;
+}
+.top-menu > li {
+    color: #fff;
+}
+.top-menu > li + li:before {
+    background: #16a34a;
+}
+.top-menu > li[data-active="true"],
+.top-menu > li:hover {
+    color: #ffffff;
+}
+.top-menu .game-list-container {
+    background-color: #16a34a;
+    border-bottom-color: #15803d;
+}
+.top-menu .games-container > li:hover > a {
+    background-color: rgba(88, 75, 32, 0.3);
+}
+.site-content-container {
+    background-color: #dcfce7;
+}
+.site-contacts {
+    background: #16a34a;
+    background-image: none;
+}
+.site-contacts .contact-list li a {
+    background-color: #16a34a;
+    color: #fff;
+}
+.site-contacts .contact-list li a i {
+    background-color: #16a34a;
+}
+.site-info-container {
+    background-color: #16a34a;
+}
+.site-info-container .section-title {
+    color: #d5d5d5;
+}
+.site-info-container .footer-links li a,
+.footer-links > li > a {
+    color: #ffffff;
+}
+.site-info-container .footer-links li a:hover,
+.footer-links > li > a:hover {
+    color: #ffffff;
+}
+.site-info-inner-container {
+    color: #ffffff;
+}
+.site-info-inner-container .site-links-container {
+    border-color: #15803d;
+}
+.site-info-inner-container .support-list li {
+    border-color: #15803d;
+}
+.copyright-info-container {
+    border-top-color: transparent;
+    color: #4b5563;
+}
+.copyright-info-container .copyright {
+    color: #1f2937;
+}
+.register-page-reminder {
+    color: #1f2937;
+}
+.register-page-link a {
+    color: #22c55e;
+}
+.register-modal .modal-body,
+.forgot-password-modal .modal-body {
+    background-color: #f0fdf4;
+    color: #1f2937;
+}
+[data-container-background="general"] {
+    background-color: #dcfce7;
+}
+[data-container-background="home"] {
+    background-color: #dcfce7;
+}
+[data-container-background="slots"] {
+    background-color: #dcfce7;
+}
+[data-container-background="arcade"] {
+    background-color: #dcfce7;
+}
+[data-container-background="crash-game"] {
+    background-color: #dcfce7;
+}
+[data-container-background="casino"] {
+    background-color: #dcfce7;
+}
+[data-container-background="others"] {
+    background-color: #dcfce7;
+}
+[data-container-background="promotions"] {
+    background-color: #dcfce7;
+}
+.login-panel {
+    color: #1f2937;
+}
+.login-panel .login-panel-item:last-of-type {
+    border-right-color: #a7f3d0;
+}
+.login-panel input[type="text"],
+.login-panel input[type="password"] {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+.login-panel .login-button {
+    background: transparent;
+    border: 1px solid #a7f3d0;
+    transition: all 0.3s ease;
+}
+.login-panel .login-button:hover {
+    background: #bbf7d0;
+    border-color: #bbf7d0;
+}
+.login-panel .register-button {
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.login-panel .register-button:hover {
+    background: #16a34a;
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.login-panel .forgot-password-link {
+    color: #1f2937;
+}
+.login-panel .forgot-password-link:hover {
+    color: #22c55e;
+}
+.modal-header {
+    background-color: #16a34a;
+    background-image: linear-gradient(to bottom, #16a34a 0%, #16a34a 100%);
+    color: #fff;
+}
+.modal-header .close {
+    color: #fff;
+}
+.modal-body {
+    background-color: #f0fdf4;
+    color: #1f2937;
+}
+.modal-footer {
+    background: #f0fdf4;
+    border-top: 1px solid #bbf7d0;
+}
+.modal-footer .btn-secondary {
+    background: none;
+    color: #1f2937;
+}
+.modal-footer .btn-secondary:hover {
+    color: #22c55e;
+}
+.modal-footer .btn-primary {
+    color: #fff;
+    background: #22c55e;
+    background-image: none;
+}
+.modal-footer .btn-primary:hover {
+    background: #ffffff;
+    color: #22c55e;
+}
+.popup-modal [data-popup="maintenance"] p span {
+    background: #22c55e;
+    color: #fff;
+}
+.standard-form-content {
+    background: #f0fdf4;
+    color: #1f2937;
+}
+.standard-form-title {
+    color: #ffffff;
+}
+.standard-form-sub-title {
+    border-left-color: #16a34a;
+}
+.standard-form-note {
+    border-bottom-color: #bbf7d0;
+    color: #9ca3af;
+}
+.standard-reporting-control-group > input {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #6b7280;
+}
+.standard-form-content .table thead,
+.standard-reporting-scroll-container .table thead {
+    background-color: #16a34a;
+    border-color: #15803d;
+}
+.standard-form-content .table thead tr th,
+.standard-reporting-scroll-container .table thead tr th {
+    border-color: #15803d;
+    color: #fff;
+}
+.standard-form-content .table tbody,
+.standard-reporting-scroll-container .table tbody {
+    background-color: #dcfce7;
+}
+.standard-form-content .table tbody td,
+.standard-reporting-scroll-container .table tbody td {
+    border-color: #bbf7d0;
+    color: #1f2937;
+}
+.table .table {
+    color: #333;
+}
+.standard-required-message,
+.field-validation-error {
+    color: #f00;
+}
+.standard-inline-form-group label {
+    color: #1f2937;
+}
+.standard-inline-form-group .form-control,
+.standard-form-content .form-control,
+.mobile-app-container .mobile-app-select {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #1f2937;
+}
+.mobile-app-container .mobile-app-select .active a,
+.mobile-app-container .mobile-app-select a:hover {
+    background-color: #22c55e;
+}
+.standard-inline-form-group .form-control[disabled],
+.standard-inline-form-group .form-control[readonly] {
+    background-color: #dcfce7;
+}
+.standard-inline-form-group [data-section="asterisk"] {
+    color: #f00;
+}
+.standard-button-group .btn-primary,
+.standard-reporting-control-group .btn-primary,
+.deposit-container .reveal-bank-account-button {
+    background: #22c55e;
+    background-image: none;
+    color: #fff;
+}
+.standard-button-group .btn-primary:hover,
+.standard-reporting-control-group .btn-primary:hover,
+.deposit-container .reveal-bank-account-button:hover {
+    background: #ffffff;
+    color: #22c55e;
+    background-image: none;
+}
+.expiration-countdown [data-section] {
+    background-color: #16a34a;
+    color: #fff;
+    border-color: #a9a9a9;
+}
+.expiration-countdown [data-value] {
+    background-color: #f6f6f6;
+    color: #6b7280;
+}
+.standard-profile-bar {
+    background-color: #f0fdf4;
+    color: #4b5563;
+}
+.standard-profile-bar .username-field .username {
+    color: #22c55e;
+}
+.standard-profile-bar .balance-field .balance {
+    color: #22c55e;
+}
+.standard-nav-bar .nav-bar-title {
+    color: #22c55e;
+}
+.standard-nav-bar a {
+    border-color: transparent;
+    background-color: transparent;
+    color: #1f2937;
+}
+.standard-nav-bar a[data-active="true"],
+.standard-nav-bar a:not([data-active="true"]):hover {
+    background-color: #22c55e;
+    background-image: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.standard-nav-bar a:not([data-active="true"]):hover {
+    border-color: transparent;
+    color: #1f2937;
+}
+.standard-side-menu {
+    background-color: #16a34a;
+    color: #ffffff;
+}
+.standard-side-menu a {
+    border-color: transparent;
+    background-color: transparent;
+    color: #fff;
+}
+.standard-side-menu a[data-active="true"],
+.standard-side-menu a:not([data-active="true"]):hover {
+    background-color: #16a34a;
+    background-image: linear-gradient(to right, #16a34a 0%, #16a34a 100%);
+}
+.standard-side-menu a:not([data-active="true"]):hover {
+    border-color: transparent;
+    color: #fff;
+}
+.user-info {
+    color: #1f2937;
+}
+.user-info .balance > span {
+    color: #22c55e;
+}
+.referral-box {
+    background-color: #f0fdf4;
+    color: #1f2937;
+}
+.referral-box h4 {
+    color: #1f2937;
+}
+.referral-code-container {
+    border: 1px dashed #bbf7d0;
+    background-color: #f0fdf4;
+}
+.referral-code-container a,
+.change-referral-code a,
+.referral-box a,
+.whitelisted-domains-link a {
+    color: #22c55e;
+}
+.referral-code-container a:hover,
+.change-referral-code a:hover,
+.referral-box a:hover,
+.whitelisted-domains-link a:hover {
+    color: #16a34a;
+}
+.standard-reporting-control-group {
+    color: #1f2937;
+}
+.standard-reporting-control-group > input {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+.user-info .wallet-container > .balance::after {
+    border-top-color: #a7f3d0;
+}
+.user-info .wallet-container > .balance.open::after {
+    border-color: #a7f3d0;
+}
+.user-info .vendor-balances-container {
+    border-color: #16a34a;
+}
+.user-info .dropdown-menu.vendor-balances-container {
+    background-color: rgba(255, 255, 255, 0.98);
+}
+.user-info .vendor-balances-container .vendor-balances-header {
+    border-color: #16a34a;
+}
+.user-info .vendor-balances-container .vendor-balances-header,
+.user-info .vendor-balances-container strong {
+    color: #16a34a;
+}
+.user-info .vendor-balances-container .vendor-balance-item {
+    color: #1f2937;
+}
+.user-info .vendor-balances-container ::-webkit-scrollbar-track {
+    background: transparent;
+}
+.user-info .vendor-balances-container ::-webkit-scrollbar-thumb {
+    background: #bbf7d0;
+}
+.site-description,
+.site-description h1,
+.site-description h2,
+.site-description h3,
+.site-description p,
+.site-description a,
+.site-description div,
+.site-info .site-info-title p,
+.site-footer .copyright,
+.site-info .site-info-description h4,
+.site-info .site-info-description p {
+    color: #ffffff;
+}
+.site-info .site-info-title h3,
+.footer-section-title,
+.provider-container > h5,
+.percentCount {
+    color: #d5d5d5;
+}
+.footer-links > li + li > a,
+.footer-separator,
+.site-info .site-info-title,
+.site-info .site-info-description.with-seperator + .with-seperator,
+.provider-container {
+    border-color: #15803d;
+}
+.footer-info-container .site-info:not(:last-child):after {
+    background-color: #16a34a;
+}
+.provider-container > h5 {
+    background: #f0fdf4;
+}
+.percentCount {
+    font-family: inherit;
+}
+.progressbar {
+    background: #bbf7d0 !important;
+}
+.proggress {
+    background: #22c55e !important;
+}
+.download-apk {
+    color: #1f2937;
+}
+.download-apk .h2 > span {
+    color: #22c55e;
+}
+.download-apk-section i {
+    color: #22c55e;
+}
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+    color: #f5f5f5;
+}
+.standard-form-note strong {
+    color: #22c55e;
+}
+.standard-content-info h2 {
+    color: #22c55e;
+}
+.bank-info-container .carousel-indicators .active {
+    background-color: #22c55e;
+}
+.profile-summary-table.table tbody {
+    background-color: inherit;
+}
+.otp-hr {
+    border-color: #22c55e;
+}
+.request-otp-button,
+.request-otp-button:hover {
+    border-color: #22c55e;
+    color: #22c55e;
+}
+.otp-input {
+    border-color: #22c55e;
+}
+.standard-form-content .offline-container,
+.standard-form-content .offline-container h3,
+.standard-form-content .offline-container h4 {
+    color: #1f2937;
+}
+.payment-method-selection input[type="radio"]:checked + label {
+    background-color: #22c55e;
+    background-image: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.withdrawal-container .formatted-balance {
+    color: #22c55e;
+}
+.withdrawal-container .real-withdrawal-amount {
+    color: #22c55e;
+}
+[data-payment-gateway="qris"] .qris-qr-code-container a {
+    background: #22c55e;
+}
+.notification-tabs .notification-tab-item[data-active="true"] {
+    background-color: #22c55e;
+    background-image: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.unread-announcements-popup {
+    border-color: #16a34a;
+}
+.unread-announcements-popup:before {
+    border-bottom-color: #16a34a;
+}
+.notification-popup-body .notification-footer {
+    background-color: #22c55e;
+    background-image: linear-gradient(to bottom, #22c55e 0%, #16a34a 100%);
+    border-color: #22c55e;
+}
+.referral-features .referral-features-item .feature-icon > div {
+    background: linear-gradient(to bottom, #22c55e 0%, #16a34a 100%);
+}
+.referral-features .referral-features-item .feature-info p {
+    color: #22c55e;
+}
+.simple-form-note,
+.referral-verification-container .standard-form-note,
+.standard-form-note.with-icon > div:last-child p {
+    color: #22c55e;
+}
+.pending-verification-container .icon-container {
+    background-color: #22c55e;
+}
+.pending-verification-container p {
+    color: #22c55e;
+}
+.referral-verification-container
+    [data-is-contact-verified="false"]
+    .profile-link {
+    background: linear-gradient(to bottom, #22c55e 0%, #16a34a 100%);
+}
+.referral-verification-container
+    [data-is-contact-verified="false"]
+    .profile-link:hover {
+    background: linear-gradient(to bottom, #16a34a 0%, #22c55e 100%);
+}
+.special-event,
+.calendar-container
+    .date-picker-wrapper.date-picker-wrapper
+    .first-date-selected
+    div.special-event,
+.event-legend-container [data-legend="event-available"]::before {
+    background-color: #15803d;
+}
+.calendar-container
+    .date-picker-wrapper.date-picker-wrapper
+    .first-date-selected
+    div.group-event,
+.group-event,
+.event-legend-container [data-legend="group-event-available"]::before {
+    background-color: #bbf7d0;
+}
+.calendar-container
+    .date-picker-wrapper.date-picker-wrapper
+    .first-date-selected
+    div {
+    outline-color: #15803d;
+}
+.mission-container
+    .mission-item[data-status="claimable"]
+    .mission-action-container
+    .action-button {
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.mission-container
+    .mission-item[data-status="claimable"]
+    .mission-action-container
+    .action-button:hover {
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.daily-reward-container .standard-secondary-button {
+    background: #16a34a;
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.daily-reward-container .standard-secondary-button:hover {
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.loyalty-container .loyalty-menu a:hover,
+.loyalty-container .loyalty-menu a[data-active="true"] {
+    background-color: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.benefit-container h2 {
+    color: #16a34a;
+}
+.how-it-works-container .how-it-works-section .how-it-works-section-title {
+    color: #ffffff;
+}
+.introjs-tooltip-title.introjs-tooltip-title {
+    color: #1f2937;
+}
+.introjs-tooltiptext .subtitle {
+    color: #22c55e;
+}
+.introjs-nextbutton.introjs-nextbutton {
+    background: #22c55e;
+}
+.introjs-nextbutton.introjs-nextbutton:focus {
+    background: #22c55e;
+}
+.introjs-bullets.introjs-bullets ul li a.active,
+.introjs-bullets.introjs-bullets ul li a:hover {
+    background-color: #22c55e;
+}
+.introjs-skipbutton.introjs-skipbutton {
+    color: #22c55e;
+}
+.loyalty-available-rank-up-modal .standard-secondary-button {
+    background: #16a34a;
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.loyalty-available-rank-up-modal .standard-secondary-button:hover {
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.payment-maintenance-container,
+.remarks-container {
+    background: #dcfce7;
+    color: #1f2937;
+}
+.payment-maintenance-container i,
+.remarks-container i {
+    background-color: #bbf7d0;
+    color: #1f2937;
+    border-color: #a7f3d0;
+}
+.remarks-container {
+    border-color: #22c55e;
+    background: #166534;
+    color: #fff;
+}
+.remarks-container i {
+    background-color: transparent;
+    border-color: #22c55e;
+    color: #22c55e;
+}
+.deposit-summary-container .deposit-summary-header .summary-transfer-amount,
+.withdrawal-summary-container
+    .withdrawal-summary-header
+    .summary-transfer-amount {
+    color: #22c55e;
+}
+.copy-input-button-field .copy-input-button {
+    color: #fff;
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.copy-input-button-field .copy-input-button:hover {
+    color: #fff;
+    background: #16a34a;
+    background: linear-gradient(to right, #16a34a 0%, #22c55e 100%);
+}
+.popover {
+    background-color: #22c55e;
+    border-color: #22c55e;
+    color: #fff;
+}
+.popover.top .arrow {
+    border-top-color: #22c55e;
+}
+.popover.top .arrow:after {
+    border-top-color: #22c55e;
+}
+[data-payment-gateway] .download-qr-button {
+    background: #22c55e;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+    color: #fff;
+}
+.bank-info .bank-account-number-container img,
+.bank-info .download-qr-code-button img {
+    filter: invert(1);
+}
+[data-payment-gateway] .destination-account-number-container img,
+[data-payment-gateway] .va-account-number img,
+[data-payment-gateway] .download-qr-button img {
+    filter: invert(1);
+}
+.pending-transactions-container .pending-transactions-item {
+    color: #1f2937;
+    background-color: #f0fdf4;
+}
+.pending-transactions-container
+    .pending-transactions-item
+    [data-payment-gateway] {
+    background-color: #dcfce7;
+    color: #1f2937;
+}
+.pending-transactions-container
+    .pending-transactions-item
+    [data-payment-gateway]
+    span {
+    color: #1f2937;
+}
+.pending-transactions-container.pending-transactions-container
+    [data-payment-gateway]
+    .destination-account-number-container
+    img {
+    filter: invert(1);
+}
+.pending-transactions-container
+    .pending-transactions-item
+    [data-payment-gateway]
+    .destination-account-bank-info
+    > div
+    > img {
+    filter: initial;
+}
+.modal-body .pending-transaction-summary-container,
+.pending-transactions-container
+    .pending-transactions-item
+    .pending-transaction-remarks-container {
+    border-color: #22c55e;
+    color: #fff;
+    background-color: rgba(34, 197, 94, 0.15);
+}
+.modal-body
+    .pending-transaction-summary-container
+    .pending-transaction-summary-footer {
+    border-top-color: #22c55e;
+}
+.modal-body
+    .pending-transaction-summary-container
+    .pending-transaction-summary-footer
+    a {
+    color: #fff;
+    background: linear-gradient(to right, #22c55e 0%, #16a34a 100%);
+}
+.modal-body .pending-transaction-details-container {
+    color: #1f2937;
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+.modal-body
+    .pending-transaction-details-container
+    .pending-transaction-details-item {
+    background-color: #dcfce7;
+    border-color: #bbf7d0;
+}
+.modal-body
+    .pending-transaction-details-container
+    .pending-transaction-details-item
+    hr {
+    border-color: #bbf7d0;
+}
+.modal-body .pending-transaction-details-container::-webkit-scrollbar-thumb {
+    background: #bbf7d0;
+}
+.carousel-indicators .active,
+.carousel-indicators .slick-active {
+    background-color: #22c55e;
+    border-color: #22c55e;
+}
+.otp-fake-inputs div.filled,
+.otp-fake-inputs div.focused {
+    border-color: #22c55e;
+}
+.otp-popup .otp-popup-content .resend-button {
+    color: #22c55e;
+}

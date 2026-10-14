@@ -1,6 +1,7 @@
 @extends('layout.desktop.main')
 @section('content')
     <link rel="stylesheet" href="../../../assets/css/desktop/gamelist.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/gamelist-green.css">
     
     <style>
         /* === TAMBAHAN CSS JACKPOT BIAR SAMA PERSIS === */
@@ -8,8 +9,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #000;
-            border: 7px solid #b77636;
+            background: #ffffff;
+            border: 7px solid #22c55e;
             border-radius: 50px;
             padding: 20px 30px;
             margin: 20px auto;

@@ -30,6 +30,7 @@
         rel="icon" type="image/x-icon" />
 
     <link rel="stylesheet" href="{{ asset('assets/css/mobile/mobile.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/mobile/mobile-green.css') }}">
 
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
@@ -42,6 +43,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('assets/css/mobile/theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/mobile/theme-green.css') }}">
 
 </head>
 
@@ -564,8 +566,8 @@ window.addEventListener('DOMContentLoaded', function() {
         @import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
 
         :root {
-            --accent-color: #1130a5;
-            --base-color: #1abc9c;
+            --accent-color: #16a34a;
+            --base-color: #22c55e;
             /* Warna hijau tosca */
         }
 
@@ -653,7 +655,7 @@ window.addEventListener('DOMContentLoaded', function() {
             border-radius: 10px;
             justify-content: center;
             align-items: center;
-            background-color: #000000;
+            background-color: #ffffff;
         }
 
         .bar1,
@@ -689,8 +691,8 @@ window.addEventListener('DOMContentLoaded', function() {
             scale: .1;
             font-family: "Times New Roman", sans-serif;
             font-size: large;
-            background: rgba(0, 0, 0, 1);
-            color: #ffffff;
+            background: rgba(255, 255, 255, 1);
+            color: #1f2937;
             text-align: center;
             text-wrap: nowrap;
             border: 1px solid var(--base-color);

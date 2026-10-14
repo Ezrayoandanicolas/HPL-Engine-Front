@@ -1,6 +1,7 @@
 @extends('layout.desktop.main')
 @section('content')
     <link rel="stylesheet" href="../../../assets/css/desktop/profile.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/profile-green.css">
     <div class="site-content-container" data-container-background="general">
         <div class="container">
             <div class="row">

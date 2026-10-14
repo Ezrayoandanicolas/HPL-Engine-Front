@@ -1,7 +1,9 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/loyalitas.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/loyalitas-green.css">
     <link rel="stylesheet" href="../../../assets/css/mobile/datepicker.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/datepicker-green.css">
 
     <div class="standard-form-container loyalty-container">
         <div class="container">

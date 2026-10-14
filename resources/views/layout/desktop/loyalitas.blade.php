@@ -1,6 +1,7 @@
 @extends('layout.desktop.main')
 @section('content')
     <link rel="stylesheet" href="../../../assets/css/desktop/loyalitas.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/loyalitas-green.css">
 
     <style>
         .nav-link {
@@ -9,21 +10,21 @@
             margin-right: 10px;
             text-align: center;
             text-decoration: none;
-            color: white;
+            color: #1f2937;
             border-radius: 5px;
             border: 1px solid transparent;
             font-weight: bold;
         }
 
         .nav-link[data-active="true"] {
-            background-color: #37c288;
-            color: black;
+            background-color: #22c55e;
+            color: #ffffff;
             border: 1px solid #a8d5a2;
         }
 
         .nav-link[data-active="false"] {
-            background-color: black;
-            color: white;
+            background-color: #f1f5f9;
+            color: #1f2937;
             border: 1px solid transparent;
         }
 
@@ -36,25 +37,25 @@
             display: flex;
             cursor: pointer;
             padding: 10px;
-            background-color: #1b1c1c;
-            color: white
+            background-color: #f8fafc;
+            color: #1f2937
         }
 
         .tabs div {
             padding: 10px;
             margin: 0 5px;
-            border: 1px solid #3c8781;
+            border: 1px solid #22c55e;
             border-radius: 5px;
         }
 
         .tabs div.active {
-            background-color: #458981;
+            background-color: #22c55e;
         }
 
         .tab-content {
             display: none;
             padding: 10px;
-            border: 1px solid #272525;
+            border: 1px solid #e5e7eb;
             border-top: none;
         }
 

@@ -1,13 +1,14 @@
 @extends('layout.desktop.main')
 @section('content')
     <link rel="stylesheet" href="../../../assets/css/desktop/refferal.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/refferal-green.css">
     <style>
         .button-link {
             display: inline-block;
             padding: 10px 20px;
             margin: 5px;
             color: white;
-            background-color: #22655e;
+            background-color: #16a34a;
             /* Warna toska */
             text-decoration: none;
             border-radius: 5px;
@@ -17,16 +18,16 @@
         }
 
         .button-link:hover {
-            background-color: #32C8B9;
+            background-color: #22c55e;
         }
 
         .button-link[data-active="true"] {
-            background-color: #32C8B9;
+            background-color: #22c55e;
             /* Warna toska sedikit lebih gelap untuk link aktif */
         }
 
         .button-link[data-active="true"]:hover {
-            background-color: #28AFA2;
+            background-color: #15803d;
             /* Warna toska lebih gelap saat hover untuk link aktif */
         }
     </style>

@@ -1,7 +1,9 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/loyalitas.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/loyalitas-green.css">
     <link rel="stylesheet" href="../../../assets/css/mobile/datepicker.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/datepicker-green.css">
     <div style="margin-left: 20px;margin-top: 20px;">
         <a href="/loyalitas" class="back-button"
             style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/layout/back.svg?v=20240813);">

@@ -46,10 +46,10 @@
             padding: 16px;
         }
         .casino-provider-card {
-            background: #1a1a1a;
+            background: #ffffff;
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid #333;
+            border: 1px solid #e5e7eb;
             height: 100%;
         }
         .casino-provider-card img {
@@ -63,12 +63,12 @@
             text-align: center;
         }
         .provider-name {
-            color: #fff;
+            color: #1f2937;
             font-size: 14px;
             font-weight: 700;
         }
         .game-count {
-            color: #bfbfbf;
+            color: #6b7280;
             font-size: 12px;
             margin-top: 4px;
         }

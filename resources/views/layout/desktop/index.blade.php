@@ -32,7 +32,7 @@
             <div class="row wallet-stats-row">
                 <div class="col-md-3 col-6">
                     <div class="wallet-stat-card">
-                        <div class="wallet-stat-icon" style="background: linear-gradient(135deg,#22c1c3,#2e86de);box-shadow:0 6px 16px rgba(34,193,195,.35);"><i class="fas fa-wallet"></i></div>
+                        <div class="wallet-stat-icon" style="background: linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 6px 16px rgba(34,197,94,.35);"><i class="fas fa-wallet"></i></div>
                         <div class="wallet-stat-info">
                             <p class="wallet-stat-label">Saldo Utama</p>
                             <h3 class="wallet-stat-value">Rp {{ number_format($user->saldo ?? 0, 0, ',', '.') }}</h3>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="wallet-stat-card">
-                        <div class="wallet-stat-icon" style="background: linear-gradient(135deg,#f7971e,#ffd200);box-shadow:0 6px 16px rgba(247,151,30,.35);"><i class="fas fa-arrow-up"></i></div>
+                        <div class="wallet-stat-icon" style="background: linear-gradient(135deg,#15803d,#22c55e);box-shadow:0 6px 16px rgba(22,163,74,.35);"><i class="fas fa-arrow-up"></i></div>
                         <div class="wallet-stat-info">
                             <p class="wallet-stat-label">Total Withdraw</p>
                             <h3 class="wallet-stat-value">Rp {{ number_format($total_withdraw ?? 0, 0, ',', '.') }}</h3>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="wallet-stat-card">
-                        <div class="wallet-stat-icon" style="background: linear-gradient(135deg,#ff512f,#f09819);box-shadow:0 6px 16px rgba(255,81,47,.35);"><i class="fas fa-star"></i></div>
+                        <div class="wallet-stat-icon" style="background: linear-gradient(135deg,#16a34a,#4ade80);box-shadow:0 6px 16px rgba(34,197,94,.35);"><i class="fas fa-star"></i></div>
                         <div class="wallet-stat-info">
                             <p class="wallet-stat-label">Poin</p>
                             <h3 class="wallet-stat-value">{{ $user->point_player ?? 0 }}</h3>
@@ -72,15 +72,15 @@
             .wallet-stats-row > div { margin-bottom: 16px; }
             .wallet-stat-card {
                 display: flex; align-items: center; gap: 14px;
-                background: linear-gradient(145deg, #1c1f2e 0%, #262b3d 100%);
-                border: 1px solid rgba(255,255,255,.06);
+                background: linear-gradient(145deg, #ffffff 0%, #f0fdf4 100%);
+                border: 1px solid rgba(0,0,0,.06);
                 border-radius: 16px; padding: 18px 20px; height: 100%;
                 transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
             }
             .wallet-stat-card:hover {
                 transform: translateY(-4px);
-                border-color: rgba(255,255,255,.16);
-                box-shadow: 0 14px 30px rgba(0,0,0,.45);
+                border-color: rgba(0,0,0,.16);
+                box-shadow: 0 14px 30px rgba(0,0,0,.12);
             }
             .wallet-stat-icon {
                 flex-shrink: 0; width: 52px; height: 52px; border-radius: 14px;
@@ -624,7 +624,7 @@
 
     function gameCard(game) {
         var img = game.image || '';
-        var imgHtml = img ? '<picture><source srcset="' + img + '" type="image/webp" /><img alt="' + escHtml(game.game_name) + '" height="150" loading="lazy" src="' + img + '" width="150" /></picture>' : '<div style="width:150px;height:150px;background:#1a1a2e;display:flex;align-items:center;justify-content:center;color:#666;border-radius:8px">' + escHtml(game.game_name) + '</div>';
+        var imgHtml = img ? '<picture><source srcset="' + img + '" type="image/webp" /><img alt="' + escHtml(game.game_name) + '" height="150" loading="lazy" src="' + img + '" width="150" /></picture>' : '<div style="width:150px;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:#6b7280;border-radius:8px">' + escHtml(game.game_name) + '</div>';
         var playUrl = loggedIn
             ? '/gameplay/' + game.id + '/show'
             : '/login';

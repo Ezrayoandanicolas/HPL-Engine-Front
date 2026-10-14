@@ -13,7 +13,7 @@
         height: 520px !important; /* Tinggi disesuaikan pas dengan proporsi target */
         background: url('https://d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/providers/banners/slots/banner.webp?v=606181553') no-repeat top center !important;
         background-size: cover !important;
-        background-color: #0d0d0d !important; 
+        background-color: #ffffff !important; 
         overflow: hidden !important;
         box-sizing: border-box !important;
     }
@@ -24,11 +24,11 @@
         bottom: 95px !important; /* Jarak pas di atas bar provider hitam */
         left: 50% !important;
         transform: translateX(-50%) !important;
-        background: #000000 !important;
-        border: 3px solid #7c5a1c !important; /* Ketebalan dan warna border disesuaikan target */
+        background: #ffffff !important;
+        border: 3px solid #22c55e !important; /* Ketebalan dan warna border disesuaikan target */
         border-radius: 35px !important;
         padding: 5px 45px !important;
-        box-shadow: inset 0px 0px 12px rgba(0,0,0,1), 0px 8px 20px rgba(0,0,0,0.8) !important;
+        box-shadow: inset 0px 0px 12px rgba(0,0,0,.08), 0px 8px 20px rgba(0,0,0,.15) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -38,7 +38,7 @@
     }
 
     .jackpot-counter-box span {
-        color: #aa7c11 !important; /* Teks IDR keemasan gelap dulled */
+        color: #16a34a !important; /* Teks IDR keemasan gelap dulled */
         font-size: 24px !important;
         font-family: 'Impact', 'Arial Black', sans-serif !important;
         font-weight: 900 !important;
@@ -47,7 +47,7 @@
     .jackpot-counter-box h3 {
         margin: 0 !important;
         padding: 0 !important;
-        color: #ffffff !important;
+        color: #1f2937 !important;
         font-family: 'Courier New', Courier, monospace !important; /* Karakter font digital kokoh */
         font-size: 36px !important;
         font-weight: 900 !important;
@@ -62,33 +62,33 @@
         transform: translateX(-50%) !important;
         width: 100% !important;
         max-width: 960px !important; /* Lebar pas proporsional di tengah banner */
-        background: #0a0a0a !important; /* Warna hitam pekat base */
+        background: #ffffff !important; /* Warna hitam pekat base */
         height: 55px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
         z-index: 100 !important;
-        border: 1px solid #222 !important;
+        border: 1px solid #e5e7eb !important;
         border-radius: 4px !important;
         padding: 0px !important;
     }
 
     /* Tombol Navigasi Panah */
     .provider-nav-arrow {
-        color: #888888 !important;
+        color: #6b7280 !important;
         font-size: 16px !important;
         cursor: pointer !important;
         padding: 0 15px !important;
         height: 100% !important;
         display: flex !important;
         align-items: center !important;
-        background: #111111 !important;
+        background: #f8fafc !important;
         user-select: none !important;
         transition: color 0.2s, background 0.2s !important;
     }
     .provider-nav-arrow:hover {
-        color: #ffffff !important;
-        background: #1a1a1a !important;
+        color: #1f2937 !important;
+        background: #e5e7eb !important;
     }
 
     /* Pembungkus Geser */

@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/promotion.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/promotion-green.css">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">

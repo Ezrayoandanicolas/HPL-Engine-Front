@@ -3,7 +3,7 @@
     width:320px;
     padding:15px;
     border-radius:12px;
-    background:#232323;
+    background:#ffffff;
 }
 
 .wallet-row{
@@ -11,8 +11,8 @@
     justify-content:space-between;
     align-items:center;
     padding:10px 0;
-    border-bottom:1px solid rgba(255,255,255,.08);
-    color:#fff;
+    border-bottom:1px solid rgba(0,0,0,.08);
+    color:#1f2937;
 }
 
 .wallet-row:last-child{
@@ -24,6 +24,7 @@
 }
 </style>
 <link rel="stylesheet" href="../../../assets/css/desktop/message.css">
+<link rel="stylesheet" href="../../../assets/css/desktop/message-green.css">
 <header class="site-header">
     <a href="/" class="logo">
        <picture>
@@ -125,7 +126,7 @@
             </div>
             <div class="modal-body" id="mobile_popup_modal_body">
                 <div class="notification-popup-body" id="mobile_notification_popup_body"
-                    style="background-color: #0c0b0b">
+                    style="background-color: #ffffff">
                     <h1 class="notification-popup-title">Notifikasi</h1>
 
                     <div class="notification-tabs">
@@ -165,7 +166,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="notification-footer" style="background-color: #0c0b0b">
+                    <div class="notification-footer" style="background-color: #ffffff">
                         <a href="#" id="mobile_read_all_announcements_button">Tandai
                             Semua Dibaca</a>
                         <a href="/message" id="mobile_view_more_button">Lihat Selengkapnya</a>

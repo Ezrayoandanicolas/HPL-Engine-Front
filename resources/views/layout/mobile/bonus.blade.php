@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/bonus.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/bonus-green.css">
     <div class="standard-form-container">
         <div class="tab-menu-background-container">
             <div class="tab-menu-container" data-style="vertical">

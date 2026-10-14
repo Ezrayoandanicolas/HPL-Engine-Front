@@ -26,6 +26,7 @@
         }
     </style>
     <link rel="stylesheet" href="../../../assets/css/promotion/promotion.css">
+    <link rel="stylesheet" href="../../../assets/css/promotion/promotion-green.css">
     <div class="site-content-container">
         <div class="container">
             <div class="row">

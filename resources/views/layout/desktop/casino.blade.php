@@ -4,18 +4,18 @@
 
 <style>
     .casino-provider-card{
-        background:#1a1a1a;
+        background:#ffffff;
         border-radius:16px;
         overflow:hidden;
         transition:.3s;
-        border:1px solid #333;
+        border:1px solid #e5e7eb;
         height:100%;
     }
 
     .casino-provider-card:hover{
         transform:translateY(-8px);
-        border-color:#d4af37;
-        box-shadow:0 10px 25px rgba(0,0,0,.5);
+        border-color:#22c55e;
+        box-shadow:0 10px 25px rgba(0,0,0,.1);
     }
 
     .casino-provider-card img{
@@ -30,13 +30,13 @@
     }
 
     .provider-name{
-        color:#fff;
+        color:#1f2937;
         font-size:18px;
         font-weight:700;
     }
 
     .game-count{
-        color:#bfbfbf;
+        color:#6b7280;
         font-size:13px;
         margin-top:6px;
     }

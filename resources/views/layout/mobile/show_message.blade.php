@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/message.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/message-green.css">
     <div class="messaging-side-menu">
         <button type="button" class="back-button" onclick="history.back();">
             <i class="fas fa-arrow-left"></i>

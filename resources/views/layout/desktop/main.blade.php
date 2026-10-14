@@ -27,8 +27,11 @@
         rel="icon" type="image/x-icon" />
 
     <link href="../../../assets/css/desktop/beta.css" rel="stylesheet" />
+    <link href="../../../assets/css/desktop/beta-green.css" rel="stylesheet" />
     <link href="../../../assets/css/desktop/beta1.css" rel="stylesheet" />
+    <link href="../../../assets/css/desktop/beta1-green.css" rel="stylesheet" />
     <link href="../../../assets/css/desktop/theme.css" rel="stylesheet" />
+    <link href="../../../assets/css/desktop/theme-green.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
     <link rel="stylesheet" type="text/css"
@@ -527,13 +530,13 @@
                         @csrf
                         <div class="form-group text-left">
                             <label for="login_username">Nama Pengguna</label>
-                            <input type="text" name="username" id="login_username" class="form-control" placeholder="Nama Pengguna" required autocomplete="off" style="background-color:#0c0c0c;border-color:#2a2a2a;color:#fff" />
+                            <input type="text" name="username" id="login_username" class="form-control" placeholder="Nama Pengguna" required autocomplete="off" style="background-color:#ffffff;border-color:#e5e7eb;color:#1f2937" />
                         </div>
                         <div class="form-group text-left">
                             <label for="login_password">Kata Sandi</label>
                             <div style="position:relative">
-                                <input type="password" name="password" id="login_password" class="form-control" placeholder="Kata Sandi" required autocomplete="off" style="background-color:#0c0c0c;border-color:#2a2a2a;color:#fff;padding-right:40px" />
-                                <i class="fa-solid fa-eye-slash" id="login_password_toggle" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#02bca2;cursor:pointer;z-index:5"></i>
+                                <input type="password" name="password" id="login_password" class="form-control" placeholder="Kata Sandi" required autocomplete="off" style="background-color:#ffffff;border-color:#e5e7eb;color:#1f2937;padding-right:40px" />
+                                <i class="fa-solid fa-eye-slash" id="login_password_toggle" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#22c55e;cursor:pointer;z-index:5"></i>
                             </div>
                         </div>
                         <div style="text-align:right;margin:4px 0 16px">
@@ -1072,8 +1075,8 @@ window.addEventListener('DOMContentLoaded', function() {
         @import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
 
         :root {
-            --accent-color: #1130a5;
-            --base-color: #1abc9c;
+            --accent-color: #16a34a;
+            --base-color: #22c55e;
             /* Warna hijau tosca */
         }
 
@@ -1161,7 +1164,7 @@ window.addEventListener('DOMContentLoaded', function() {
             border-radius: 10px;
             justify-content: center;
             align-items: center;
-            background-color: #000000;
+            background-color: #ffffff;
         }
 
         .bar1,
@@ -1197,8 +1200,8 @@ window.addEventListener('DOMContentLoaded', function() {
             scale: .1;
             font-family: "Times New Roman", sans-serif;
             font-size: large;
-            background: rgba(0, 0, 0, 1);
-            color: #ffffff;
+            background: rgba(255, 255, 255, 1);
+            color: #1f2937;
             text-align: center;
             text-wrap: nowrap;
             border: 1px solid var(--base-color);

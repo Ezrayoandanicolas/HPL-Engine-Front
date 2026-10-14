@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/refferal.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/refferal-green.css">
     <div class="standard-form-container">
         <div class="container">
             <div class="row referral-container">
@@ -34,7 +35,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 text-center standard-button-group"
-                                    style="background-color: #2c2c2c; color: #ffffff; padding: 15px; border-radius: 10px;">
+                                    style="background-color: #f8fafc; color: #1f2937; padding: 15px; border-radius: 10px;">
                                     <div class="qr-code" id="referral-qr-code">
                                         <img src="{{ storageUrl($verifikasi->barcode) }}" alt="">
                                     </div>
@@ -76,19 +77,19 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div id="referral-count" class="referral-box"
-                                        style="background-color: #2c2c2c; color: #ffffff; padding: 15px; border-radius: 10px;">
+                                        style="background-color: #f8fafc; color: #1f2937; padding: 15px; border-radius: 10px;">
                                         <h4>Pendaftaran Referensi:</h4><a href="#">0</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="referral-box"
-                                        style="background-color: #2c2c2c; color: #ffffff; padding: 15px; border-radius: 10px;">
+                                        style="background-color: #f8fafc; color: #1f2937; padding: 15px; border-radius: 10px;">
                                         <h4>Total Penghasilan:</h4><span id="total-earnings">IDR 0.00</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="referral-box"
-                                        style="background-color: #2c2c2c; color: #ffffff; padding: 15px; border-radius: 10px;">
+                                        style="background-color: #f8fafc; color: #1f2937; padding: 15px; border-radius: 10px;">
                                         <h4>Penghasilan Terakhir:</h4><span id="last-earning">IDR 0.00</span>
                                     </div>
                                 </div>

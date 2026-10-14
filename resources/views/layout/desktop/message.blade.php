@@ -1,7 +1,9 @@
 @extends('layout.desktop.main')
 @section('content')
     <link rel="stylesheet" href="../../../assets/css/desktop/deposit.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/deposit-green.css">
     <link rel="stylesheet" href="../../../assets/css/desktop/message.css">
+    <link rel="stylesheet" href="../../../assets/css/desktop/message-green.css">
     <div class="site-content-container" data-container-background="general">
         <div class="container">
             <div class="row">

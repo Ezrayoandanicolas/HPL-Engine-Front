@@ -1,6 +1,7 @@
 @extends('layout.mobile.main')
 @section('mobile')
     <link rel="stylesheet" href="../../../assets/css/mobile/profile.css">
+    <link rel="stylesheet" href="../../../assets/css/mobile/profile-green.css">
     <div class="profile-container">
         <div class="standard-form-container">
             <div class="container">

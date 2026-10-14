@@ -140,7 +140,7 @@
     background-color: #dcfce7;
 }
 .popular-game-title-container {
-    color: #fff;
+    color: #1f2937;
 }
 .popular-game-title-container > i {
     border-bottom-color: #15803d;
@@ -163,7 +163,7 @@
     background-color: #16a34a;
 }
 .info-center-container .panel-group .panel-heading .glyphicon-question-sign {
-    color: #a5a5a5;
+    color: #6b7280;
 }
 .info-center-container .panel-group .panel-title a {
     color: #1f2937;
@@ -250,7 +250,7 @@
     background-color: #dcfce7;
 }
 .mobile-app-container .title-container {
-    color: #ffffff;
+    color: #22c55e;
 }
 .mobile-app-container .link-container a:hover {
     background-color: #f0fdf4;
@@ -717,7 +717,7 @@ body {
     color: #fff;
 }
 .modal-header .close {
-    color: #fff;
+    color: #1f2937;
 }
 .modal-body {
     background-color: #f0fdf4;
@@ -752,7 +752,7 @@ body {
     color: #1f2937;
 }
 .standard-form-title {
-    color: #ffffff;
+    color: #22c55e;
 }
 .standard-form-sub-title {
     border-left-color: #16a34a;
@@ -774,7 +774,7 @@ body {
 .standard-form-content .table thead tr th,
 .standard-reporting-scroll-container .table thead tr th {
     border-color: #15803d;
-    color: #fff;
+    color: #1f2937;
 }
 .standard-form-content .table tbody,
 .standard-reporting-scroll-container .table tbody {
@@ -987,7 +987,7 @@ body {
     background: #22c55e !important;
 }
 .download-apk {
-    color: #1f2937;
+    color: #fff;
 }
 .download-apk .h2 > span {
     color: #22c55e;
@@ -1001,7 +1001,7 @@ body {
 .table thead > tr > td,
 .table tbody > tr > td,
 .table tfoot > tr > td {
-    color: #f5f5f5;
+    color: #374151;
 }
 .standard-form-note strong {
     color: #22c55e;
@@ -1137,7 +1137,7 @@ body {
     color: #16a34a;
 }
 .how-it-works-container .how-it-works-section .how-it-works-section-title {
-    color: #ffffff;
+    color: #22c55e;
 }
 .introjs-tooltip-title.introjs-tooltip-title {
     color: #1f2937;

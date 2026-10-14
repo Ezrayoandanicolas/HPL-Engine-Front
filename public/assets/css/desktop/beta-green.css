@@ -4811,7 +4811,7 @@ a.list-group-item:focus {
     border-color: #ddd;
 }
 .panel-default > .panel-heading {
-    color: #ffffff;
+    color: #333;
     background-color: #f5f5f5;
     border-color: #ddd;
 }
@@ -4839,7 +4839,7 @@ a.list-group-item:focus {
     border-color: #d6e9c6;
 }
 .panel-success > .panel-heading {
-    color: #ffffff;
+    color: #468847;
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
@@ -4853,7 +4853,7 @@ a.list-group-item:focus {
     border-color: #fbeed5;
 }
 .panel-warning > .panel-heading {
-    color: #c09853;
+    color: #6b7280;
     background-color: #fcf8e3;
     border-color: #fbeed5;
 }
@@ -4867,7 +4867,7 @@ a.list-group-item:focus {
     border-color: #eed3d7;
 }
 .panel-danger > .panel-heading {
-    color: #ffffff;
+    color: #b94a48;
     background-color: #f2dede;
     border-color: #eed3d7;
 }
@@ -9060,7 +9060,7 @@ body a:focus {
     }
 }
 .footer-section-title {
-    color: #fff;
+    color: #1f2937;
 }
 .supported-browser-container {
     display: flex;
@@ -9853,7 +9853,7 @@ body a:focus {
 }
 .modal-header .close {
     opacity: 1;
-    color: #fff;
+    color: #1f2937;
     margin: 0;
 }
 .modal-body {
@@ -9871,7 +9871,7 @@ body a:focus {
     padding-top: 1px;
 }
 .register-modal .modal-body .standard-form-title {
-    color: #dbdbdb;
+    color: #1f2937;
     border-bottom: none;
     margin-bottom: 0;
     font-size: 16px;
@@ -10023,7 +10023,7 @@ body a:focus {
     border-radius: 15px;
 }
 .standard-form-title {
-    color: #ffffff;
+    color: #ff0078;
     font-size: 26px;
     text-indent: 15px;
     line-height: 1;
@@ -10138,7 +10138,7 @@ body a:focus {
 .standard-form-content .table thead tr th,
 .standard-reporting-scroll-container .table thead tr th {
     border: 2px solid #15803d;
-    color: #fff;
+    color: #1f2937;
 }
 .standard-form-content .table tbody,
 .standard-reporting-scroll-container .table tbody {

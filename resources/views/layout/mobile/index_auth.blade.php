@@ -1428,7 +1428,7 @@
 </div>
 
 <div class="download-apk-container" id="download_apk"
-    style="--image-src: url(https://d33egg70nrp50s.cloudfront.net/Images/zoom-v2-beta/dark-turquoise/mobile/home/download-apk-background.webp?v=20240708-4);">
+    style="--image-src: url(https://i.ibb.co.com/20jXMdFS/Emerald-Geometric-Tech-Banner.png);">
     <div>
         <div class="h2">
             <span>Unduh Gratis</span><br />

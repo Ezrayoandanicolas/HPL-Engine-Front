@@ -20,7 +20,7 @@
         .jackpot-currency {
             font-size: 30px;
             font-weight: bold;
-            color: #b77636;
+            color: #16a34a;
             margin-right: 15px;
             font-family: sans-serif;
         }
@@ -35,7 +35,7 @@
             font-family: 'Courier New', Courier, monospace;
             font-size: 32px;
             font-weight: bold;
-            color: #fff;
+            color: #1f2937;
             display: inline-block;
             min-width: 18px;
             text-align: center;
@@ -43,7 +43,7 @@
 
         .jackpot-comma {
             margin: 0 5px;
-            color: #fff;
+            color: #1f2937;
         }
 
         /* === CSS BAWAAN === */

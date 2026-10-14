@@ -191,10 +191,10 @@ a {
     background-color: #16a34a;
 }
 .info-center-container .panel-group .panel-heading a {
-    color: #fff;
+    color: #1f2937;
 }
 .info-center-container .panel-group .panel-heading .glyphicon-question-sign {
-    color: #a5a5a5;
+    color: #6b7280;
 }
 .info-center-container
     .panel-default
@@ -668,7 +668,7 @@ body[data-route="home"]:not(.empty-layout) {
     color: #fff;
 }
 .modal-header .close {
-    color: #fff;
+    color: #1f2937;
 }
 .modal-body {
     background-color: #f0fdf4;
@@ -750,7 +750,7 @@ body[data-route="home"]:not(.empty-layout) {
     color: #1f2937;
 }
 .standard-form-title {
-    color: #ffffff;
+    color: #22c55e;
 }
 .reporting-nav-bar {
     border-color: #22c55e;
@@ -920,13 +920,13 @@ body[data-route="login"] {
     background-color: #16a34a;
 }
 .download-apk-container {
-    color: #1f2937;
+    color: #fff;
 }
 .download-apk-container .h2 span {
     color: #22c55e;
 }
 .download-apk-guide {
-    color: #1f2937;
+    color: #fff;
 }
 .tab-menu-container {
     background-color: #bbf7d0;
@@ -1096,7 +1096,7 @@ body[data-route="login"] {
 .standard-section-title,
 .benefit-container h2,
 .how-it-works-container .how-it-works-section .how-it-works-section-title {
-    color: #ffffff;
+    color: #22c55e;
 }
 .introjs-tooltip-title.introjs-tooltip-title {
     color: #1f2937;

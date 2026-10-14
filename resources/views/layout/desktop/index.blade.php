@@ -90,10 +90,10 @@
             .wallet-stat-info { min-width: 0; }
             .wallet-stat-label {
                 margin: 0; font-size: 12px; letter-spacing: .4px; text-transform: uppercase;
-                color: #9aa0b5; font-weight: 600;
+                color: #6b7280; font-weight: 600;
             }
             .wallet-stat-value {
-                margin: 3px 0 0; font-size: 20px; font-weight: 700; color: #fff; line-height: 1.15;
+                margin: 3px 0 0; font-size: 20px; font-weight: 700; color: #1f2937; line-height: 1.15;
                 white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             }
             @media (max-width: 575.98px) {
@@ -128,7 +128,7 @@
             </div>
         </div>
         <div data-container-background="home"
-            style="background-image: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/backgrounds/home.jpg?v=20240708-4);">
+            style="background-image: url(https://iili.io/nXZrpus.th.jpg);">
             <div class="container home-outer-container">
                 <div class="row">
                     <div class="col-md-12">
@@ -237,7 +237,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="download-apk" id="download_apk"
-                            style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/home/download-apk-background.webp?v=20240708-4);">
+                            style="--image-src: url(https://i.ibb.co.com/20jXMdFS/Emerald-Geometric-Tech-Banner.png);">
                             <div>
                                 <div class="h2">
                                     Unduh Gratis
@@ -399,7 +399,7 @@
             </div>
         </div>
         <div data-container-background="home"
-            style="background-image: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/backgrounds/home.jpg?v=20240708-4);">
+            style="background-image: url(https://iili.io/nXZrpus.th.jpg);">
             <div class="container home-outer-container">
                 <div class="row">
                     <div class="col-md-12">
@@ -476,7 +476,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="download-apk" id="download_apk"
-                            style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/desktop/home/download-apk-background.webp?v=20240708-4);">
+                            style="--image-src: url(https://i.ibb.co.com/20jXMdFS/Emerald-Geometric-Tech-Banner.png);">
                             <div>
                                 <div class="h2">
                                     Unduh Gratis

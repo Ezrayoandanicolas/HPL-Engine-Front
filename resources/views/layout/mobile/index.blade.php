@@ -663,11 +663,11 @@
                  </div>
              </main>
              <i class="right-chevron right_trigger"
-                 style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/home/download-apk-background.webp?v=20240708-4);"></i>
+                 style="--image-src: url(https://i.ibb.co.com/20jXMdFS/Emerald-Geometric-Tech-Banner.png);"></i>
          </div>
 
          <div class="download-apk-container" id="download_apk"
-             style="--image-src: url(//d33egg70nrp50s.cloudfront.net/Images/v-zelma-v2-beta/dark-brown/mobile/home/download-apk-background.webp?v=20240708-4);">
+             style="--image-src: url(https://i.ibb.co.com/20jXMdFS/Emerald-Geometric-Tech-Banner.png);">
              <div>
                  <div class="h2">
                      <span>Unduh Gratis</span><br />

@@ -1022,7 +1022,15 @@ window.addEventListener('DOMContentLoaded', function() {
         </div>
         <ul>
             @php
-                $sosmedLinks = collect($setting->sosmed_links ?? [])->filter(fn($l) => trim($l['label'] ?? '') !== '' || trim($l['url'] ?? '') !== '');
+                $rawSosmed = $setting->sosmed_links ?? [];
+                if (is_string($rawSosmed)) {
+                    $decodedSosmed = json_decode($rawSosmed, true);
+                    $rawSosmed = is_array($decodedSosmed) ? $decodedSosmed : [];
+                }
+                $sosmedLinks = collect(is_array($rawSosmed) ? $rawSosmed : [])
+                    ->map(fn($l) => (array) $l)
+                    ->filter(fn($l) => trim((string) ($l['label'] ?? '')) !== '' || trim((string) ($l['url'] ?? '')) !== '')
+                    ->values();
             @endphp
             @forelse ($sosmedLinks as $link)
             <li>

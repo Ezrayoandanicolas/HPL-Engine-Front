@@ -153,9 +153,8 @@
                     <div class="wrapper-container">
 
                        <img
-                    src="{{ $game->image_url ?? $game->game_image ?? asset('assets/images/default-game.png') }}"
-                    alt="{{ $game->game_name }}"
-                    onerror="this.onerror=null;this.src='{{ asset('assets/images/default-game.png') }}';">
+                    src="{{ $game->image_url ?? $game->game_image }}"
+                    alt="{{ $game->game_name }}">
 
                         <div class="link-container">
 

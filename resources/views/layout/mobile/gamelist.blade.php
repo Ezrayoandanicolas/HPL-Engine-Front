@@ -23,9 +23,7 @@
                 @foreach ($gamelist as $game)
                     <li class="game-item" data-game="{{ $game->game_name }}"><label class="inner-game-item">
                             <input type="radio" name="game-list-radio-button">
-                            <div class="wrapper-container"><img src="{{ $game->image_url }}"
-                                alt="{{ $game->game_name }}"
-                                onerror="this.onerror=null;this.src='{{ asset('assets/images/default-game.png') }}';">"
+                            <div class="wrapper-container"><img src="{{ $game->image_url ?? $game->game_image }}"
                                     alt="{{ $game->game_name }}"><span class="link-container"><a class="play-now"
                                         data-game="{{ $game->game_name }}" href="/login">MAIN</a></span></div>
                             <div class="game-name">{{ $game->game_name }}</div>
